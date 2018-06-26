@@ -6,10 +6,11 @@ from copy import copy
 from hashlib import sha1
 
 from django.utils import timezone
+from django.db import transaction
 
 import tqdm
 from dateutil.parser import parse as dt_parse
-
+import jmespath
 
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger("importer")
@@ -21,7 +22,15 @@ class FileLoader(object):
     chunk_size = 1000
     last_updated_param_is_required = False
 
-    def get_dedup_field(self):
+    def __init__(self, *args, **kwargs):
+        self._pathes = {}
+
+        for k in self.get_dedup_fields():
+            self._pathes[k] = jmespath.compile(k)
+
+        return super().__init__(*args, **kwargs)
+
+    def get_dedup_fields(self):
         raise NotImplementedError
 
     def preprocess(self, record):
@@ -68,22 +77,28 @@ class FileLoader(object):
         else:
             raise NotImplementedError()
 
-    def get_name(self, doc, fields):
-        return " ".join(filter(None, (doc.get(x, None) for x in fields)))
-
-    def get_default_render_fields(self, doc, name_fields):
-        return sorted(k for k in doc.keys() if k not in name_fields)
-
     def get_doc_hash(self, doc, options):
-        dedup_fields = sorted(self.get_dedup_field())
+        dedup_fields = sorted(self.get_dedup_fields())
 
-        return sha1(
-            json.dumps({k: doc.get(k) for k in dedup_fields}).encode("utf-8")
-        ).hexdigest()
+        def get_value(pth, expression):
+            if not(("." in pth) or ("[" in pth) or ("]" in pth)):
+                return doc[pth]
+
+            val = expression.search(doc)
+
+            # Evaluate if we need code below
+            if isinstance(val, list):
+                if len(val) == 1:
+                    return v[0]
+                elif len(val) == 0:
+                    return None
+            return val
+
+        dct = {k: get_value(k, self._pathes[k]) for k in dedup_fields}
+
+        return sha1(json.dumps(dct).encode("utf-8")).hexdigest()
 
     def handle_details(self, *args, **options):
-        pass
-
         if options.get("last_updated_from_dataset"):
             last_updated = timezone.make_aware(
                 dt_parse(options["last_updated_from_dataset"], dayfirst=True)
@@ -96,27 +111,28 @@ class FileLoader(object):
         bulk_add = []
 
         with tqdm.tqdm() as pbar:
-            for item in self.iter_dataset(options["dataset_file"], options["filetype"]):
-                pbar.update(1)
-                doc_hash = self.get_doc_hash(item, options)
-                if doc_hash not in existing_hashes:
-                    bulk_add.append(
-                        model(
-                            id=doc_hash,
-                            data=item,
-                            last_updated_from_dataset=last_updated,
-                            first_updated_from_dataset=last_updated,
+            with transaction.atomic():
+                for item in self.iter_dataset(options["dataset_file"], options["filetype"]):
+                    pbar.update(1)
+                    doc_hash = self.get_doc_hash(item, options)
+                    if doc_hash not in existing_hashes:
+                        bulk_add.append(
+                            model(
+                                id=doc_hash,
+                                data=item,
+                                last_updated_from_dataset=last_updated,
+                                first_updated_from_dataset=last_updated,
+                            )
                         )
-                    )
-                    existing_hashes.add(doc_hash)
-                else:
-                    model.objects.filter(pk=doc_hash).update(
-                        data=item, last_updated_from_dataset=last_updated
-                    )
+                        existing_hashes.add(doc_hash)
+                    else:
+                        model.objects.filter(pk=doc_hash).update(
+                            data=item, last_updated_from_dataset=last_updated
+                        )
 
-                if len(bulk_add) >= self.chunk_size:
-                    model.objects.bulk_create(bulk_add)
-                    bulk_add = []
+                    if len(bulk_add) >= self.chunk_size:
+                        model.objects.bulk_create(bulk_add)
+                        bulk_add = []
 
-            # So sweet leftovers
-            model.objects.bulk_create(bulk_add)
+                # So sweet leftovers
+                model.objects.bulk_create(bulk_add)

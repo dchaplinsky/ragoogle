@@ -80,9 +80,10 @@ BASIC_INDEX_SETTINGS = {
 }
 
 
-class AbstractMappingMixin(object):
+class AbstractDatasetMapping(DocType):
     addresses = Text(analyzer="ukrainianAddressesStopwordsAnalyzer", copy_to="all")
     persons = Text(analyzer="ukrainian", copy_to="all")
+    countries = Text(analyzer="ukrainian", copy_to="all")
     companies = Text(analyzer="ukrainian", copy_to="all")
     raw_records = Text(analyzer="ukrainian", copy_to="all")
     names_autocomplete = Text(
