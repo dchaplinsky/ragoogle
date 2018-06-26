@@ -1,0 +1,97 @@
+{% extends "companies/base.html" %}
+
+{% block container_class %}sidebar-o side-scroll main-content-narrow page-header-fixed page-header-inverse{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <!-- Search -->
+        <form class="push col-sm-6 ml-auto mr-auto" action="{{ url('search>results') }}" method="get" _lpchecked="1">
+            <div class="input-group input-group-lg">
+                <input type="text" class="form-control search-form-q" name="q" data-provide="typeahead" id="search-form" placeholder="{{ _("Пошук") }}" data-endpoint="{{ url("search>suggest") }}" value="{{ query }}">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-secondary">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <!-- END Search -->
+
+        <!-- Results -->
+        <!-- Images Filtering -->
+        <h2 class="content-heading">Результати <small>пошуку за фразою </small>'{{ query }}'</h2>
+
+        <!-- Content Filtering (.js-filter class is initialized in Edrdr() -> uiHelperContentFilter()) -->
+        <!-- If data-numbers="true" is added, then the number of the items of each category will be auto added to each category link -->
+        <div class="js-filter" data-numbers="true">
+            <div class="p-10 bg-white push">
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <a class="nav-link{% if search_type == "strict" %} active{% endif %}" href="{{ url("search>results") }}?{{ updated_querystring(request, {'search_type': "strict"}) }}" data-category-link="all">{{ _("Повне співпадіння") }} ({% if search_type == "strict" %}{{ strict_count }}{% else %}{% if strict_count >= base_count %}+{% endif %}{{ strict_count - base_count }}{% endif %})</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link{% if search_type == "loose" %} active{% endif %}" href="{{ url("search>results") }}?{{ updated_querystring(request, {'search_type': "loose"}) }}" data-category-link="ghata">{{ _("Неповне співпадіння") }} ({% if search_type == "loose" %}{{ loose_count }}{% else %}{% if loose_count >= base_count %}+{% endif %}{{ loose_count - base_count }}{% endif %})</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link{% if search_type == "fuzzy" %} active{% endif %}" href="{{ url("search>results") }}?{{ updated_querystring(request, {'search_type': "fuzzy"}) }}" data-category-link="posipaks">{{ _("Нечітке співпадіння") }} ({% if search_type == "fuzzy" %}{{ fuzzy_count }}{% else %}{% if fuzzy_count >= base_count %}+{% endif %}{{ fuzzy_count - base_count }}{% endif %})</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="row items-push">
+                {% for res in search_results %}
+                <div class="small-profile col-lg-4" itemscope="" itemtype="http://schema.org/Person" data-category="decl">
+                    <div class="box active-box">
+                        <header class="profile-header">
+                            <a href="{{ url("company>detail", args=[res.full_edrpou]) }}">
+                                <div class="not-avatar">{{ res.full_edrpou }}</div>
+                                <h3 class="name" itemprop="name">{{ res.latest_record.short_name or res.latest_record.name }}</h3>
+                            </a>
+                        </header>
+                        <div class="descr">{{ res.latest_record.status }}
+                            <br/>
+                            {% for h_field in res.meta.highlight %}{% for content in res.meta.highlight[h_field] %}{{ content|safe }}<br/>{% endfor %}{% endfor %}
+                        </div>
+                        <div data-toggle="popover"
+                             title="" data-placement="top"
+                             data-content="" data-original-title="Тут якісь деталі">Детальніше</div>
+                        <hr>
+                        <footer>
+                            {{ res.latest_record.location }}
+                        </footer>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        {% if search_results.paginator.num_pages > 1 %}
+        <nav>
+            <ul class="pagination pagination-lg">
+                <li class="page-item{% if not search_results.has_previous() %} disabled{% endif %}">
+                    <a href="{{ url("search>results") }}{% if search_results.has_previous() %}?{{ updated_querystring(request, {'page': search_results.previous_page_number()}) }}{% endif %}" class="page-link">
+                        <span aria-hidden="true"><i class="fa fa-angle-left"></i></span>
+                        <span class="sr-only">{{ _("Попередня") }}</span>
+                    </a>
+                </li>
+                {% for page_num in search_results.contextual_page_range %}
+                {% if page_num == None %}
+                    <li class="page-item disabled"><span>&hellip;</span></li>
+                {% else %}
+                    <li{% if search_results.number == page_num %} class="page-item active"{% endif %}>
+                        <a href="{{ url("search>results") }}?{{ updated_querystring(request, {'page': page_num}) }}"  class="page-link">{{ page_num }}</a>
+                    </li>
+                {% endif %}
+                {% endfor %}
+                <li class="page-item{% if not search_results.has_next() %} disabled{% endif %}">
+                    <a href="{{ url("search>results") }}{% if search_results.has_next() %}?{{ updated_querystring(request, {'page': search_results.next_page_number()}) }}{% endif %}" class="page-link">
+                        <i class="fa fa-angle-right"></i>
+                        <span class="sr-only">{{ _("Наступна") }}</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        {% endif %}
+        <!-- END Results -->
+    </div>
+{% endblock %}
+

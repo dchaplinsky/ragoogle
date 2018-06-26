@@ -1,0 +1,274 @@
+// SCSS variables are information about icon's compiled state, stored under its original file name
+//
+// .icon-home {
+//   width: $icon-home-width;
+// }
+//
+// The large array-like variables contain all information about a single icon
+// $icon-home: x y offset_x offset_y width height total_width total_height image_path;
+//
+// At the bottom of this section, we provide information about the spritesheet itself
+// $spritesheet: width height image $spritesheet-sprites;
+$arrow-dropdown-bold-name: 'arrow-dropdown-bold';
+$arrow-dropdown-bold-x: 0px;
+$arrow-dropdown-bold-y: 22px;
+$arrow-dropdown-bold-offset-x: 0px;
+$arrow-dropdown-bold-offset-y: -22px;
+$arrow-dropdown-bold-width: 11px;
+$arrow-dropdown-bold-height: 9px;
+$arrow-dropdown-bold-total-width: 42px;
+$arrow-dropdown-bold-total-height: 39px;
+$arrow-dropdown-bold-image: '../img/spritesheet.png';
+$arrow-dropdown-bold: (0px, 22px, 0px, -22px, 11px, 9px, 42px, 39px, '../img/spritesheet.png', 'arrow-dropdown-bold', );
+$arrow-dropdown-name: 'arrow-dropdown';
+$arrow-dropdown-x: 0px;
+$arrow-dropdown-y: 33px;
+$arrow-dropdown-offset-x: 0px;
+$arrow-dropdown-offset-y: -33px;
+$arrow-dropdown-width: 11px;
+$arrow-dropdown-height: 6px;
+$arrow-dropdown-total-width: 42px;
+$arrow-dropdown-total-height: 39px;
+$arrow-dropdown-image: '../img/spritesheet.png';
+$arrow-dropdown: (0px, 33px, 0px, -33px, 11px, 6px, 42px, 39px, '../img/spritesheet.png', 'arrow-dropdown', );
+$error-icon-name: 'error-icon';
+$error-icon-x: 13px;
+$error-icon-y: 22px;
+$error-icon-offset-x: -13px;
+$error-icon-offset-y: -22px;
+$error-icon-width: 9px;
+$error-icon-height: 9px;
+$error-icon-total-width: 42px;
+$error-icon-total-height: 39px;
+$error-icon-image: '../img/spritesheet.png';
+$error-icon: (13px, 22px, -13px, -22px, 9px, 9px, 42px, 39px, '../img/spritesheet.png', 'error-icon', );
+$icon-close-name: 'icon-close';
+$icon-close-x: 23px;
+$icon-close-y: 0px;
+$icon-close-offset-x: -23px;
+$icon-close-offset-y: 0px;
+$icon-close-width: 10px;
+$icon-close-height: 10px;
+$icon-close-total-width: 42px;
+$icon-close-total-height: 39px;
+$icon-close-image: '../img/spritesheet.png';
+$icon-close: (23px, 0px, -23px, 0px, 10px, 10px, 42px, 39px, '../img/spritesheet.png', 'icon-close', );
+$search-icon-name: 'search-icon';
+$search-icon-x: 0px;
+$search-icon-y: 0px;
+$search-icon-offset-x: 0px;
+$search-icon-offset-y: 0px;
+$search-icon-width: 21px;
+$search-icon-height: 20px;
+$search-icon-total-width: 42px;
+$search-icon-total-height: 39px;
+$search-icon-image: '../img/spritesheet.png';
+$search-icon: (0px, 0px, 0px, 0px, 21px, 20px, 42px, 39px, '../img/spritesheet.png', 'search-icon', );
+$select-arrows-name: 'select-arrows';
+$select-arrows-x: 35px;
+$select-arrows-y: 0px;
+$select-arrows-offset-x: -35px;
+$select-arrows-offset-y: 0px;
+$select-arrows-width: 7px;
+$select-arrows-height: 12px;
+$select-arrows-total-width: 42px;
+$select-arrows-total-height: 39px;
+$select-arrows-image: '../img/spritesheet.png';
+$select-arrows: (35px, 0px, -35px, 0px, 7px, 12px, 42px, 39px, '../img/spritesheet.png', 'select-arrows', );
+$arrow-dropdown-bold-2x-name: 'arrow-dropdown-bold@2x';
+$arrow-dropdown-bold-2x-x: 44px;
+$arrow-dropdown-bold-2x-y: 0px;
+$arrow-dropdown-bold-2x-offset-x: -44px;
+$arrow-dropdown-bold-2x-offset-y: 0px;
+$arrow-dropdown-bold-2x-width: 24px;
+$arrow-dropdown-bold-2x-height: 18px;
+$arrow-dropdown-bold-2x-total-width: 86px;
+$arrow-dropdown-bold-2x-total-height: 62px;
+$arrow-dropdown-bold-2x-image: '../img/spritesheet@2x.png';
+$arrow-dropdown-bold-2x: (44px, 0px, -44px, 0px, 24px, 18px, 86px, 62px, '../img/spritesheet@2x.png', 'arrow-dropdown-bold@2x', );
+$arrow-dropdown-2x-name: 'arrow-dropdown@2x';
+$arrow-dropdown-2x-x: 44px;
+$arrow-dropdown-2x-y: 22px;
+$arrow-dropdown-2x-offset-x: -44px;
+$arrow-dropdown-2x-offset-y: -22px;
+$arrow-dropdown-2x-width: 22px;
+$arrow-dropdown-2x-height: 12px;
+$arrow-dropdown-2x-total-width: 86px;
+$arrow-dropdown-2x-total-height: 62px;
+$arrow-dropdown-2x-image: '../img/spritesheet@2x.png';
+$arrow-dropdown-2x: (44px, 22px, -44px, -22px, 22px, 12px, 86px, 62px, '../img/spritesheet@2x.png', 'arrow-dropdown@2x', );
+$error-icon-2x-name: 'error-icon@2x';
+$error-icon-2x-x: 24px;
+$error-icon-2x-y: 42px;
+$error-icon-2x-offset-x: -24px;
+$error-icon-2x-offset-y: -42px;
+$error-icon-2x-width: 18px;
+$error-icon-2x-height: 18px;
+$error-icon-2x-total-width: 86px;
+$error-icon-2x-total-height: 62px;
+$error-icon-2x-image: '../img/spritesheet@2x.png';
+$error-icon-2x: (24px, 42px, -24px, -42px, 18px, 18px, 86px, 62px, '../img/spritesheet@2x.png', 'error-icon@2x', );
+$icon-close-2x-name: 'icon-close@2x';
+$icon-close-2x-x: 0px;
+$icon-close-2x-y: 42px;
+$icon-close-2x-offset-x: 0px;
+$icon-close-2x-offset-y: -42px;
+$icon-close-2x-width: 20px;
+$icon-close-2x-height: 20px;
+$icon-close-2x-total-width: 86px;
+$icon-close-2x-total-height: 62px;
+$icon-close-2x-image: '../img/spritesheet@2x.png';
+$icon-close-2x: (0px, 42px, 0px, -42px, 20px, 20px, 86px, 62px, '../img/spritesheet@2x.png', 'icon-close@2x', );
+$search-icon-2x-name: 'search-icon@2x';
+$search-icon-2x-x: 0px;
+$search-icon-2x-y: 0px;
+$search-icon-2x-offset-x: 0px;
+$search-icon-2x-offset-y: 0px;
+$search-icon-2x-width: 40px;
+$search-icon-2x-height: 38px;
+$search-icon-2x-total-width: 86px;
+$search-icon-2x-total-height: 62px;
+$search-icon-2x-image: '../img/spritesheet@2x.png';
+$search-icon-2x: (0px, 0px, 0px, 0px, 40px, 38px, 86px, 62px, '../img/spritesheet@2x.png', 'search-icon@2x', );
+$select-arrows-2x-name: 'select-arrows@2x';
+$select-arrows-2x-x: 72px;
+$select-arrows-2x-y: 0px;
+$select-arrows-2x-offset-x: -72px;
+$select-arrows-2x-offset-y: 0px;
+$select-arrows-2x-width: 14px;
+$select-arrows-2x-height: 24px;
+$select-arrows-2x-total-width: 86px;
+$select-arrows-2x-total-height: 62px;
+$select-arrows-2x-image: '../img/spritesheet@2x.png';
+$select-arrows-2x: (72px, 0px, -72px, 0px, 14px, 24px, 86px, 62px, '../img/spritesheet@2x.png', 'select-arrows@2x', );
+$spritesheet-width: 42px;
+$spritesheet-height: 39px;
+$spritesheet-image: '../img/spritesheet.png';
+$spritesheet-sprites: ($arrow-dropdown-bold, $arrow-dropdown, $error-icon, $icon-close, $search-icon, $select-arrows, );
+$spritesheet: (42px, 39px, '../img/spritesheet.png', $spritesheet-sprites, );
+$retina-spritesheet-width: 86px;
+$retina-spritesheet-height: 62px;
+$retina-spritesheet-image: '../img/spritesheet@2x.png';
+$retina-spritesheet-sprites: ($arrow-dropdown-bold-2x, $arrow-dropdown-2x, $error-icon-2x, $icon-close-2x, $search-icon-2x, $select-arrows-2x, );
+$retina-spritesheet: (86px, 62px, '../img/spritesheet@2x.png', $retina-spritesheet-sprites, );
+
+// These "retina group" variables are mappings for the naming and pairing of normal and retina sprites.
+//
+// The list formatted variables are intended for mixins like `retina-sprite` and `retina-sprites`.
+$arrow-dropdown-bold-group-name: 'arrow-dropdown-bold';
+$arrow-dropdown-bold-group: ('arrow-dropdown-bold', $arrow-dropdown-bold, $arrow-dropdown-bold-2x, );
+$arrow-dropdown-group-name: 'arrow-dropdown';
+$arrow-dropdown-group: ('arrow-dropdown', $arrow-dropdown, $arrow-dropdown-2x, );
+$error-icon-group-name: 'error-icon';
+$error-icon-group: ('error-icon', $error-icon, $error-icon-2x, );
+$icon-close-group-name: 'icon-close';
+$icon-close-group: ('icon-close', $icon-close, $icon-close-2x, );
+$search-icon-group-name: 'search-icon';
+$search-icon-group: ('search-icon', $search-icon, $search-icon-2x, );
+$select-arrows-group-name: 'select-arrows';
+$select-arrows-group: ('select-arrows', $select-arrows, $select-arrows-2x, );
+$retina-groups: ($arrow-dropdown-bold-group, $arrow-dropdown-group, $error-icon-group, $icon-close-group, $search-icon-group, $select-arrows-group, );
+
+// The provided mixins are intended to be used with the array-like variables
+//
+// .icon-home {
+//   @include sprite-width($icon-home);
+// }
+//
+// .icon-email {
+//   @include sprite($icon-email);
+// }
+//
+// Example usage in HTML:
+//
+// `display: block` sprite:
+// <div class="icon-home"></div>
+//
+// To change `display` (e.g. `display: inline-block;`), we suggest using a common CSS class:
+//
+// // CSS
+// .icon {
+//   display: inline-block;
+// }
+//
+// // HTML
+// <i class="icon icon-home"></i>
+@mixin sprite-width($sprite) {
+  width: nth($sprite, 5);
+}
+
+@mixin sprite-height($sprite) {
+  height: nth($sprite, 6);
+}
+
+@mixin sprite-position($sprite) {
+  $sprite-offset-x: nth($sprite, 3);
+  $sprite-offset-y: nth($sprite, 4);
+  background-position: $sprite-offset-x  $sprite-offset-y;
+}
+
+@mixin sprite-image($sprite) {
+  $sprite-image: nth($sprite, 9);
+  background-image: url(#{$sprite-image});
+}
+
+@mixin sprite($sprite) {
+  @include sprite-image($sprite);
+  @include sprite-position($sprite);
+  @include sprite-width($sprite);
+  @include sprite-height($sprite);
+}
+
+// The `retina-sprite` mixin sets up rules and a media query for a sprite/retina sprite.
+//   It should be used with a "retina group" variable.
+//
+// The media query is from CSS Tricks: https://css-tricks.com/snippets/css/retina-display-media-query/
+//
+// $icon-home-group: ('icon-home', $icon-home, $icon-home-2x, );
+//
+// .icon-home {
+//   @include retina-sprite($icon-home-group);
+// }
+@mixin sprite-background-size($sprite) {
+  $sprite-total-width: nth($sprite, 7);
+  $sprite-total-height: nth($sprite, 8);
+  background-size: $sprite-total-width $sprite-total-height;
+}
+
+@mixin retina-sprite($retina-group) {
+  $normal-sprite: nth($retina-group, 2);
+  $retina-sprite: nth($retina-group, 3);
+  @include sprite($normal-sprite);
+
+  @media (-webkit-min-device-pixel-ratio: 2),
+         (min-resolution: 192dpi) {
+    @include sprite-image($retina-sprite);
+    @include sprite-background-size($normal-sprite);
+  }
+}
+
+// The `sprites` mixin generates identical output to the CSS template
+//   but can be overridden inside of SCSS
+//
+// @include sprites($spritesheet-sprites);
+@mixin sprites($sprites) {
+  @each $sprite in $sprites {
+    $sprite-name: nth($sprite, 10);
+    .#{$sprite-name} {
+      @include sprite($sprite);
+    }
+  }
+}
+
+// The `retina-sprites` mixin generates a CSS rule and media query for retina groups
+//   This yields the same output as CSS retina template but can be overridden in SCSS
+//
+// @include retina-sprites($retina-groups);
+@mixin retina-sprites($retina-groups) {
+  @each $retina-group in $retina-groups {
+    $sprite-name: nth($retina-group, 1);
+    .#{$sprite-name} {
+      @include retina-sprite($retina-group);
+    }
+  }
+}

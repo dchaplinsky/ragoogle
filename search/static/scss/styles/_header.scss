@@ -1,0 +1,143 @@
+//
+// Header
+// --------------------------------------------------
+
+#page-header {
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    background-color: $header-bg;
+}
+
+// Header overlay (used for various reasons eg: loading or search)
+.overlay-header {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #406FBF;
+    opacity: 0;
+    transition: transform .2s ease-in-out, opacity .2s ease-in-out;
+    transform: translateY(-100%);
+    will-change: opacity, transform;
+
+    &.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.site-logo-name {
+    span {
+        vertical-align: middle;
+    }
+}
+
+// Inner header sections
+.content-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    padding: (($header-height - $pbf-height) / 2) $space-side;
+    height: $header-height;
+
+    &.content-header-fullrow {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    &-section {
+        flex: 0 0 auto;
+
+        &.content-header-section-wrap {
+            flex: 1 1 auto;
+        }
+    }
+
+    &-item {
+        display: inline-block;
+        height: $pbf-height;
+        line-height: $pbf-height;
+        vertical-align: middle;
+
+        &-align {
+            vertical-align: middle;
+        }
+    }
+
+    &-logo {
+        height: $pbf-height;
+    }
+
+    @at-root #page-header > & {
+        padding-left: $space-mobile;
+        padding-right: $space-mobile;
+
+        @include media-breakpoint-up(md) {
+            padding-left: $space-base;
+            padding-right: $space-base;
+        }
+    }
+}
+
+#page-container.page-header-inverse #page-header {
+    background: #542ED1;
+    background: -moz-linear-gradient(left, #542ED1 0%, #3480D6 100%);
+    background: -webkit-linear-gradient(left, #542ED1 0%,#3480D6 100%);
+    background: linear-gradient(to right, #542ED1 0%,#3480D6 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#542ED1', endColorstr='#3480D6',GradientType=1 );
+}
+
+
+#block-sociallinksblock {
+    margin-left: 0;
+    padding-left: 0;
+
+    li {
+        list-style: none;
+        display: block;
+    }
+}
+
+#block-sociallinksblock,
+.social-mobile {
+    .fab,
+    .fas{
+        color: #eee;
+        height: 32px;
+        width: 32px;
+        border-radius: 100%;
+        position: relative;
+
+        &:before {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+    }
+
+    .fa-facebook-f,
+    .fa-vk {
+        background: #4e71a8;
+    }
+
+    .fa-twitter {
+        background: #1cb7eb;
+    }
+
+    .fa-youtube {
+        background: #e13f4c;
+    }
+
+    .fa-telegram-plane{
+        background: #1cb7eb;
+    }
+
+    .fa-rss {
+        background: #e13f4c;
+    }
+}

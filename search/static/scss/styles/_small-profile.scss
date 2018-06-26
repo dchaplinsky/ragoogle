@@ -1,0 +1,387 @@
+.small-profile {
+  float: left;
+  position: relative;
+  cursor: pointer;
+  z-index: 10;
+
+  .box {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+    background: none repeat scroll 0 0 #fff;
+    border: 0 none;
+    border-radius: 5px;
+    box-shadow: 0px 0px 23px 2px rgba(0,0,0,0.07);
+    //box-shadow: 0 3px 10px rgba(0, 0, 0, 0.23), 0 3px 10px rgba(0, 0, 0, 0.16);
+    padding: 10px 15px;
+    transition: all 0.1s linear;
+    top: 0;
+
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      z-index: 0;
+      width: 100%;
+      height: 95px;
+      left: 0;
+      top: 0;
+      @include blueGradient();
+    }
+
+    &:hover {
+      //transition: all 0.1s linear;
+      //box-shadow: none;
+      //top: -5px;
+    }
+  }
+
+  .show-more {
+    cursor: pointer;
+
+    &:hover {
+      color: $bihus-red;
+      text-decoration: underline;
+    }
+  }
+
+  $w: 100px;
+
+  .profile-header {
+    position: relative;
+    z-index: 1;
+
+    a:hover {
+      text-decoration: none;
+
+      .avatar img {
+        height: $w + 20;
+      }
+    }
+  }
+
+  .additional-info {
+    display: none;
+  }
+
+  footer {
+    .svg-image {
+      display: inline-block;
+      height: 25px;
+      width: 25px;
+    }
+
+    a {
+      display: block;
+
+      span {
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      .source-name {
+        background: $decl-green;
+        color: white;
+        border-radius: 2px;
+        padding: 1px 5px;
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  .avatar {
+    float: left;
+    display: block;
+    height: $w;
+    width: $w;
+    border-radius: 100%;
+    overflow: hidden;
+    background: white;
+    position: relative;
+
+    img {
+      height: $w;
+      width: auto;
+      padding: 5px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      transition: all 0.3s linear;
+    }
+
+    &.no-foto {
+      position: relative;
+      background: #eceeef;
+
+      &:after {
+        content: "\f3a0";
+        font-family: "Ionicons";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0.3;
+        font-size: 80px;
+      }
+    }
+  }
+
+  .name,
+  .descr {
+    //margin-left: $w + 20px;
+  }
+
+  .name {
+    color: #FFFFFF;
+    font-weight: normal;
+    font-size: 16px;
+    text-transform: uppercase;
+    min-height: 62px;
+    margin-bottom: 0;
+
+    .match {
+      background: $bihus-red;
+      text-decoration: none;
+    }
+
+    .pib {
+      font-size: 20px;
+      display: block;
+      text-transform: none;
+      color: black;
+    }
+  }
+
+  .edrpou {
+    background: white;
+    color: black;
+    border-radius: 3px;
+    padding: 0px 5px;
+    font-size: 12px;
+    margin-bottom: 5px;
+    display: inline-block;
+  }
+
+  .descr {
+    position: relative;
+    display: block;
+    height: 200px;
+    overflow: hidden;
+
+    &:after {
+      background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 55%);
+      background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 55%);
+      background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 55%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 );
+      display: block;
+      content: '';
+      height: 40px;
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+    }
+
+    span {
+      font-weight: bold;
+    }
+
+    p {
+      margin-bottom: 0;
+    }
+
+    span.small-tip {
+      font-size: 12px;
+      margin-left: -45px;
+      color: #7B7B7B;
+    }
+  }
+
+  //todo: refactor
+  .posipaky {
+    margin-left: 0;
+    padding-left: 0;
+    margin-top: 10px;
+
+    .match {
+      background: #fcf900;
+      text-decoration: none;
+    }
+
+    > span {
+      font-weight: bold;
+    }
+
+    > div > span {
+      font-weight: bold;
+    }
+
+    .date {
+      font-size: 10px;
+      display: inline-block;
+      padding: 1px 5px;
+      color: black;
+    }
+  }
+
+  &.open,
+  &:hover {
+    @media (min-width: 992px) {
+      z-index: 11;
+    }
+
+    .posipaky {
+      .link_nb {
+        &.hidden {
+          display: block;
+        }
+      }
+
+      .show-more {
+        display: none;
+      }
+    }
+  }
+
+  &.hover {
+    //position: absolute;
+    z-index: 9;
+    background: red;
+
+    .additional-info {
+      display: block;
+    }
+  }
+
+  .full-box {
+    display: none;
+  }
+
+  &:hover {
+    .short-box {
+      opacity: 0;
+      transition: all 0.1s linear;
+    }
+
+    .full-box {
+      transition: all 0.1s linear;
+      top: -5px;
+      left: -5px;
+      display: block;
+      position: absolute;
+      width: 100%;
+      z-index: 999;
+      //box-shadow: 0px 0px 23px 2px rgba(0,0,0,0.07);
+      box-shadow:         0px 0px 30px 0px rgba(50, 50, 50, 1);
+      height: auto;
+
+      .descr {
+        height: auto;
+
+        &:after {
+          display: none;
+        }
+      }
+    }
+  }
+
+  &.hovered {
+    .short-box {
+      opacity: 0;
+      transition: all 0.1s linear;
+    }
+  }
+}
+
+.row {
+  .small-profile:last-child {
+    @media (max-width: $screen-md-max) {
+      margin-top: 40px;
+    }
+  }
+
+  &.hovered {
+    .short-box {
+      opacity: 0.8;
+      transition: all 0.1s linear;
+    }
+  }
+}
+
+.link_nb {
+  position: relative;
+  overflow: hidden;
+  clear: both;
+  border-top: 1px solid #e3e3e3;
+  padding: 5px 10px;
+  color: black;
+
+  @media (min-width: $screen-lg-min) {
+    display: table;
+    width: 100%;
+  }
+
+  &:nth-child(odd) {
+    background: #eee;
+  }
+
+  &.hidden {
+    display: none;
+  }
+
+  h2 {
+    font-weight: normal;
+    font-size: 18px;
+  }
+
+  .party {
+    @media (min-width: $screen-lg-min) {
+      display: table-cell;
+    }
+  }
+
+  .convocation {
+    @include rft(12, 16);
+    display: block;
+
+    @media (min-width: $screen-md-min) {
+      display: inline;
+    }
+
+    @media (min-width: $screen-lg-min) {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .radius {
+      color: white;
+      border-radius: 2px;
+      padding: 0 7px 2px 7px;
+      margin-right: 10px;
+
+      @media (min-width: $screen-lg-min) {
+        white-space: nowrap;
+        margin-right: 0;
+        margin-left: 10px;
+      }
+
+      &.with-link {
+        background: $decl-blue;
+        cursor: pointer;
+
+        &:hover {
+          background: $decl-green;
+          text-decoration: none;
+        }
+
+        a {
+          color: white;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}
+
