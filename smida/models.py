@@ -59,10 +59,10 @@ class SmidaModel(AbstractDataset):
             companies.add(dt["last_name"])
         else:
             persons |= generate_all_names(
-                dt["first_name"], dt["last_name"], dt["patronymic"], "Акціонер"
+                dt["last_name"], dt["first_name"], dt["patronymic"], "Акціонер"
             )
             names_autocomplete |= autocomplete_suggestions(
-                concat_name(dt["first_name"], dt["last_name"], dt["patronymic"])
+                concat_name(dt["last_name"], dt["first_name"], dt["patronymic"])
             )
 
         names_autocomplete |= companies
