@@ -8,10 +8,23 @@ from django.shortcuts import render
 
 from elasticsearch_dsl import Search, Q
 
-from search.search_tools import get_all_enabled_indices, get_all_enabled_models
+from search.search_tools import (
+    get_all_enabled_indices,
+    get_all_enabled_models,
+    get_all_enabled_datasources
+)
 
 class HomeView(TemplateView):
     template_name = "search/home.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context.update({
+            "datasources": get_all_enabled_datasources()
+        })
+
+        return context
 
 
 class SearchView(TemplateView):

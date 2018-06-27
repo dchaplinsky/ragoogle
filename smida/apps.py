@@ -5,6 +5,7 @@ from .elastic_models import ElasticSmidaModel, smida_idx
 
 class SmidaConfig(AppConfig):
     name = "smida"
+    verbose_name = "Власники значної частки СМІДА"
     loader_class = SmidaLoader
 
     @property

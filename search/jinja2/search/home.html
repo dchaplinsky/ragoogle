@@ -30,6 +30,9 @@
                             </div>
                         </div>
                         <p>Наприклад: Рошен</p>
+                        {% for ds in datasources %}
+                        <label><input type="checkbox" checked="" value="{{ ds.name }}"> {{ ds.verbose_name }}</label>
+                        {% endfor %}
                     </form>
                 </div>
                 <div class="js-countdown mb-20 col-md-6 ml-auto mr-auto">
