@@ -31,7 +31,7 @@
                         </div>
                         <p>Наприклад: Рошен</p>
                         {% for ds in datasources %}
-                        <label><input type="checkbox" checked="" value="{{ ds.name }}"> {{ ds.verbose_name }}</label>
+                        <label><input type="checkbox" name="datasources" checked="" value="{{ ds.name }}"> {{ ds.verbose_name }}</label>
                         {% endfor %}
                     </form>
                 </div>

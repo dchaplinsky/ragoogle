@@ -51,12 +51,16 @@ class SmidaModel(AbstractDataset):
                     )
                 )
 
-            # companies.add(dt["owner_edrpou"])
-            # companies.add(dt["owner_edrpou"].lstrip("0"))
             companies |= generate_edrpou_options(dt["owner_edrpou"])
             companies |= unify_cyprus_codes(dt["foreign_code"])
             companies.add(dt["first_name"])
             companies.add(dt["last_name"])
+
+            res["company_owner"] = {
+                "short_name": dt["first_name"],
+                "full_name": dt["last_name"],
+                "code": dt["foreign_code"]
+            }
         else:
             persons |= generate_all_names(
                 dt["last_name"], dt["first_name"], dt["patronymic"], "Акціонер"
@@ -64,6 +68,8 @@ class SmidaModel(AbstractDataset):
             names_autocomplete |= autocomplete_suggestions(
                 concat_name(dt["last_name"], dt["first_name"], dt["patronymic"])
             )
+
+            res["person_owner"] = concat_name(dt["last_name"], dt["first_name"], dt["patronymic"])
 
         names_autocomplete |= companies
 

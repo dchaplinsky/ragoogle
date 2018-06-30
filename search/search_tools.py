@@ -2,6 +2,7 @@ from django.apps import apps as django_apps
 
 _ENABLED_DATASOURCES = None
 
+
 def get_all_enabled_datasources():
     global _ENABLED_DATASOURCES
     if _ENABLED_DATASOURCES is not None:
@@ -15,8 +16,13 @@ def get_all_enabled_datasources():
     return _ENABLED_DATASOURCES
 
 
-def get_all_enabled_models():
-    return [config.elastic_model for config in get_all_enabled_datasources()]
+def get_all_enabled_models(filter_by=None):
+    return [
+        config.elastic_model
+        for config in get_all_enabled_datasources()
+        if (filter_by is None) or (config.name in filter_by)
+    ]
 
-def get_all_enabled_indices():
-    return [model._doc_type.index for model in get_all_enabled_models()]
+
+def get_all_enabled_indices(filter_by=None):
+    return [model._doc_type.index for model in get_all_enabled_models(filter_by)]

@@ -1,4 +1,4 @@
-{% extends "companies/base.html" %}
+{% extends "search/base.html" %}
 
 {% block container_class %}sidebar-o side-scroll main-content-narrow page-header-fixed page-header-inverse{% endblock %}
 
@@ -14,6 +14,9 @@
                     </button>
                 </div>
             </div>
+            {% for ds in datasources %}
+            <label><input type="checkbox" name="datasources" {% if ds.name in enabled_datasources %}checked="" {% endif %} value="{{ ds.name }}"> {{ ds.verbose_name }}</label>
+            {% endfor %}
         </form>
         <!-- END Search -->
 
@@ -41,23 +44,7 @@
                 {% for res in search_results %}
                 <div class="small-profile col-lg-4" itemscope="" itemtype="http://schema.org/Person" data-category="decl">
                     <div class="box active-box">
-                        <header class="profile-header">
-                            <a href="{{ url("company>detail", args=[res.full_edrpou]) }}">
-                                <div class="not-avatar">{{ res.full_edrpou }}</div>
-                                <h3 class="name" itemprop="name">{{ res.latest_record.short_name or res.latest_record.name }}</h3>
-                            </a>
-                        </header>
-                        <div class="descr">{{ res.latest_record.status }}
-                            <br/>
-                            {% for h_field in res.meta.highlight %}{% for content in res.meta.highlight[h_field] %}{{ content|safe }}<br/>{% endfor %}{% endfor %}
-                        </div>
-                        <div data-toggle="popover"
-                             title="" data-placement="top"
-                             data-content="" data-original-title="Тут якісь деталі">Детальніше</div>
-                        <hr>
-                        <footer>
-                            {{ res.latest_record.location }}
-                        </footer>
+                        {{ res.render_infocard()|safe }}
                     </div>
                 </div>
                 {% endfor %}

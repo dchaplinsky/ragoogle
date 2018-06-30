@@ -1,0 +1,22 @@
+<header class="profile-header">
+    <a href="{{ url }}" target="_blank">
+    {% block header %}
+    {% endblock %}
+    </a>
+</header>
+<div class="descr">
+    {% block description %}
+    {% endblock %}
+    <hr/>
+    Знайдені фрагменти: <br />
+    {% block description_hl %}
+        {% for h_field in res.hl[:1] %}
+            {{ h_field|safe }}<br/>
+        {% endfor %}
+    {% endblock %}
+</div>
+<hr>
+
+<footer>
+    {% block footer %}{{ datasource_verbose_name }}{% endblock %}
+</footer>

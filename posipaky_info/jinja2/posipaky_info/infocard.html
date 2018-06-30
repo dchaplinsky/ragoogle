@@ -1,0 +1,12 @@
+{% extends "abstract/base_infocard.html" %}
+{% block header %}
+    <h3 class="name">
+        {{ res.mp.name }}<br/><br/>
+        {{ res.mp.party }}<br/>
+        {{ res.mp.convocation }} скликання
+    </h3>
+{% endblock %}
+
+{% block description %}
+    <br/> {{ res.name }}, помічник {{ res.paid|lower }}
+{% endblock %}

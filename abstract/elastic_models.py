@@ -12,7 +12,7 @@ from elasticsearch_dsl import (
 )
 
 from django.conf import settings
-
+from django.template.loader import render_to_string
 
 namesAutocompleteAnalyzer = analyzer(
     "namesAutocompleteAnalyzer",
@@ -93,3 +93,6 @@ class AbstractDatasetMapping(DocType):
     )
 
     all = Text(analyzer="ukrainian")
+
+    def render_infocard(self):
+        return render_to_string("abstract/base_infocard.html", {"res": self})
