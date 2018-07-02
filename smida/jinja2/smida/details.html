@@ -52,7 +52,10 @@
                 <tr>
                     <th>Тип акцій</th>
                     <td>
-                        {{ rec.type_of_stock }}
+                        {% if rec.stock_readable %} 
+                        {{ rec.stock_readable }}
+                        {% endif %}
+                        ({{ rec.type_of_stock }})
                     </td>
                 </tr>
                 <tr>

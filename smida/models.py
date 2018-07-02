@@ -9,6 +9,7 @@ from abstract.tools.names import (
     concat_name,
 )
 from abstract.tools.countries import COUNTRIES
+from abstract.tools.stocks import STOCK_TYPES
 from abstract.tools.companies import unify_cyprus_codes, generate_edrpou_options
 
 
@@ -40,6 +41,11 @@ class SmidaModel(AbstractDataset):
                 country["country_name_en"],
             }
             res["country_name"] = country["country_short_name"]
+
+        if dt.get("type_of_stock") in STOCK_TYPES:
+            res["stock_readable"] = STOCK_TYPES[dt["type_of_stock"]]["value"]
+        else:
+            print("Cannot find {} type of stock".format(dt["type_of_stock"]))
 
         if dt.get("owner_edrpou") or dt.get("foreign_code"):
             # Stock owner is a company
