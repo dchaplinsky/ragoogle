@@ -3,7 +3,7 @@ import logging
 from django.db import models
 
 from abstract.models import AbstractDataset
-from abstract.tools.names import (
+from names_translator.name_utils import (
     generate_all_names,
     autocomplete_suggestions,
     concat_name,
@@ -44,8 +44,6 @@ class SmidaModel(AbstractDataset):
 
         if dt.get("type_of_stock") in STOCK_TYPES:
             res["stock_readable"] = STOCK_TYPES[dt["type_of_stock"]]["value"]
-        else:
-            print("Cannot find {} type of stock".format(dt["type_of_stock"]))
 
         if dt.get("owner_edrpou") or dt.get("foreign_code"):
             # Stock owner is a company
