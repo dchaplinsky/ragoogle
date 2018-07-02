@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "smida.apps.SmidaConfig",
     "posipaky_info.apps.PosipakyInfoConfig",
     "posipaky_2_info.apps.Posipaky2InfoConfig",
+    "edrdr.apps.EDRDRConfig",
 
     # Generalized search
     "search",

@@ -1,0 +1,13 @@
+{% extends "abstract/base_infocard.html" %}
+
+{% block header %}
+    <div class="edrpou">{{ res.full_edrpou }}</div>
+    <h3 class="name">
+        {{ res.latest_record.short_name or res.latest_record.name }}
+    </h3>
+{% endblock %}
+
+{% block description %}
+    {{ res.latest_record.status }}<br/>
+    {{ res.latest_record.location }}
+{% endblock %}
