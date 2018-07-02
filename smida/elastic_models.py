@@ -1,4 +1,5 @@
 from django.template.loader import render_to_string
+from django.urls import reverse
 
 from abstract.elastic_models import (
     BASIC_INDEX_SETTINGS,
@@ -28,10 +29,14 @@ class ElasticSmidaModel(AbstractDatasetMapping):
             "smida/infocard.html",
             {
                 "res": self,
+                "url": self.get_absolute_url(),
                 "datasource_name": AppConfig.name,
                 "datasource_verbose_name": AppConfig.verbose_name,
             },
         )
+
+    def get_absolute_url(self):
+        return reverse('smida>details', kwargs={'pk': self._id})
 
     class Meta:
         index = SMIDA_INDEX

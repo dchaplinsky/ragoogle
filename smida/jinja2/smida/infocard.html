@@ -14,5 +14,6 @@
     {% else %}
         {{ res.company_owner.short_name or res.company_owner.full_name }}
         {% if res.company_owner.code %}({{ res.company_owner.code }}){% endif %}
+        {% if res.company_owner.foreign_code %}({{ res.company_owner.foreign_code }}){% endif %}
     {% endif %}
 {% endblock %}

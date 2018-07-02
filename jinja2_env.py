@@ -28,7 +28,8 @@ def environment(**options):
     )
 
     env.filters.update({
-        'datetime': lambda dt: formats.date_format(dt, "DATETIME_FORMAT"),
+        'datetime': lambda dt: formats.date_format(dt, "SHORT_DATETIME_FORMAT"),
+        'date': lambda dt: formats.date_format(dt, "SHORT_DATE_FORMAT"),
     })
     env.globals.update({
         'updated_querystring': updated_querystring

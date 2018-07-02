@@ -6,9 +6,7 @@ from elasticsearch_dsl import (
     analyzer,
     tokenizer,
     token_filter,
-    MultiSearch,
-    MetaField,
-    Object,
+    Date,
 )
 
 from django.conf import settings
@@ -81,6 +79,8 @@ BASIC_INDEX_SETTINGS = {
 
 
 class AbstractDatasetMapping(DocType):
+    last_updated_from_dataset = Date()
+    first_updated_from_dataset = Date()
     addresses = Text(analyzer="ukrainianAddressesStopwordsAnalyzer", copy_to="all")
     persons = Text(analyzer="ukrainian", copy_to="all")
     countries = Text(analyzer="ukrainian", copy_to="all")

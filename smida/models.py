@@ -20,7 +20,7 @@ class SmidaModel(AbstractDataset):
     def to_dict(self):
         dt = self.data
         res = {
-            "rec_id": self.pk,
+            "_id": self.pk,
             "last_updated_from_dataset": self.last_updated_from_dataset,
             "first_updated_from_dataset": self.first_updated_from_dataset,
         }
@@ -39,6 +39,7 @@ class SmidaModel(AbstractDataset):
                 country["country_name"],
                 country["country_name_en"],
             }
+            res["country_name"] = country["country_short_name"]
 
         if dt.get("owner_edrpou") or dt.get("foreign_code"):
             # Stock owner is a company
@@ -59,7 +60,8 @@ class SmidaModel(AbstractDataset):
             res["company_owner"] = {
                 "short_name": dt["first_name"],
                 "full_name": dt["last_name"],
-                "code": dt["foreign_code"]
+                "code": dt["owner_edrpou"],
+                "foreign_code": dt["foreign_code"]
             }
         else:
             persons |= generate_all_names(
