@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "posipaky_info.apps.PosipakyInfoConfig",
     "posipaky_2_info.apps.Posipaky2InfoConfig",
     "edrdr.apps.EDRDRConfig",
+    "garnahata_in_ua.apps.GarnahataInUaConfig",
 
     # Generalized search
     "search",

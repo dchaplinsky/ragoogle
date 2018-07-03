@@ -1,0 +1,27 @@
+{% extends "abstract/base_infocard.html" %}
+
+{% block header %}
+    <h3 class="name">
+        {{ res.owner }} <br/><br/>
+        {{ res.addr_title }}{% if res.addr_city %}, {{ res.addr_city }} {% endif %}
+    </h3>
+{% endblock %}
+
+{% block description %}
+    {{ res.asset }}
+    {% if res.share %}
+        <br /> частка: {{ res.share }}
+    {% endif %}
+    {% if res.registered %}
+        {{ res.registered }}<br />
+    {% endif %}
+    
+    {% if res.ownership_ground %}
+        {{ res.ownership_ground }}<br />
+    {% endif %}
+    
+    {% if res.ownership_form %}
+        Форма: {{ res.ownership_form }}
+    {% endif %}
+
+{% endblock %}
