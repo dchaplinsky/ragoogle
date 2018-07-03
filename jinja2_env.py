@@ -2,6 +2,7 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.utils import formats
 from django.urls import reverse
 from django.utils.translation import gettext, ngettext
+from dateutil.parser import parse as parse_dt
 
 from jinja2 import Environment
 
@@ -28,8 +29,8 @@ def environment(**options):
     )
 
     env.filters.update({
-        'datetime': lambda dt: formats.date_format(dt, "SHORT_DATETIME_FORMAT"),
-        'date': lambda dt: formats.date_format(dt, "SHORT_DATE_FORMAT"),
+        'datetime': lambda dt: formats.date_format(parse_dt(dt) if isinstance(dt, str) else dt, "SHORT_DATETIME_FORMAT"),
+        'date': lambda dt: formats.date_format(parse_dt(dt) if isinstance(dt, str) else dt, "SHORT_DATE_FORMAT"),
     })
     env.globals.update({
         'updated_querystring': updated_querystring

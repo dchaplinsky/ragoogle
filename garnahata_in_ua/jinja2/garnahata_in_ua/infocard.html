@@ -10,10 +10,10 @@
 {% block description %}
     {{ res.asset }}
     {% if res.share %}
-        <br /> частка: {{ res.share }}
+        <br /> частка: {{ res.share }} <br/>
     {% endif %}
     {% if res.registered %}
-        {{ res.registered }}<br />
+        {{ res.registered|date }}<br />
     {% endif %}
     
     {% if res.ownership_ground %}
