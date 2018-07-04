@@ -4,6 +4,7 @@ import logging
 import argparse
 from copy import copy
 from hashlib import sha1
+from collections import OrderedDict
 
 from django.utils import timezone
 from django.db import transaction
@@ -94,7 +95,7 @@ class FileLoader(object):
                     return None
             return val
 
-        dct = {k: get_value(k, self._pathes[k]) for k in dedup_fields}
+        dct = OrderedDict((k, get_value(k, self._pathes[k])) for k in dedup_fields)
 
         return sha1(json.dumps(dct).encode("utf-8")).hexdigest()
 
