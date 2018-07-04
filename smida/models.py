@@ -80,6 +80,7 @@ class SmidaModel(AbstractDataset):
         names_autocomplete |= companies
 
         res.update(dt)
+        del res["date_of_report"]
         res.update(
             {
                 "companies": list(filter(None, companies)),
