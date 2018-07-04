@@ -14,3 +14,4 @@ raven==6.9.0
 django-ckeditor==5.5.0
 Pillow==5.1.0
 jmespath==0.9.3
+gunicorn==19.9.0
