@@ -34,7 +34,7 @@ class FileLoader(object):
     def get_dedup_fields(self):
         raise NotImplementedError
 
-    def preprocess(self, record):
+    def preprocess(self, record, options):
         # NOOP
         return record
 
@@ -62,19 +62,26 @@ class FileLoader(object):
             required=self.last_updated_param_is_required,
         )
 
+        parser.add_argument(
+            "--store_broken_to",
+            help="Store records that cannot be properly parsed into a file",
+            type=argparse.FileType("w", encoding=self.encoding),
+        )
+
     def iter_dataset(self, fp, filetype):
         if filetype == "json":
             for l in json.load(fp):
-                yield self.preprocess(l)
+                yield l
 
         elif filetype == "jsonlines":
-            for l in fp.read():
-                yield self.preprocess(json.loads(l))
+            for l in fp:
+                if l:
+                    yield json.loads(l)
 
         elif filetype == "csv":
             r = DictReader(fp)
             for l in r:
-                yield self.preprocess(l)
+                yield l
         else:
             raise NotImplementedError()
 
@@ -82,7 +89,7 @@ class FileLoader(object):
         dedup_fields = sorted(self.get_dedup_fields())
 
         def get_value(pth, expression):
-            if not(("." in pth) or ("[" in pth) or ("]" in pth)):
+            if not (("." in pth) or ("[" in pth) or ("]" in pth)):
                 return doc[pth]
 
             val = expression.search(doc)
@@ -110,10 +117,26 @@ class FileLoader(object):
         model = self.model
         existing_hashes = set(model.objects.values_list("pk", flat=True))
         bulk_add = []
+        successful = 0
+        broken = 0
 
         with tqdm.tqdm() as pbar:
             with transaction.atomic():
-                for item in self.iter_dataset(options["dataset_file"], options["filetype"]):
+                for i, item in enumerate(
+                    self.iter_dataset(options["dataset_file"], options["filetype"])
+                ):
+                    try:
+                        item = self.preprocess(item, options)
+                        successful += 1
+                    except Exception as e:
+                        logger.error(
+                            "Cannot parse record {}, error message was: {}".format(i, e)
+                        )
+                        broken += 1
+                        if options["store_broken_to"]:
+                            options["store_broken_to"].write(json.dumps(item) + "\n")
+                        continue
+
                     pbar.update(1)
                     doc_hash = self.get_doc_hash(item, options)
                     if doc_hash not in existing_hashes:
@@ -137,3 +160,8 @@ class FileLoader(object):
 
                 # So sweet leftovers
                 model.objects.bulk_create(bulk_add)
+        logger.info(
+            "Import of {} records done, {} successful, {} broken".format(
+                i + 1, successful, broken
+            )
+        )

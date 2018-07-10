@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "posipaky_2_info.apps.Posipaky2InfoConfig",
     "edrdr.apps.EDRDRConfig",
     "garnahata_in_ua.apps.GarnahataInUaConfig",
+    "vkks.apps.VKKSConfig",
 
     # Generalized search
     "search",
@@ -208,6 +209,26 @@ CATALOG_PER_PAGE = 24
 
 # Setup Elasticsearch default connection
 ELASTICSEARCH_CONNECTIONS = {"default": {"hosts": "localhost", "timeout": 120}}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+        },
+        'importer': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+        }
+    },
+}
 
 try:
     from .local_settings import *

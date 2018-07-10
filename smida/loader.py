@@ -9,7 +9,7 @@ class SmidaLoader(FileLoader):
         from .models import SmidaModel
         return SmidaModel
 
-    def preprocess(self, record):
+    def preprocess(self, record, options):
         assert set(self.get_dedup_fields()).issubset(
             record.keys()
         )
