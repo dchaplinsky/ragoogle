@@ -10,6 +10,7 @@ urlpatterns = [
     path('search/suggest', SuggestView.as_view(), name="search>suggest"),
 
     path('smida/', include("smida.urls")),
+    path('vkks/', include("vkks.urls")),
     path('admin/', admin.site.urls),
 ]
 

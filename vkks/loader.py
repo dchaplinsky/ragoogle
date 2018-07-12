@@ -2,6 +2,8 @@ import re
 import json
 import logging
 
+from django.utils import timezone
+
 from dateutil.parser import parse as dt_parse
 
 from names_translator.name_utils import parse_fullname
@@ -39,11 +41,11 @@ class VKKSLoader(FileLoader):
         else:
             declaration_type = title
             if not year_from or not year_to:
-                logger.error("Cannot parse title '{}/{}'".format(year_from, year_to))
+                logger.warning("Cannot parse title '{}/{}'".format(year_from, year_to))
 
         l, f, p, _ = parse_fullname(record["fields"]["name"])
 
-        submit_date = dt_parse(record["submitDate"])
+        submit_date = dt_parse(record["submitDate"]).astimezone(timezone.get_current_timezone())
 
         res = {
             "source": "electronic",
@@ -53,34 +55,34 @@ class VKKSLoader(FileLoader):
                 "declaration_year_to": year_to,
                 "declaration_type": declaration_type,
             },
-            "post": {
-                "office": "{}, {}".format(
-                    record["values"].get("114", {}).get("label", ""),
-                    record["values"]["104"],
-                ).strip(" ,"),
-                "office_id": record["values"].get("114", {}).get("value"),
-                "post": record["values"]["105"],
-            },
-            "has_information": int(record["values"]["211"]),
             "general": {
+                "post": {
+                    "office": "{}, {}".format(
+                        record["values"].get("114", {}).get("label", ""),
+                        record["values"]["104"],
+                    ).strip(" ,"),
+                    "office_id": record["values"].get("114", {}).get("value"),
+                    "post": record["values"]["105"],
+                },
                 "family": [],
                 "family_conflicts": [],
                 "last_name": l,
                 "name": f,
                 "patronymic": p,
                 "family_comment": record["values"]["292"],
-                "family_comment": record["values"]["392"],
+                "has_information": record["values"]["211"],
+                "family_conflicts_comment": record["values"]["392"],
             },
             "declaration": {
-                "date_day": submit_date.day,
-                "date_month": submit_date.month,
-                "date_year": submit_date.year,
-                # TODO: native object with TZ?
+                "date_day": str(submit_date.day),
+                "date_month": str(submit_date.month),
+                "date_year": str(submit_date.year),
                 "date_time": str(submit_date.time()),
             },
         }
 
         for pos in range(0, int(record["values"]["220"]) + 1):
+            # TODO: process cases where some records are reusing the name above.
             if record["values"]["220_{}-221".format(pos)]:
                 fam = {}
                 l, f, p, _ = parse_fullname(record["values"]["220_{}-221".format(pos)])
@@ -243,7 +245,12 @@ class VKKSLoader(FileLoader):
         if record:
             rec = record[0]["answer"]
             rec["source"] = "paper"
+            if "has_information" in rec["general"]:
+                rec["general"]["has_information"] = rec["general"]["has_information"] == "1"
+            else:
+                rec["general"]["has_information"] = bool(rec["general"]["family"])
             rec["ID"] = record[0]["task"]["id"]
+            rec["url"] = record[0]["task"]["data"]["file"]
 
         return rec
 

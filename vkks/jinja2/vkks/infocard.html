@@ -1,0 +1,23 @@
+{% extends "abstract/base_infocard.html" %}
+
+{% block header %}
+    <div class="edrpou">
+        Декларація {{ res.intro.declaration_type }}
+        {% if res.intro.declaration_year_from %}
+        з {{ res.intro.declaration_year_from }}
+        {% endif %}
+        {% if res.intro.declaration_year_to %}
+        по {{ res.intro.declaration_year_to }}
+        {% endif %}
+    </div>
+    <h3 class="name">
+        {{ res.general.last_name }}
+        {{ res.general.name }}
+        {{ res.general.patronymic }}<br/><br/>
+        {{ res.general.post.post }}
+    </h3>
+{% endblock %}
+
+{% block description %}
+    {{ res.general.post.office }}
+{% endblock %}

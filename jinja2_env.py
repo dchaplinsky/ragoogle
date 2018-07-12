@@ -1,10 +1,14 @@
+import re
+
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.utils import formats
 from django.urls import reverse
 from django.utils.translation import gettext, ngettext
-from dateutil.parser import parse as parse_dt
 
-from jinja2 import Environment
+from dateutil.parser import parse as parse_dt
+from jinja2 import Environment, evalcontextfilter, Markup, escape
+
+_paragraph_re = re.compile(r'(?:\r\n|\r|\n){2,}')
 
 
 def updated_querystring(request, params):
@@ -17,6 +21,14 @@ def updated_querystring(request, params):
     original_params.update(params)
     return original_params.urlencode()
 
+
+@evalcontextfilter
+def nl2br(eval_ctx, value):
+    result = u'\n\n'.join(u'<p>%s</p>' % p.strip().replace('\n', Markup('<br>\n'))
+                          for p in _paragraph_re.split(escape(value)))
+    if eval_ctx.autoescape:
+        result = Markup(result)
+    return result
 
 def environment(**options):
     env = Environment(**options)
@@ -31,6 +43,7 @@ def environment(**options):
     env.filters.update({
         'datetime': lambda dt: formats.date_format(parse_dt(dt) if isinstance(dt, str) else dt, "SHORT_DATETIME_FORMAT"),
         'date': lambda dt: formats.date_format(parse_dt(dt) if isinstance(dt, str) else dt, "SHORT_DATE_FORMAT"),
+        'nl2br': nl2br
     })
     env.globals.update({
         'updated_querystring': updated_querystring

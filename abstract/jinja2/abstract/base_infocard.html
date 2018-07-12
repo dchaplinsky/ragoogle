@@ -8,12 +8,12 @@
     {% block description %}
     {% endblock %}
     <hr/>
-    Знайдені фрагменти: <br />
-    {% block description_hl %}
+    {% if res.hl %}
+        Знайдені фрагменти: <br />
         {% for h_field in res.hl[:1] %}
             {{ h_field|safe }}<br/>
         {% endfor %}
-    {% endblock %}
+    {% endif %}
 </div>
 <hr>
 
