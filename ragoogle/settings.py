@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "edrdr.apps.EDRDRConfig",
     "garnahata_in_ua.apps.GarnahataInUaConfig",
     "vkks.apps.VKKSConfig",
+    "nacp_declarations.apps.NACPDeclarationsConfig",
 
     # Generalized search
     "search",
