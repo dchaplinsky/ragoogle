@@ -1,0 +1,57 @@
+{% extends "search/base.html" %}
+
+{% block sidebars %}
+{% endblock %}
+
+{% block body_class %}front{% endblock %}
+{% block container_class %}main-content-narrow{% endblock %}
+
+{% block content %}
+    <!-- Hero -->
+    <div class="bg-image" style="background-image: url({{ static('img/photos/photo24@2x.jpg') }});">
+        <div class="hero bg-black-op">
+            <div class="hero-inner">
+                <div class="content content-full text-center border-white-op-b">
+                    <h1 class="display-3 font-w700 text-white mb-10 invisible" data-toggle="appear" data-class="animated fadeInDown">
+                        <span class="svg-image inline-logo media-object">
+                                <svg preserveAspectRatio="xMidYMid" focusable="false">
+                                    <use xlink:href="{{ static('img/sprite.svg') }}#wh100"></use>
+                                </svg>
+                            </span><span class="text-primary">ВККС</span>
+                    </h1>
+                    <h2 class="font-w400 text-white-op mb-50 invisible" data-toggle="appear" data-class="animated fadeInDown">Держреєстр ВККС</h2>
+                    <form class="push col-sm-6 ml-auto mr-auto" action="{{ url('search>results') }}" method="get" _lpchecked="1" autocomplete="off">
+                        <div class="input-group input-group-lg">
+                            <input type="text" class="form-control search-form-q" name="q" data-provide="typeahead" id="search-form" placeholder="{{ _("Пошук") }}" data-endpoint="{{ url("search>suggest") }}" autocomplete="off">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-secondary">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                            <input type="hidden" name="datasources" checked="" value="vkks">
+                        </div>
+                        <p>Наприклад: Гольник</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Hero -->
+
+    <!-- Feature: Powerful Layout -->
+    <div class="bg-white">
+        <div class="content">
+            <div class="pt-100 pb-50">
+                <h3 class="h1 font-w700 text-center mb-10">
+                    VKKS <span class="text-primary">Шо це?</span>
+                </h3>
+            </div>
+            <p>Вже давно відомо, що читабельний зміст буде заважати зосередитись людині, яка оцінює композицію сторінки.
+                Сенс використання Lorem Ipsum полягає в тому, що цей текст має більш-менш нормальне розподілення літер на
+                відміну від, наприклад, "Тут іде текст. Тут іде текст." Це робить текст схожим на оповідний.
+                Багато програм верстування та веб-дизайну використовують Lorem Ipsum як зразок і пошук за терміном "lorem ipsum"
+                відкриє багато веб-сайтів, які знаходяться ще в зародковому стані. Різні версії Lorem Ipsum з'явились
+                за минулі роки, деякі випадково, деякі було створено зумисно (зокрема, жартівливі).</p>
+        </div>
+    </div>
+{% endblock %}

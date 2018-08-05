@@ -21,3 +21,7 @@ class VKKSDetailsView(TemplateView):
         context["rec"] = rec
 
         return context
+
+
+class VKKSHomeView(TemplateView):
+    template_name = "vkks/home.html"

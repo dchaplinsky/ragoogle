@@ -2,6 +2,7 @@ $(function() {
     $(".search-form-q").typeahead({
         minLength: 2,
         items: 100,
+        delay: 300,
         autoSelect: false,
         source: function(query, process) {
             $.get(
