@@ -90,6 +90,7 @@ class AbstractDatasetMapping(DocType):
         analyzer="namesAutocompleteAnalyzer",
         search_analyzer="namesAutocompleteSearchAnalyzer",
         fields={"raw": Text(index=True)},
+        term_vector="with_positions_offsets"
     )
 
     all = Text(analyzer="ukrainian")
