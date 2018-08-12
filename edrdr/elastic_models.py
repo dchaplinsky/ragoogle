@@ -15,7 +15,7 @@ class ElasticEDRDRModel(DocType):
             "edrdr/infocard.html",
             {
                 "res": self,
-                "url": "http://edrdr.sotnya.org.ua/uk/company/{}".format(self.full_edrpou),
+                "url": "https://ring.org.ua/edr/uk/company/{}".format(self.full_edrpou),
                 "datasource_name": AppConfig.name,
                 "datasource_verbose_name": AppConfig.verbose_name,
             },
