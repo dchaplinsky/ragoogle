@@ -6,22 +6,10 @@ document.addEventListener(
 
 $(function() {
     function populateBihusNews(data, $container, ntitle, link) {
-        var title = data[0].title,
-            nid = data[0].nid,
-            teaser_text = data[0].field_teaser_text,
-            created = data[0].created,
-            big_teaser_media = data[0].field_teaser_media_1.replace(/^\s+|\s+$/g,''),
-            declNews = '';
-
-        declNews = declNews + '<div class="top-news"><a target="_blank" class="top-news-card" href="https://bihus.info/node/' + nid +'"><div class="news-block-title">Останні новини ' + ntitle + '</div>';
-        declNews = declNews +  '<div class="top-news-container"><img src="' +  big_teaser_media +'" />';
-        declNews = declNews +  '<div class="top-news-info"><h4>' + title  + '</h4>';
-        declNews = declNews +  '<h6>' + created + '</h6><div class="top-teaser">' + teaser_text + '</div></div>';
-        declNews = declNews + '</div></a></div>';
-
+        var declNews = '';
         declNews = declNews + '<div class="more-news"><div class="more-news-container">';
 
-        for(i = 1; i < 6; i ++) {
+        for(i = 0; i < 5; i ++) {
             title = data[i].title,
                 nid = data[i].nid,
                 teaser_text = data[i].field_teaser_text,

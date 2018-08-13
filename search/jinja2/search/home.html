@@ -12,14 +12,14 @@
         <div class="hero bg-black-op">
             <div class="hero-inner">
                 <div class="content content-full text-center border-white-op-b">
-                    <h1 class="display-3 font-w700 text-white mb-10 invisible" data-toggle="appear" data-class="animated fadeInDown">
+                    <h1 class="display-3 font-w700 mb-10 invisible" data-toggle="appear" data-class="animated fadeInDown">
                         <span class="svg-image inline-logo media-object">
                                 <svg preserveAspectRatio="xMidYMid" focusable="false">
                                     <use xlink:href="{{ static('img/sprite.svg') }}#wh100"></use>
                                 </svg>
                             </span> EDR<span class="text-primary">DR</span>
                     </h1>
-                    <h2 class="font-w400 text-white-op mb-50 invisible" data-toggle="appear" data-class="animated fadeInDown">Держреєстр чогось там видатного</h2>
+                    <h2 class="font-w400 mb-50 invisible" data-toggle="appear" data-class="animated fadeInDown">Держреєстр чогось там видатного</h2>
                     <form class="push col-sm-6 ml-auto mr-auto" action="{{ url('search>results') }}" method="get" _lpchecked="1" autocomplete="off">
                         <div class="input-group input-group-lg">
                             <input type="text" class="form-control search-form-q" name="q" data-provide="typeahead" id="search-form" placeholder="{{ _("Пошук") }}" data-endpoint="{{ url("search>suggest") }}" autocomplete="off">
@@ -35,7 +35,7 @@
                         {% endfor %}
                     </form>
                 </div>
-                <div class="js-countdown mb-20 col-md-6 ml-auto mr-auto">
+                <div class="js-countdown mb-20 col-md-8 ml-auto mr-auto">
                     <div class="row items-push text-center">
                         <div class="col-6 col-sm-3">
                             <div class="font-size-h1 font-w700 text-white">num_of_companies</div>

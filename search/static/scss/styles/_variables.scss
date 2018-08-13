@@ -21,7 +21,7 @@ $gray:                      $gray-400 !default;
 $gray-dark:                 $gray-600 !default;
 $gray-darker:               $gray-800 !default;
 
-$brand-primary:             #10cb6c !default; //#42a5f5 !default;
+$brand-primary:             #10cb6c !default;
 $brand-light:               lighten($brand-primary, 15%) !default;
 $brand-lighter:             lighten($brand-primary, 30%) !default;
 $brand-dark:                $gray-800 !default;
@@ -118,7 +118,7 @@ $header-inverse-bg:         $brand-dark !default;
 
 // Sidebar and Side Overlay
 $sidebar-bg:                $white !default;
-$sidebar-inverse-bg:        $brand-dark !default;
+$sidebar-inverse-bg:        #0f1d35; //$brand-dark !default;
 $sidebar-width:             220px !default;
 $sidebar-mini-width:        54px !default;
 

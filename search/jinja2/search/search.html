@@ -1,6 +1,6 @@
 {% extends "search/base.html" %}
 
-{% block container_class %}sidebar-o side-scroll main-content-narrow page-header-fixed page-header-inverse{% endblock %}
+{% block container_class %}sidebar-o sidebar-inverse side-scroll main-content-narrow page-header-fixed page-header-inverse{% endblock %}
 
 {% block content %}
     <div class="content">
@@ -42,11 +42,7 @@
             </div>
             <div class="row items-push">
                 {% for res in search_results %}
-                <div class="small-profile col-lg-4" itemscope="" itemtype="http://schema.org/Person" data-category="decl">
-                    <div class="box active-box">
-                        {{ res.render_infocard()|safe }}
-                    </div>
-                </div>
+                    {{ res.render_infocard()|safe }}
                 {% endfor %}
             </div>
         </div>

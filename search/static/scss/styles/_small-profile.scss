@@ -6,7 +6,9 @@
 
   .box {
     position: relative;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     text-decoration: none;
     color: inherit;
     height: 100%;
@@ -14,27 +16,32 @@
     border: 0 none;
     border-radius: 5px;
     box-shadow: 0px 0px 23px 2px rgba(0,0,0,0.07);
-    //box-shadow: 0 3px 10px rgba(0, 0, 0, 0.23), 0 3px 10px rgba(0, 0, 0, 0.16);
     padding: 10px 15px;
     transition: all 0.1s linear;
     top: 0;
 
-    &:before {
-      content: '';
-      display: block;
-      position: absolute;
-      z-index: 0;
-      width: 100%;
-      height: 95px;
-      left: 0;
-      top: 0;
-      @include blueGradient();
-    }
+    .header-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      position: relative;
+      flex: 1;
+      margin-bottom: 1rem;
+      border: 0;
+      border-bottom: 1px solid #eaecee;
 
-    &:hover {
-      //transition: all 0.1s linear;
-      //box-shadow: none;
-      //top: -5px;
+      &:after {
+        background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 55%);
+        background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 55%);
+        background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 55%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 );
+        display: block;
+        content: '';
+        height: 40px;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+      }
     }
   }
 
@@ -52,6 +59,9 @@
   .profile-header {
     position: relative;
     z-index: 1;
+    margin: -10px -15px;
+    padding: 15px;
+    @include blueGradient();
 
     a:hover {
       text-decoration: none;
@@ -141,6 +151,7 @@
     text-transform: uppercase;
     min-height: 62px;
     margin-bottom: 0;
+    word-break: break-word;
 
     .match {
       background: $bihus-red;
@@ -168,21 +179,10 @@
   .descr {
     position: relative;
     display: block;
-    height: 200px;
+    min-height: 80px;
+    max-height: 200px;
     overflow: hidden;
-
-    &:after {
-      background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 55%);
-      background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 55%);
-      background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 55%);
-      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 );
-      display: block;
-      content: '';
-      height: 40px;
-      width: 100%;
-      position: absolute;
-      bottom: 0;
-    }
+    margin-top: 20px;
 
     span {
       font-weight: bold;
@@ -279,6 +279,7 @@
 
       .descr {
         height: auto;
+        max-height: none;
 
         &:after {
           display: none;

@@ -76,7 +76,7 @@
             'main-content-narrow'                       Full width Main Content with a percentage width (screen width > 1200px)
         -->
 
-        <div id="page-container" class="{% block container_class %}sidebar-o side-scroll main-content-narrow  page-header-fixed page-header-inverse{% endblock %}">
+        <div id="page-container" class="{% block container_class %}sidebar-o sidebar-inverse side-scroll main-content-narrow  page-header-fixed page-header-inverse{% endblock %}">
             {% block sidebars %}
                 {% include "search/_right_sidebar.html" with context %}
                 <nav id="sidebar">
