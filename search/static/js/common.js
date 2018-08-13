@@ -19,4 +19,6 @@ $(function () {
       $(this).closest('.row').removeClass('hovered');
     }
   );
+
+  $('.select-multiselect').select2();
 });

@@ -140,6 +140,7 @@ PIPELINE = {
                 "js/core/jquery.countTo.min.js",
                 "js/core/js.cookie.min.js",
                 "js/core/bootstrap3-typeahead.js",
+                "js/plugins/select2/select2.full.min.js",
                 "js/bihus.js",
                 "js/main.js",
                 "js/common.js",

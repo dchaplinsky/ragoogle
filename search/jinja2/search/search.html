@@ -14,9 +14,12 @@
                     </button>
                 </div>
             </div>
-            {% for ds in datasources %}
-            <label><input type="checkbox" name="datasources" {% if ds.name in enabled_datasources %}checked="" {% endif %} value="{{ ds.name }}"> {{ ds.verbose_name }}</label>
-            {% endfor %}
+
+            <select class="select-multiselect" name="states[]" multiple="multiple">
+                {% for ds in datasources %}
+                <option {% if ds.name in enabled_datasources %}selected="selected" {% endif %} value="{{ ds.name }}"> {{ ds.verbose_name }}</option>
+                {% endfor %}
+            </select>
         </form>
         <!-- END Search -->
 
