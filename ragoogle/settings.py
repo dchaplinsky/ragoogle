@@ -116,20 +116,22 @@ STATICFILES_FINDERS = (
 )
 
 PIPELINE = {
-    "CSS_COMPRESSOR": "pipeline.compressors.cssmin.CssminCompressor",
-    "JS_COMPRESSOR": "pipeline.compressors.uglifyjs.UglifyJSCompressor",
-    "COMPILERS": ("pipeline.compilers.sass.SASSCompiler",),
-    "SASS_ARGUMENTS": "-q",
-    "STYLESHEETS": {
-        "css_all": {
-            "source_filenames": ("scss/main.scss",),
-            "output_filename": "css/merged.css",
-            "extra_context": {},
+    'COMPILERS': ('pipeline.compilers.sass.SASSCompiler',),
+    'SASS_ARGUMENTS': '-q',
+    'CSS_COMPRESSOR': 'pipeline.compressors.cssmin.CssminCompressor',
+    'JS_COMPRESSOR': 'pipeline.compressors.uglifyjs.UglifyJSCompressor',
+    'STYLESHEETS': {
+        'css_all': {
+            'source_filenames': (
+                'scss/main.scss',
+            ),
+            'output_filename': 'css/merged.css',
+            'extra_context': {},
         }
     },
-    "JAVASCRIPT": {
-        "js_all": {
-            "source_filenames": (
+    'JAVASCRIPT': {
+        'js_all': {
+            'source_filenames': (
                 "js/core/jquery.min.js",
                 "js/core/bootstrap.bundle.min.js",
                 "js/core/jquery.slimscroll.min.js",
@@ -138,17 +140,18 @@ PIPELINE = {
                 "js/core/jquery.countTo.min.js",
                 "js/core/js.cookie.min.js",
                 "js/core/bootstrap3-typeahead.js",
+                "js/plugins/select2/select2.full.min.js",
                 "js/bihus.js",
                 "js/main.js",
                 "js/common.js",
                 "js/autocomplete.js",
             ),
-            "output_filename": "js/merged.js",
+            'output_filename': 'js/merged.js',
         }
-    },
+    }
 }
 
-STATIC_URL = "/static/"
+STATIC_URL = '/static/'
 WSGI_APPLICATION = "ragoogle.wsgi.application"
 
 

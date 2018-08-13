@@ -1,15 +1,24 @@
 document.addEventListener(
-    "touchstart",
-    function(){},
-    true
+  "touchstart",
+  function () {
+  },
+  true
 );
 
-$(function() {
-    $("[data-toggle=popover]").popover({
-        html : true
-    });
+$(function () {
+  $("[data-toggle=popover]").popover({
+    html: true
+  });
 
-    $(document).ready(function() {
+  $(".small-profile ").hover(
+    function () {
+      $(this).addClass('hovered');
+      $(this).closest('.row').addClass('hovered');
+    }, function () {
+      $(this).removeClass('hovered');
+      $(this).closest('.row').removeClass('hovered');
+    }
+  );
 
-    });
+  $('.select-multiselect').select2();
 });

@@ -1,6 +1,6 @@
 {% extends "search/base.html" %}
 
-{% block container_class %}sidebar-o side-scroll main-content-narrow page-header-fixed page-header-inverse{% endblock %}
+{% block container_class %}sidebar-o sidebar-inverse side-scroll main-content-narrow page-header-fixed page-header-inverse{% endblock %}
 
 {% block content %}
     <div class="content">
@@ -14,9 +14,12 @@
                     </button>
                 </div>
             </div>
-            {% for ds in datasources %}
-            <label><input type="checkbox" name="datasources" {% if ds.name in enabled_datasources %}checked="" {% endif %} value="{{ ds.name }}"> {{ ds.verbose_name }}</label>
-            {% endfor %}
+
+            <select class="select-multiselect" name="states[]" multiple="multiple">
+                {% for ds in datasources %}
+                <option {% if ds.name in enabled_datasources %}selected="selected" {% endif %} value="{{ ds.name }}"> {{ ds.verbose_name }}</option>
+                {% endfor %}
+            </select>
         </form>
         <!-- END Search -->
 
@@ -42,11 +45,7 @@
             </div>
             <div class="row items-push">
                 {% for res in search_results %}
-                <div class="small-profile col-lg-4" itemscope="" itemtype="http://schema.org/Person" data-category="decl">
-                    <div class="box active-box">
-                        {{ res.render_infocard()|safe }}
-                    </div>
-                </div>
+                    {{ res.render_infocard()|safe }}
                 {% endfor %}
             </div>
         </div>
