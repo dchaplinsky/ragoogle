@@ -5,6 +5,8 @@
 // --------------------------------------------------
 
 .select2-container {
+    width: 100% !important;
+
     .select2-selection--single {
         height: $pbf-height;
     }

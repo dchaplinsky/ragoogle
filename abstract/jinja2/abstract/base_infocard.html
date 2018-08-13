@@ -1,24 +1,56 @@
-<header class="profile-header">
-    <a href="{{ url }}" target="_blank">
-    {% block header %}
-    {% endblock %}
-    </a>
-</header>
-<div class="descr">
-    {% block description %}
-    {% endblock %}
-    <hr/>
-    {% block highlighting %}
-    {% if res.hl %}
-        Знайдені фрагменти: <br />
-        {% for h_field in res.hl[:1] %}
-            {{ h_field|safe }}<br/>
-        {% endfor %}
-    {% endif %}
-    {% endblock %}
-</div>
-<hr>
+<div class="small-profile col-lg-4" itemscope="" itemtype="http://schema.org/Person" data-category="decl">
+    <div class="box active-box short-box">
+        <div class="header-content">
+            <header class="profile-header">
+                <a href="{{ url }}" target="_blank">
+                    {% block header %}
+                    {% endblock %}
+                </a>
+            </header>
+            <div>
+                <div class="descr">
+                    {% block description %}
+                    {% endblock %}
+                    <hr/>
+                    {% block highlighting %}
+                    {% if res.hl %}
+                    Знайдені фрагменти: <br/>
+                    {% for h_field in res.hl[:1] %}
+                    {{ h_field|safe }}<br/>
+                    {% endfor %}
+                    {% endif %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+        <footer>
+            {% block footer %}{{ datasource_verbose_name }}{% endblock %}
+        </footer>
+    </div>
+    <div class="box active-box full-box">
 
-<footer>
-    {% block footer %}{{ datasource_verbose_name }}{% endblock %}
-</footer>
+        <header class="profile-header">
+            <a href="{{ url }}" target="_blank">
+                {{ self.header() }}
+            </a>
+        </header>
+
+        <div class="descr">
+            {{ self.description() }}
+            <hr/>
+            {% block highlighting2 %}
+            {% if res.hl %}
+            Знайдені фрагменти: <br/>
+            {% for h_field in res.hl[:1] %}
+            {{ h_field|safe }}<br/>
+            {% endfor %}
+            {% endif %}
+            {% endblock %}
+        </div>
+
+        <hr>
+        <footer>
+            {% block footer2 %}{{ datasource_verbose_name }}{% endblock %}
+        </footer>
+    </div>
+</div>

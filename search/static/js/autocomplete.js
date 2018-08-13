@@ -2,22 +2,20 @@ $(function() {
     $(".search-form-q").typeahead({
         minLength: 2,
         items: 100,
-        delay: 300,
         autoSelect: false,
         source: function(query, process) {
-            $.get(
-                $(".search-form-q").data("endpoint"),
-                this.$element.closest("form").find("input").serialize()
-            )
-            .done(function(data) {
-                process(data);
-            });
+            $.get($(".search-form-q").data("endpoint"), {
+                    "q": query
+                })
+                .done(function(data) {
+                    process(data);
+                })
         },
         matcher: function() {
             return true;
         },
         highlighter: function(instance) {
-            return instance;
+        	return instance;
         },
         updater: function(instance) {
             return $(instance).data("sugg_text")
