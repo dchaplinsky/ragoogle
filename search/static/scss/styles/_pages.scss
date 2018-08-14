@@ -1,4 +1,8 @@
 .front {
+  h1, h2 {
+    color: white;
+  }
+
   .hero-inner {
     .svg-image {
       display: inline-block;
@@ -30,7 +34,32 @@
     img {
       box-shadow: 0px 0px 23px 2px rgba(0,0,0,0.23);
       border-radius: 3px;
+
+      &.no-shadow {
+        box-shadow: none;
+      }
     }
+  }
+
+  .select2-container--default .select2-selection--multiple {
+    background: none;
+    border: none;
+    margin-top: 10px;
+  }
+
+  .select2-container--default .select2-selection--multiple .select2-selection__rendered li:last-child:after {
+    display: inline-block;
+    color: #212529;
+    background-color: #f5f6f7;
+    border-color: #d3d7dc;
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin: 0 0 0 -20px;
+  }
+
+  .select2-container--default .select2-selection--multiple .select2-selection__rendered li + li:after {
+    display: inline-block !important;
+    margin: 0 !important;
   }
 
 }
@@ -124,5 +153,16 @@ canvas {
     height: 120px;
     background: white;
     transform: skewY(-4deg);
+  }
+}
+
+.document-details {
+  .block-title {
+    font-weight: bold !important;
+    font-size: 1.8rem;
+  }
+
+  .block-content {
+    padding: 20px 60px 60px;
   }
 }
