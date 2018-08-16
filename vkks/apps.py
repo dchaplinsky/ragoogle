@@ -4,7 +4,7 @@ from .loader import VKKSLoader
 
 
 class VKKSConfig(AppConfig):
-    name = 'vkks'
+    name = "vkks"
     verbose_name = "Декларації родинних зв'язків суддів та кандидатів"
     loader_class = VKKSLoader
 
@@ -12,7 +12,14 @@ class VKKSConfig(AppConfig):
     def data_model(self):
         # Doing that to prevent circular imports of some kind
         from .models import VKKSModel
+
         return VKKSModel
-    
+
+    @property
+    def sitemap(self):
+        from .sitemaps import VKKSSitemap
+
+        return VKKSSitemap
+
     elastic_model = ElasticVKKSModel
     elastic_index = vkks_idx
