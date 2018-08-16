@@ -17,9 +17,9 @@
                 <tr itemscope="" itemtype="http://schema.org/Organization" itemprop="funder">
                     <th>Акціонер</th>
                     <td>
-                        <span itemprop="name">{{ rec.company_owner.short_name }}</span>><br/>
+                        <span itemprop="name">{{ rec.company_owner.short_name }}</span><br/>
                         {% if rec.company_owner.code %}(<span itemprop="taxID">{{ rec.company_owner.code }}</span>){% endif %}
-                        {% if rec.company_owner.foreign_code %}({{ <span itemprop="taxID">rec.company_owner.foreign_code </span>}}){% endif %}
+                        {% if rec.company_owner.foreign_code %}(<span itemprop="taxID">{{rec.company_owner.foreign_code}}</span>){% endif %}
                     </td>
                 </tr>
                 <tr>
