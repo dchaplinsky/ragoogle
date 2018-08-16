@@ -1,6 +1,7 @@
 import logging
 
 from django.db import models
+from django.urls import reverse
 
 from abstract.models import AbstractDataset
 from names_translator.name_utils import (
@@ -18,6 +19,9 @@ logger = logging.getLogger("smida")
 
 
 class SmidaModel(AbstractDataset):
+    def get_absolute_url(self):
+        return reverse('smida>details', kwargs={'pk': self.id})
+
     def to_dict(self):
         dt = self.data
         res = {

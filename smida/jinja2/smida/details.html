@@ -4,10 +4,10 @@
 
 {% block content %}
     <!-- Page Content -->
-    <div class="content">
+    <div class="content" itemscope="" itemtype="http://schema.org/Organization">
         <!-- Frequently Asked Questions -->
         <h2 class="content-heading">
-        	{{ rec.emitent_name }} ({{ rec.EDRPOU }})
+        	<span itemprop="name">{{ rec.emitent_name }}</span> (<span itemprop="taxID">{{ rec.EDRPOU }}</span>)
         </h2>
 
         <!-- Introduction -->
@@ -24,15 +24,15 @@
                 </tr>
                 <tr>
                     <th>Повна назва</th>
-                    <td>
+                    <td itemprop="legalName">
                         {{ rec.company_owner.full_name }}
                     </td>
                 </tr>
                 {% endif %}
                 {% if rec.person_owner %}
-                <tr>
+                <tr itemscope="" itemtype="http://schema.org/Person">
                     <th>Акціонер</th>
-                    <td>
+                    <td itemprop="name">
                         {{ rec.person_owner }}
                     </td>
                 </tr>

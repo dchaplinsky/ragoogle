@@ -1,6 +1,7 @@
 import logging
 
 from django.db import models
+from django.urls import reverse
 
 from abstract.models import AbstractDataset
 from names_translator.name_utils import (
@@ -14,6 +15,9 @@ logger = logging.getLogger("vkks")
 
 
 class VKKSModel(AbstractDataset):
+    def get_absolute_url(self):
+        return reverse('vkks>details', kwargs={'pk': self.pk})
+
     def to_dict(self):
         dt = self.data
         dt_g = dt["general"]
