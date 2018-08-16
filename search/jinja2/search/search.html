@@ -15,16 +15,36 @@
                 </div>
             </div>
 
-            <select class="select-multiselect" name="datasources" multiple="multiple">
-                {% for ds in datasources %}
-                <option {% if ds.name in enabled_datasources %}selected="" {% endif %} value="{{ ds.name }}"> {{ ds.verbose_name }}</option>
-                {% endfor %}
-            </select>
+            {% set vars = {'db_src': 0} %}
+            {% for ds in datasources %}
+                {% if ds.name in enabled_datasources %}
+                    {% if vars.update({'db_src': vars.db_src + 1}) %} {% endif %}
+                {% endif %}
+            {% endfor %}
+
+            <div class="block block-mode-hidden">
+                <div class="block-header block-header-default">
+                    <h3 class="block-title">Джерел пошуку: {{ vars.db_src}}</h3>
+                    <div class="block-options">
+                        <button type="button" class="btn-block-option" data-toggle="block-option" data-action="content_toggle"><i class="si si-arrow-up"></i></button>
+                    </div>
+                </div>
+                <div class="block-content">
+                    <div class="form-group row">
+                        <div class="col-12">
+                            {% for ds in datasources %}
+                            <div class="custom-control custom-checkbox mb-5">
+                                <input class="custom-control-input" type="checkbox" name="datasources" {% if ds.name in enabled_datasources %}checked="" {% endif %} id="datasources-{{ loop.index }}" value="{{ ds.name }}">
+                                <label class="custom-control-label" for="datasources-{{ loop.index }}">{{ ds.verbose_name }}</label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </form>
         <!-- END Search -->
 
-        <!-- Content Filtering (.js-filter class is initialized in Edrdr() -> uiHelperContentFilter()) -->
-        <!-- If data-numbers="true" is added, then the number of the items of each category will be auto added to each category link -->
         <div class="js-filter" data-numbers="true">
             <div class="p-10 bg-white push">
                 <ul class="nav nav-pills">

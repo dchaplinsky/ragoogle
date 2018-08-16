@@ -17,10 +17,10 @@
                                 <svg preserveAspectRatio="xMidYMid" focusable="false">
                                     <use xlink:href="{{ static('img/sprite.svg') }}#logo"></use>
                                 </svg>
-                            </span>RING<span class="text-primary">/EDR</span>
+                            </span>RING</span>
                     </h1>
                     <h2 class="font-w400 mb-50 invisible" data-toggle="appear" data-class="animated fadeInDown">Сервіс пошуку</h2>
-                    <form class="push col-sm-6 ml-auto mr-auto" action="{{ url('search>results') }}" method="get" _lpchecked="1" autocomplete="off">
+                    <form class="br-10 bg-white push col-sm-6 ml-auto mr-auto" action="{{ url('search>results') }}" method="get" _lpchecked="1" autocomplete="off">
                         <div class="input-group input-group-lg">
                             <input type="text" class="form-control search-form-q" name="q" data-provide="typeahead" id="search-form" placeholder="{{ _("Пошук") }}" data-endpoint="{{ url("search>suggest") }}" autocomplete="off">
                             <div class="input-group-append">
@@ -31,11 +31,31 @@
                         </div>
                         <p>Наприклад: Рошен, Ромашко Роман Петрович, ПП "РОМДІРОМ", 37504544 </p>
 
-                        <select class="select-multiselect" name="datasources" multiple="multiple">
-                            {% for ds in datasources %}
-                            <option {% if ds.name in enabled_datasources %}selected="" {% endif %} value="{{ ds.name }}"> {{ ds.verbose_name }}</option>
-                            {% endfor %}
-                        </select>
+                        {% set vars = {'db_src': 0} %}
+                        {% for ds in datasources %}
+                            {% if vars.update({'db_src': vars.db_src + 1}) %} {% endif %}
+                        {% endfor %}
+
+                        <div class="block block-mode-hidden text-sm-left mt-10 br-10">
+                            <div class="block-header block-header-default bg-transparent">
+                                <h3 class="block-title bg-transparent">Джерел пошуку: {{ vars.db_src}}</h3>
+                                <div class="block-options">
+                                    <button type="button" class="btn-block-option" data-toggle="block-option" data-action="content_toggle"><i class="si si-arrow-up"></i></button>
+                                </div>
+                            </div>
+                            <div class="block-content">
+                                <div class="form-group row">
+                                    <div class="col-12">
+                                        {% for ds in datasources %}
+                                        <div class="custom-control custom-checkbox mb-5">
+                                            <input class="custom-control-input" type="checkbox" name="datasources" checked="" id="datasources-{{ loop.index }}" value="{{ ds.name }}">
+                                            <label class="custom-control-label" for="datasources-{{ loop.index }}">{{ ds.verbose_name }}</label>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
