@@ -20,5 +20,5 @@ $(function () {
     }
   );
 
-  $('.select-multiselect').select2();
+  //$('.select-multiselect').select2();
 });
