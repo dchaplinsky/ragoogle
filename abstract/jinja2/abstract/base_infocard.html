@@ -28,29 +28,27 @@
         </footer>
     </div>
     <div class="box active-box full-box">
-
-        <header class="profile-header">
-            <a href="{{ url }}" target="_blank">
+        <a href="{{ url }}" target="_blank">
+            <header class="profile-header">
                 {{ self.header() }}
-            </a>
-        </header>
+            </header>
+            <div class="descr">
+                {{ self.description() }}
+                <hr/>
+                {% block highlighting2 %}
+                {% if res.hl %}
+                Знайдені фрагменти: <br/>
+                {% for h_field in res.hl[:1] %}
+                {{ h_field|safe }}<br/>
+                {% endfor %}
+                {% endif %}
+                {% endblock %}
 
-        <div class="descr">
-            {{ self.description() }}
-            <hr/>
-            {% block highlighting2 %}
-            {% if res.hl %}
-            Знайдені фрагменти: <br/>
-            {% for h_field in res.hl[:1] %}
-            {{ h_field|safe }}<br/>
-            {% endfor %}
-            {% endif %}
-            {% endblock %}
-        </div>
-
-        <hr>
-        <footer>
-            {% block footer2 %}{{ datasource_verbose_name }}{% endblock %}
-        </footer>
+            </div>
+            <hr>
+            <footer>
+                {% block footer2 %}{{ datasource_verbose_name }}{% endblock %}
+            </footer>
+        </a>
     </div>
 </div>

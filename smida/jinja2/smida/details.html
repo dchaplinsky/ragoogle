@@ -6,90 +6,105 @@
     <!-- Page Content -->
     <div class="content">
         <!-- Frequently Asked Questions -->
-        <h2 class="content-heading">
+        <h1 class="content-heading">
         	{{ rec.emitent_name }} ({{ rec.EDRPOU }})
-        </h2>
+        </h1>
 
-        <!-- Introduction -->
-        <div class="block">
-            <table class="table">
-                {% if rec.company_owner %}
-                <tr>
-                    <th>Акціонер</th>
-                    <td>
-                        {{ rec.company_owner.short_name }}<br/>
-                        {% if rec.company_owner.code %}({{ rec.company_owner.code }}){% endif %}
-                        {% if rec.company_owner.foreign_code %}({{ rec.company_owner.foreign_code }}){% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <th>Повна назва</th>
-                    <td>
-                        {{ rec.company_owner.full_name }}
-                    </td>
-                </tr>
-                {% endif %}
-                {% if rec.person_owner %}
-                <tr>
-                    <th>Акціонер</th>
-                    <td>
-                        {{ rec.person_owner }}
-                    </td>
-                </tr>
-                {% endif %}
-                <tr>
-                    <th>Країна</th>
-                    <td>
-                        {{ rec.country_name }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>ICIH</th>
-                    <td>
-                        {{ rec.ICIH }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>Тип акцій</th>
-                    <td>
-                        {% if rec.stock_readable %} 
-                        {{ rec.stock_readable }}
+        <div class="block document-details">
+            <div class="block-header block-header-default">
+                <h2 class="block-title">Детальна інформація: </h2>
+                <div class="block-options">
+                    <button type="button" class="btn-block-option" onclick="Edrdr.helpers('print-page');">
+                        <i class="si si-printer"></i> Друкувати
+                    </button>
+                    <button type="button" class="btn-block-option" data-toggle="block-option"
+                            data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
+                </div>
+            </div>
+            <div class="block-content">
+                <div class="table-responsive push">
+                    <table class="table table-bordered table-hover">
+                        {% if rec.company_owner %}
+                        <tr>
+                            <th>Акціонер</th>
+                            <td>
+                                {{ rec.company_owner.short_name }}<br/>
+                                {% if rec.company_owner.code %}({{ rec.company_owner.code }}){% endif %}
+                                {% if rec.company_owner.foreign_code %}({{ rec.company_owner.foreign_code }}){% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Повна назва</th>
+                            <td>
+                                {{ rec.company_owner.full_name }}
+                            </td>
+                        </tr>
                         {% endif %}
-                        ({{ rec.type_of_stock }})
-                    </td>
-                </tr>
-                <tr>
-                    <th>Номінальна вартість</th>
-                    <td>
-                        {{ rec.nominal_price }} UAH
-                    </td>
-                </tr>
-                <tr>
-                    <th>Частка</th>
-                    <td>
-                        {{ rec.share }}%
-                    </td>
-                </tr>
-                <tr>
-                    <th>Кількість акцій</th>
-                    <td>
-                        {{ rec.number_of_shares }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>Дата першого появлення запису</th>
-                    <td>
-                        {{ rec.first_updated_from_dataset|date }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>Дата останнього оновлення</th>
-                    <td>
-                        {{ rec.last_updated_from_dataset|date }}
-                    </td>
-                </tr>
-            </table>
+                        {% if rec.person_owner %}
+                        <tr>
+                            <th>Акціонер</th>
+                            <td>
+                                {{ rec.person_owner }}
+                            </td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <th>Країна</th>
+                            <td>
+                                {{ rec.country_name }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>ICIH</th>
+                            <td>
+                                {{ rec.ICIH }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Тип акцій</th>
+                            <td>
+                                {% if rec.stock_readable %}
+                                {{ rec.stock_readable }}
+                                {% endif %}
+                                ({{ rec.type_of_stock }})
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Номінальна вартість</th>
+                            <td>
+                                {{ rec.nominal_price }} UAH
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Частка</th>
+                            <td>
+                                {{ rec.share }}%
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Кількість акцій</th>
+                            <td>
+                                {{ rec.number_of_shares }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Дата першого появлення запису</th>
+                            <td>
+                                {{ rec.first_updated_from_dataset|date }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Дата останнього оновлення</th>
+                            <td>
+                                {{ rec.last_updated_from_dataset|date }}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
         </div>
+
     </div>
 {% endblock %}
 

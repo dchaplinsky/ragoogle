@@ -11,10 +11,16 @@
     }
 
     form {
+      padding: 0;
+
       p {
         margin-top: 10px;
         margin-bottom: 0;
-        color: white;
+        color: black;
+      }
+
+      label {
+        color: black;
       }
     }
   }
