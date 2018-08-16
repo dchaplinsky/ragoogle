@@ -156,3 +156,16 @@
     border-radius: 3px;
     box-shadow: none;
 }
+
+.select2-container--default .select2-selection--multiple .select2-selection__rendered {
+    li:last-child {
+        &:after {
+            content: 'Опції пошуку';
+            display: inline-block;
+        }
+    }
+
+    li + li:after {
+        display: none !important;
+    }
+}

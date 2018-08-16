@@ -15,11 +15,11 @@
                     <h1 class="display-3 font-w700 mb-10 invisible" data-toggle="appear" data-class="animated fadeInDown">
                         <span class="svg-image inline-logo media-object">
                                 <svg preserveAspectRatio="xMidYMid" focusable="false">
-                                    <use xlink:href="{{ static('img/sprite.svg') }}#wh100"></use>
+                                    <use xlink:href="{{ static('img/sprite.svg') }}#logo"></use>
                                 </svg>
-                            </span> EDR<span class="text-primary">DR</span>
+                            </span>RING<span class="text-primary">/EDR</span>
                     </h1>
-                    <h2 class="font-w400 mb-50 invisible" data-toggle="appear" data-class="animated fadeInDown">Держреєстр чогось там видатного</h2>
+                    <h2 class="font-w400 mb-50 invisible" data-toggle="appear" data-class="animated fadeInDown">Сервіс пошуку</h2>
                     <form class="push col-sm-6 ml-auto mr-auto" action="{{ url('search>results') }}" method="get" _lpchecked="1" autocomplete="off">
                         <div class="input-group input-group-lg">
                             <input type="text" class="form-control search-form-q" name="q" data-provide="typeahead" id="search-form" placeholder="{{ _("Пошук") }}" data-endpoint="{{ url("search>suggest") }}" autocomplete="off">
@@ -29,31 +29,14 @@
                                 </button>
                             </div>
                         </div>
-                        <p>Наприклад: Рошен</p>
-                        {% for ds in datasources %}
-                        <label><input type="checkbox" name="datasources" checked="" value="{{ ds.name }}"> {{ ds.verbose_name }}</label>
-                        {% endfor %}
+                        <p>Наприклад: Рошен, Ромашко Роман Петрович, ПП "РОМДІРОМ", 37504544 </p>
+
+                        <select class="select-multiselect" name="datasources" multiple="multiple">
+                            {% for ds in datasources %}
+                            <option {% if ds.name in enabled_datasources %}selected="" {% endif %} value="{{ ds.name }}"> {{ ds.verbose_name }}</option>
+                            {% endfor %}
+                        </select>
                     </form>
-                </div>
-                <div class="js-countdown mb-20 col-md-8 ml-auto mr-auto">
-                    <div class="row items-push text-center">
-                        <div class="col-6 col-sm-3">
-                            <div class="font-size-h1 font-w700 text-white">num_of_companies</div>
-                            <div class="font-size-xs font-w700 text-white-op">КОМПАНІЯ</div>
-                        </div>
-                        <div class="col-6 col-sm-3">
-                            <div class="font-size-h1 font-w700 text-white">num_of_persons</div>
-                            <div class="font-size-xs font-w700 text-white-op">ПОВ'ЯЗАНА ОСОБА</div>
-                        </div>
-                        <div class="col-6 col-sm-3">
-                            <div class="font-size-h1 font-w700 text-white">num_of_beneficiaries</div>
-                            <div class="font-size-xs font-w700 text-white-op">БЕНЕФІЦІАР</div>
-                        </div>
-                        <div class="col-6 col-sm-3">
-                            <div class="font-size-h1 font-w700 text-white">{{ _("2+ роки") }}</div>
-                            <div class="font-size-xs font-w700 text-white-op">{{ _("ІСТОРІЙ ЗМІН") }}</div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -61,86 +44,37 @@
     <!-- END Hero -->
 
     <!-- Feature: Powerful Layout -->
-    <div class="bg-white">
+    <div class="bg-white section-2">
         <div class="content">
-            <div class="pt-100 pb-50">
+            <div class="pb-50">
                 <h3 class="h1 font-w700 text-center mb-10">
-                    RING <span class="text-primary">Шо це?</span>
+                    Чому ми? <span class="text-primary">Канцелярська сотня рекомендує:</span>
                 </h3>
-                <h4 class="h3 font-w400 text-muted text-center mb-30">Це робить текст схожим на оповідний.</h4>
+                <h4 class="h3 font-w400 text-muted text-center mb-30">Лише офіційні дані, поглиблений пошук, зручний дизайн</h4>
                 <hr>
                 <div class="row nice-copy my-10">
                     <div class="col-md-4 py-20">
                         <h4 class="font-size-xl font-w700 text-uppercase mb-10">
-                            <i class="fa fa-refresh text-earth mr-5"></i> Талант і мощь
+                            <img class="no-shadow" width="20" src="{{ static('img/ua.svg') }}" /> Офіційність
                         </h4>
-                        <p class="mb-0">Вже давно відомо, що читабельний зміст буде заважати зосередитись людині, яка оцінює композицію сторінки.
-                            Сенс використання Lorem Ipsum полягає в тому, що цей текст має більш-менш нормальне розподілення літер на
-                            відміну від</p>
+                        <p class="mb-0">Усі дані офіційно отримані з Державного реєстру юридичних осіб та фізичних осіб-підприємців.
+                            Дані оновлюються щотижнево і охоплюють період понад два роки.</p>
                     </div>
                     <div class="col-md-4 py-20">
                         <h4 class="font-size-xl font-w700 text-uppercase mb-10">
-                            <i class="fa fa-refresh text-earth mr-5"></i> API
+                            <i class="fa fa-refresh text-earth mr-5"></i> Відкритість і доступність
                         </h4>
-                        <p class="mb-0">Вже давно відомо, що читабельний зміст буде заважати зосередитись людині, яка оцінює композицію сторінки.
-                            Сенс використання Lorem Ipsum полягає в тому, що цей текст має більш-менш нормальне розподілення літер на
-                            відміну від</p>
+                        <p class="mb-0">Усе безкоштовно. Жодних реєстрацій. Жодної капчі (вони бісять). Зручні таймлайни змін в компаніях - для всіх.
+                            Відкритий і безкоштовний АРІ для тих, хто знає, що з ним робити.</p>
                     </div>
                     <div class="col-md-4 py-20">
                         <h4 class="font-size-xl font-w700 text-uppercase mb-10">
-                            <i class="fa fa-bolt text-danger mr-5"></i> Бігус
+                            <i class="fa fa-bolt text-danger mr-5"></i> Інтелект та гнучкість
                         </h4>
-                        <p class="mb-0">Вже давно відомо, що читабельний зміст буде заважати зосередитись людині, яка оцінює композицію сторінки.
-                            Сенс використання Lorem Ipsum полягає в тому, що цей текст має більш-менш нормальне розподілення літер на
-                            відміну від.</p>
+                        <p class="mb-0">Поглиблений пошук. Враховані перейменування вулиць - шукайте так, як знаєте. Автодоповнення, врахування помилок в прізвищах. Магія.</p>
                     </div>
                 </div>
             </div>
-            <div class="row no-gutters pull-b text-center overflow-hidden">
-                <div class="col-4 invisible" data-toggle="appear" data-class="animated fadeInUp" data-offset="-200">
-                    <a class="options-container" href="be_pages_dashboard.html">
-                        <img class="img-fluid options-item" src="{{ static('img/various/01.png') }}">
-                        <div class="options-overlay bg-white">
-                            <div class="options-overlay-content">
-                                <h3 class="h5 font-w700 text-uppercase mb-5">
-                                    Дивись <span class="text-primary">сюди</span>
-                                </h3>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-4 invisible" data-toggle="appear" data-class="animated fadeInUp" data-offset="-200">
-                    <a class="options-container" href="bd_dashboard.html">
-                        <img class="img-fluid options-item" src="{{ static('img/various/02.png') }}">
-                        <div class="options-overlay bg-white">
-                            <div class="options-overlay-content">
-                                <h3 class="h5 font-w700 text-uppercase mb-5">
-                                    Спробуй <span class="text-primary">це</span>
-                                </h3>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-4 invisible" data-toggle="appear" data-class="animated fadeInUp" data-offset="-200">
-                    <a class="options-container" href="be_layout_api.html">
-                        <img class="img-fluid options-item" src="{{ static('img/various/03.png') }}">
-                        <div class="options-overlay bg-white">
-                            <div class="options-overlay-content">
-                                <h3 class="h5 font-w700 text-uppercase mb-5">
-                                    Треба <span class="text-primary">лайкнуть</span>
-                                </h3>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-            <p>Вже давно відомо, що читабельний зміст буде заважати зосередитись людині, яка оцінює композицію сторінки.
-                Сенс використання Lorem Ipsum полягає в тому, що цей текст має більш-менш нормальне розподілення літер на
-                відміну від, наприклад, "Тут іде текст. Тут іде текст." Це робить текст схожим на оповідний.
-                Багато програм верстування та веб-дизайну використовують Lorem Ipsum як зразок і пошук за терміном "lorem ipsum"
-                відкриє багато веб-сайтів, які знаходяться ще в зародковому стані. Різні версії Lorem Ipsum з'явились
-                за минулі роки, деякі випадково, деякі було створено зумисно (зокрема, жартівливі).</p>
         </div>
     </div>
 {% endblock %}

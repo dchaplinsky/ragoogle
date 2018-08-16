@@ -15,17 +15,13 @@
                 </div>
             </div>
 
-            <select class="select-multiselect" name="states[]" multiple="multiple">
+            <select class="select-multiselect" name="datasources" multiple="multiple">
                 {% for ds in datasources %}
-                <option {% if ds.name in enabled_datasources %}selected="selected" {% endif %} value="{{ ds.name }}"> {{ ds.verbose_name }}</option>
+                <option {% if ds.name in enabled_datasources %}selected="" {% endif %} value="{{ ds.name }}"> {{ ds.verbose_name }}</option>
                 {% endfor %}
             </select>
         </form>
         <!-- END Search -->
-
-        <!-- Results -->
-        <!-- Images Filtering -->
-        <h2 class="content-heading">Результати <small>пошуку за фразою </small>'{{ query }}'</h2>
 
         <!-- Content Filtering (.js-filter class is initialized in Edrdr() -> uiHelperContentFilter()) -->
         <!-- If data-numbers="true" is added, then the number of the items of each category will be auto added to each category link -->

@@ -1,122 +1,147 @@
 {% extends "search/base.html" %}
 
-{% block container_class %}sidebar-o side-scroll main-content-narrow  page-header-fixed page-header-inverse{% endblock %}
+{% block container_class %}sidebar-o sidebar-inverse side-scroll main-content-narrow  page-header-fixed page-header-inverse{% endblock %}
+
+{% block side_sitename %}<span class="font-size-xl text-dual-primary-dark">RING</span><span class="font-size-xl text-primary">/SUD</span>{% endblock %}
 
 {% block content %}
-    <!-- Page Content -->
-    <div class="content">
-        <!-- Frequently Asked Questions -->
-        <h1 class="content-heading">ДЕКЛАРАЦІЯ {{ rec.intro.declaration_type }}
-            {% if rec.intro.declaration_year_from %}
-            з {{ rec.intro.declaration_year_from }}
-            {% endif %}
-            {% if rec.intro.declaration_year_to %}
-            по {{ rec.intro.declaration_year_to }}
-            {% endif %}
-            {% if rec.intro.declaration_year_from and rec.intro.declaration_year_to %}
-            роки
-            {% endif %}
-        </h1>
+<!-- Page Content -->
+<div class="content">
+    <!-- Frequently Asked Questions -->
+    <h1 class="content-heading">ДЕКЛАРАЦІЯ {{ rec.intro.declaration_type }}
+        {% if rec.intro.declaration_year_from %}
+        з {{ rec.intro.declaration_year_from }}
+        {% endif %}
+        {% if rec.intro.declaration_year_to %}
+        по {{ rec.intro.declaration_year_to }}
+        {% endif %}
+        {% if rec.intro.declaration_year_from and rec.intro.declaration_year_to %}
+        роки
+        {% endif %}
+    </h1>
 
-        <div class="block">
-            <h2>
-                Розділ І. Загальні відомості про суддю
-            </h2>
-            <p>
-                Прізвище, ім’я, по батькові:<br/>
-                <strong>{{ rec.general.last_name }} {{ rec.general.name }} {{ rec.general.patronymic }}</strong>
-            </p>
-            <p>
-                Місце роботи:<br/>
-                <strong>{{ rec.general.post.office }}</strong>
-            </p>
-            <p>
-                Займана посада:<br/>
-                <strong>{{ rec.general.post.post }}</strong>
-            </p>
+    <div class="block document-details">
+        <div class="block-header block-header-default">
+            <h1 class="block-title">{{ rec.general.last_name }} {{ rec.general.name }} {{ rec.general.patronymic }}</h1>
+            <div class="block-options">
+                <button type="button" class="btn-block-option" onclick="Edrdr.helpers('print-page');">
+                    <i class="si si-printer"></i> Друкувати
+                </button>
+                <button type="button" class="btn-block-option" data-toggle="block-option"
+                        data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
+            </div>
+        </div>
+        <div class="block-content">
+            <!-- Invoice Info -->
+            <div class="row my-20">
+                <!-- Company Info -->
+                <div class="col-6">
+                    <p class="h3">Місце роботи:</p>
+                    <address>
+                        <span class="badge badge-secondary">{{ rec.general.post.office }}</span>
+                    </address>
+                </div>
+                <!-- END Company Info -->
+
+                <!-- Client Info -->
+                <div class="col-6 text-right">
+                    <p class="h3">Займана посада:</p>
+                    <address>
+                        <span class="badge badge-info">{{ rec.general.post.post }}</span>
+                    </address>
+                </div>
+                <!-- END Client Info -->
+            </div>
+            <!-- END Invoice Info -->
 
             <h2>Розділ ІІ. Відомості про осіб, з якими є родинні зв’язки</h2>
 
-            <h4>1. За звітний період особи, з якими у мене є родинні зв’язки, займали посади, визначені пунктом 2 частини другої статті 61 Закону України «Про судоустрій і статус суддів»</h4>
+            <h4>1. За звітний період особи, з якими у мене є родинні зв’язки, займали посади, визначені пунктом 2
+                частини другої статті 61 Закону України «Про судоустрій і статус суддів»</h4>
             <p>
-            {% if rec.general.has_information %}✔{% endif %}Підтверджую<br />
-            {% if not rec.general.has_information %}✔{% endif %}Не підтверджую
+                {% if rec.general.has_information %}✔{% endif %}Підтверджую<br/>
+                {% if not rec.general.has_information %}✔{% endif %}Не підтверджую
             </p>
 
             {% if rec.general.has_information %}
-                <h4>2. Надаю відомості про осіб, з якими у мене наявні родинні зв’язки</h4>
-                <table class="table">
+            <h4>2. Надаю відомості про осіб, з якими у мене наявні родинні зв’язки</h4>
+            <div class="table-responsive push">
+                <table class="table table-bordered table-hover">
                     <thead>
-                        <tr valign="top">
-                            <th rowspan="2">№ з/п</th>
-                            <th rowspan="2">Прізвище, ім’я, по батькові</th>
-                            <th rowspan="2">Ступінь родинного зв’язку</th>
-                            <th rowspan="2">Місце роботи /проходження служби</th>
-                            <th rowspan="2">Займана посада</th>
-                            <th colspan="2">Період перебування на посаді</th>
-                        </tr>
-                        <tr>
-                            <th>з</th>
-                            <th>до</th>
-                        </tr>
+                    <tr valign="top">
+                        <th rowspan="2">№ з/п</th>
+                        <th rowspan="2">Прізвище, ім’я, по батькові</th>
+                        <th rowspan="2">Ступінь родинного зв’язку</th>
+                        <th rowspan="2">Місце роботи /проходження служби</th>
+                        <th rowspan="2">Займана посада</th>
+                        <th colspan="2">Період перебування на посаді</th>
+                    </tr>
+                    <tr>
+                        <th>з</th>
+                        <th>до</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        {% for fam in rec.general.family %}
-                            {% set fam_index = loop.index %}
-                            {% for career in fam.career %}
-                                <tr>
-                                    {% if loop.index == 1 %}
-                                        <td rowspan="{{ fam.career|length }}">{{ fam_index }}</td>
-                                        <td rowspan="{{ fam.career|length }}">
-                                            {{ fam.last_name }} {{ fam.name }} {{ fam.patronymic }}
-                                        </td>
-                                        <td rowspan="{{ fam.career|length }}">{{ fam.relation }}</td>
-                                    {% endif %}
-                                    <td>{{ career.workplace }}</td>
-                                    <td>{{ career.position }}</td>
-                                    <td>{{ career.from }}</td>
-                                    <td>{{ career.to }}</td>
-                                </tr>
-                            {% endfor %}
-                        {% endfor %}
+                    {% for fam in rec.general.family %}
+                    {% set fam_index = loop.index %}
+                    {% for career in fam.career %}
+                    <tr>
+                        {% if loop.index == 1 %}
+                        <td rowspan="{{ fam.career|length }}">{{ fam_index }}</td>
+                        <td rowspan="{{ fam.career|length }}">
+                            {{ fam.last_name }} {{ fam.name }} {{ fam.patronymic }}
+                        </td>
+                        <td rowspan="{{ fam.career|length }}">{{ fam.relation }}</td>
+                        {% endif %}
+                        <td>{{ career.workplace }}</td>
+                        <td>{{ career.position }}</td>
+                        <td>{{ career.from }}</td>
+                        <td>{{ career.to }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% endfor %}
                     </tbody>
                 </table>
+            </div>
             {% endif %}
 
             {% if rec.general.family_comment %}
-                <h4>Місце для додаткової інформації:</h4>
-                <p><strong>{{ rec.general.family_comment|nl2br }}</strong></p>
+            <h4>Місце для додаткової інформації:</h4>
+            <p><strong>{{ rec.general.family_comment|nl2br }}</strong></p>
             {% endif %}
 
             {% if rec.general.has_information %}
-                <h2>Розділ ІІІ. Відомості про пов’язаність спільним проживанням, побутом, наявність взаємних прав та обов’язків</h2>
-                <table class="table">
+            <h2>Розділ ІІІ. Відомості про пов’язаність спільним проживанням, побутом, наявність взаємних прав та
+                обов’язків</h2>
+            <div class="table-responsive push">
+                <table class="table table-bordered table-hover">
                     <thead>
-                        <tr valign="top">
-                            <th>№ з/п</th>
-                            <th>Прізвище, ім’я, по батькові</th>
-                            <th>Інформація щодо спільного проживання</th>
-                            <th>Інформація щодо пов’язаності спільним побутом</th>
-                            <th>Інформація щодо взаємних прав та обов’язків</th>
-                        </tr>
+                    <tr valign="top">
+                        <th>№ з/п</th>
+                        <th>Прізвище, ім’я, по батькові</th>
+                        <th>Інформація щодо спільного проживання</th>
+                        <th>Інформація щодо пов’язаності спільним побутом</th>
+                        <th>Інформація щодо взаємних прав та обов’язків</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        {% for fam in rec.general.family_conflicts %}
-                            <tr>
-                                <td>{{ loop.index }}</td>
-                                <td>{{ fam.last_name }} {{ fam.name }} {{ fam.patronymic }}</td>
-                                <td>{{ fam.coliving }}</td>
-                                <td>{{ fam.cohabiting }}</td>
-                                <td>{{ fam.mutual_liabilities }}</td>
-                            </tr>
-                        {% endfor %}
+                    {% for fam in rec.general.family_conflicts %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ fam.last_name }} {{ fam.name }} {{ fam.patronymic }}</td>
+                        <td>{{ fam.coliving }}</td>
+                        <td>{{ fam.cohabiting }}</td>
+                        <td>{{ fam.mutual_liabilities }}</td>
+                    </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
+            </div>
             {% endif %}
 
             {% if rec.general.family_conflicts_comment %}
-                <h4>Місце для додаткової інформації:</h4>
-                {{ rec.general.family_conflicts_comment|nl2br }}
+            <h4>Місце для додаткової інформації:</h4>
+            {{ rec.general.family_conflicts_comment|nl2br }}
             {% endif %}
 
             <small>
@@ -127,6 +152,9 @@
             {% if rec.url %}
             <a href="{{ rec.url }}" target="_blank">Посилання на оригінал</a>
             {% endif %}
+
+
         </div>
     </div>
+</div>
 {% endblock %}
