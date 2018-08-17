@@ -20,9 +20,10 @@
         {% endif %}
     </h2>
 
-    <div class="block document-details">
+    <div class="block document-details" itemscope="" itemtype="http://schema.org/Person">
         <div class="block-header block-header-default">
-            <h1 class="block-title">{{ rec.general.last_name }} {{ rec.general.name }} {{ rec.general.patronymic }}</h1>
+            <h1 class="block-title"><span itemprop="familyName">{{ rec.general.last_name }}</span> <span itemprop="givenName">{{ rec.general.name }}</span> <span itemprop="additionalName">{{ rec.general.patronymic }}</span></h1>
+            {% for alt_name in generate_all_names(rec.general.last_name, rec.general.name, rec.general.patronymic) %}<meta itemprop="alternateName" content="{{ alt_name }}" />{% endfor %}
             <div class="block-options">
                 <button type="button" class="btn-block-option" onclick="Edrdr.helpers('print-page');">
                     <i class="si si-printer"></i> Друкувати
@@ -37,8 +38,8 @@
                 <!-- Company Info -->
                 <div class="col-6">
                     <p class="h3">Місце роботи:</p>
-                    <address>
-                        <span class="badge badge-secondary">{{ rec.general.post.office }}</span>
+                    <address itemprop="worksFor" itemscope="" itemtype="http://schema.org/Organization">
+                        <span class="badge badge-secondary" itemprop="legalName">{{ rec.general.post.office }}</span>
                     </address>
                 </div>
                 <!-- END Company Info -->
@@ -47,7 +48,7 @@
                 <div class="col-6 text-right">
                     <p class="h3">Займана посада:</p>
                     <address>
-                        <span class="badge badge-info">{{ rec.general.post.post }}</span>
+                        <span class="badge badge-info" itemprop="jobTitle">{{ rec.general.post.post }}</span>
                     </address>
                 </div>
                 <!-- END Client Info -->
@@ -88,8 +89,8 @@
                     <tr>
                         {% if loop.index == 1 %}
                         <td rowspan="{{ fam.career|length }}">{{ fam_index }}</td>
-                        <td rowspan="{{ fam.career|length }}">
-                            {{ fam.last_name }} {{ fam.name }} {{ fam.patronymic }}
+                        <td rowspan="{{ fam.career|length }}"  itemprop="{{ fam.relation|identify_relation }}" itemscope="" itemtype="http://schema.org/Person">
+                            <span itemprop="familyName">{{ fam.last_name }}</span> <span itemprop="givenName">{{ fam.name }}</span> <span itemprop="additionalName">{{ fam.patronymic }}</span>
                         </td>
                         <td rowspan="{{ fam.career|length }}">{{ fam.relation }}</td>
                         {% endif %}
