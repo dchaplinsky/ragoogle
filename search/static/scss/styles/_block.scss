@@ -467,3 +467,25 @@ a.block {
         opacity: 1;
     }
 }
+
+.block-ds-toggle {
+    position: relative;
+
+    .block-options {
+        position: absolute;
+        right: 15px;
+        width: 100%;
+        padding: 0;
+
+        button {
+            width: 100%;
+            text-align: right;
+        }
+    }
+
+    &.block-mode-hidden {
+        .block-options {
+            bottom: 10px;
+        }
+    }
+}

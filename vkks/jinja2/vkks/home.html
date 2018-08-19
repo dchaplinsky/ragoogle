@@ -3,12 +3,12 @@
 {% block sidebars %}
 {% endblock %}
 
-{% block body_class %}front{% endblock %}
+{% block body_class %}front front-vkks{% endblock %}
 {% block container_class %}main-content-narrow{% endblock %}
 
 {% block content %}
     <!-- Hero -->
-    <div class="bg-image" style="background-image: url({{ static('img/photos/photo24@2x.jpg') }});">
+    <div class="bg-image bg-image-top-center" style="background-image: url({{ static('img/photos/vkks.jpg') }});">
         <div class="hero bg-black-op">
             <div class="hero-inner">
                 <div class="content content-full text-center border-white-op-b">
@@ -19,7 +19,7 @@
                                 </svg>
                             </span>RING<span class="text-primary">/SUD</span>
                     </h1>
-                    <h2 class="font-w400 text-white-op mb-50 invisible" data-toggle="appear" data-class="animated fadeInDown">База зв"язків суддів</h2>
+                    <h2 class="font-w400 text-white-op mb-50 invisible" data-toggle="appear" data-class="animated fadeInDown">База зв'язків суддів</h2>
                     <form class="push col-sm-6 ml-auto mr-auto" action="{{ url('search>results') }}" method="get" _lpchecked="1" autocomplete="off">
                         <div class="input-group input-group-lg">
                             <input type="text" class="form-control search-form-q" name="q" data-provide="typeahead" id="search-form" placeholder="{{ _("Пошук") }}" data-endpoint="{{ url("search>suggest") }}" autocomplete="off">
@@ -43,7 +43,7 @@
         <div class="content">
             <div class="pt-100 pb-50">
                 <h3 class="h1 font-w700 text-center mb-10">
-                    База зв"язків суддів <span class="text-primary">Шо це?</span>
+                    База зв'язків суддів <span class="text-primary">Шо це?</span>
                 </h3>
             </div>
             <p>Вже давно відомо, що читабельний зміст буде заважати зосередитись людині, яка оцінює композицію сторінки.
