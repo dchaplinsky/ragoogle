@@ -213,7 +213,7 @@ NUM_THREADS = 8
 CATALOG_PER_PAGE = 24
 
 # Setup Elasticsearch default connection
-ELASTICSEARCH_CONNECTIONS = {"default": {"hosts": "localhost", "timeout": 120}}
+ELASTICSEARCH_CONNECTIONS = {"default": {"hosts": "localhost", "timeout": 30}}
 
 LOGGING = {
     'version': 1,
