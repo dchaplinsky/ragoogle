@@ -90,7 +90,7 @@ class SearchView(TemplateView):
         query = request.GET.get("q", "")
         search_type = request.GET.get("search_type", "strict")
         is_addr = request.GET.get("is_addr", "false") == "true"
-        if search_type not in ["strict", "loose", "fuzzy"]:
+        if search_type not in ["strict", "loose"]:
             search_type = "strict"
 
         base_q = Search(
@@ -109,25 +109,10 @@ class SearchView(TemplateView):
                 strict_query = base_q.query(
                     "match_phrase", all={"query": query, "slop": 6}
                 )
-
-                fuzzy_query = base_q.query(
-                    "match",
-                    all={"query": query, "operator": "and", "fuzziness": "auto"},
-                )
             else:
                 no_zip_q = re.sub(r"\b\d{5,}\W", "", query)
                 strict_query = base_q.query(
                     "match", addresses={"query": no_zip_q, "operator": "and"}
-                )
-
-                fuzzy_query = base_q.query(
-                    "match",
-                    addresses={
-                        "query": no_zip_q,
-                        "operator": "or",
-                        "minimum_should_match": "-10%",
-                        "fuzziness": "auto",
-                    },
                 )
 
             loose_query = base_q.query(
@@ -142,17 +127,12 @@ class SearchView(TemplateView):
             ms = MultiSearch()
             ms = ms.add(strict_query[:0])
             ms = ms.add(loose_query[:0])
-            ms = ms.add(fuzzy_query[:0])
-            sc, lc, fc = ms.execute()
+            sc, lc = ms.execute()
 
             strict_count = sc.hits.total
             loose_count = lc.hits.total
-            fuzzy_count = fc.hits.total
 
-            if search_type == "fuzzy":
-                base_qs = fuzzy_query
-                base_count = fuzzy_count
-            elif search_type == "loose":
+            if search_type == "loose":
                 base_qs = loose_query
                 base_count = loose_count
             else:
@@ -163,7 +143,7 @@ class SearchView(TemplateView):
         else:
             qs = base_q.query("match_all")
 
-            base_count = fuzzy_count = loose_count = strict_count = qs.count()
+            base_count = loose_count = strict_count = qs.count()
 
         results = qs.highlight_options(
             order="score", pre_tags=['<u class="match">'], post_tags=["</u>"]
@@ -188,7 +168,6 @@ class SearchView(TemplateView):
                 "search_type": search_type,
                 "strict_count": strict_count,
                 "loose_count": loose_count,
-                "fuzzy_count": fuzzy_count,
                 "base_count": base_count,
                 "enabled_datasources": request.GET.getlist("datasources"),
                 "datasources": get_all_enabled_datasources(),

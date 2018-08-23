@@ -54,9 +54,6 @@
                     <li class="nav-item">
                         <a class="nav-link{% if search_type == "loose" %} active{% endif %}" href="{{ url("search>results") }}?{{ updated_querystring(request, {'search_type': "loose"}) }}" data-category-link="ghata">{{ _("Неповне співпадіння") }} ({% if search_type == "loose" %}{{ loose_count }}{% else %}{% if loose_count >= base_count %}+{% endif %}{{ loose_count - base_count }}{% endif %})</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link{% if search_type == "fuzzy" %} active{% endif %}" href="{{ url("search>results") }}?{{ updated_querystring(request, {'search_type': "fuzzy"}) }}" data-category-link="posipaks">{{ _("Нечітке співпадіння") }} ({% if search_type == "fuzzy" %}{{ fuzzy_count }}{% else %}{% if fuzzy_count >= base_count %}+{% endif %}{{ fuzzy_count - base_count }}{% endif %})</a>
-                    </li>
                 </ul>
             </div>
             <div class="row items-push">

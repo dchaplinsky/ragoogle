@@ -4,9 +4,8 @@ $(function() {
         items: 100,
         autoSelect: false,
         source: function(query, process) {
-            $.get($(".search-form-q").data("endpoint"), {
-                    "q": query
-                })
+            $.get($(".search-form-q").data("endpoint"),
+                this.$element.closest("form").find("input").serialize())
                 .done(function(data) {
                     process(data);
                 })

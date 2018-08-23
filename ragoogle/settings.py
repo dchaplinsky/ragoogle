@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "garnahata_in_ua.apps.GarnahataInUaConfig",
     "vkks.apps.VKKSConfig",
     "nacp_declarations.apps.NACPDeclarationsConfig",
+    "paper_declarations.apps.PaperDeclarationsConfig",
 
     # Generalized search
     "search",
