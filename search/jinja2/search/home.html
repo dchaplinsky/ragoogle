@@ -8,7 +8,7 @@
 
 {% block content %}
     <!-- Hero -->
-    <div class="bg-image" style="background-image: url({{ static('img/photos/photo23@2x.jpg') }});">
+    <div class="bg-image" style="background-image: url({{ static('img/photos/sauron.gif') }});">
         <div class="hero bg-black-op">
             <div class="hero-inner">
                 <div class="content content-full text-center border-white-op-b">
@@ -19,7 +19,7 @@
                                 </svg>
                             </span>RING</span>
                     </h1>
-                    <h2 class="font-w400 mb-50 invisible" data-toggle="appear" data-class="animated fadeInDown">Сервіс пошуку</h2>
+                    <h2 class="font-w400 mb-50 invisible" data-toggle="appear" data-class="animated fadeInDown">Пошук по державним реєстрам та проектам Канцелярської сотні</h2>
                     <form class="br-10 bg-white push col-sm-6 ml-auto mr-auto" action="{{ url('search>results') }}" method="get" _lpchecked="1" autocomplete="off">
                         <div class="input-group input-group-lg">
                             <input type="text" class="form-control search-form-q" name="q" data-provide="typeahead" id="search-form" placeholder="{{ _("Пошук") }}" data-endpoint="{{ url("search>suggest") }}" autocomplete="off">
@@ -75,10 +75,9 @@
                 <div class="row nice-copy my-10">
                     <div class="col-md-4 py-20">
                         <h4 class="font-size-xl font-w700 text-uppercase mb-10">
-                            <img class="no-shadow" width="20" src="{{ static('img/ua.svg') }}" /> Офіційність
+                            <i class="fa fa-lightbulb-o text-earth mr-5"></i> Що це?
                         </h4>
-                        <p class="mb-0">Усі дані офіційно отримані з Державного реєстру юридичних осіб та фізичних осіб-підприємців.
-                            Дані оновлюються щотижнево і охоплюють період понад два роки.</p>
+                        <p class="mb-0">Ми зібрали для вас офіційні відкриті дані і зробили їх насправді відкритими. Регулярно їх оновлюємо. Шукайте та знаходьте все.</p>
                     </div>
                     <div class="col-md-4 py-20">
                         <h4 class="font-size-xl font-w700 text-uppercase mb-10">

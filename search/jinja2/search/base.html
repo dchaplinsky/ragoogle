@@ -1,167 +1,189 @@
 <!doctype html>
-    <!--[if lte IE 9]>     <html lang="en" class="no-focus lt-ie10 lt-ie10-msg"> <![endif]-->
-    <!--[if gt IE 9]><!--> <html lang="en" class="no-focus"> <!--<![endif]-->
-    <head>
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-124129290-1"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
+<!--[if lte IE 9]>
+<html lang="en" class="no-focus lt-ie10 lt-ie10-msg"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html lang="en" class="no-focus"> <!--<![endif]-->
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-124129290-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
 
-          gtag('config', 'UA-124129290-1');
-        </script>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
+      gtag('config', 'UA-124129290-1');
+    </script>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0"/>
 
-        <title>Ring global registry</title>
+    <title>Ring global registry</title>
 
-        <meta name="description" content="Ring registry demo" />
-        <meta name="author" content="white collar hundred" />
+    <meta name="description" content="Ring registry demo"/>
+    <meta name="author" content="white collar hundred"/>
 
-        <meta property="og:title" content="Ring registry demo" />
-        <meta property="og:site_name" content="Ring" />
-        <meta property="og:description" content="Ring registry demo" />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="" />
-        <meta property="og:image" content="" />
+    <meta property="og:title" content="Ring registry demo"/>
+    <meta property="og:site_name" content="Ring"/>
+    <meta property="og:description" content="Ring registry demo"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content=""/>
+    <meta property="og:image" content=""/>
 
-        {% block head %}
-        {% endblock %}
+    {% block head %}
+    {% endblock %}
 
-        <link rel="shortcut icon" href="{{ static("img/favicons/favicon.ico") }}" />
-        {% stylesheet 'css_all' %}
-    </head>
-    <body class="{% block body_class %}{% endblock %}">
-        <!-- Page Container -->
+    <link rel="shortcut icon" href="{{ static(" img
+    /favicons/favicon.ico") }}" />
+    {% stylesheet 'css_all' %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+<!-- Page Container -->
 
-        <div id="page-container" class="{% block container_class %}sidebar-o sidebar-inverse side-scroll main-content-narrow  page-header-fixed page-header-inverse{% endblock %}">
-            {% block sidebars %}
-                {% include "search/_right_sidebar.html" with context %}
-                <nav id="sidebar">
-                  <!-- Sidebar Scroll Container -->
-                  <div id="sidebar-scroll">
-                    <!-- Sidebar Content -->
-                    <div class="sidebar-content">
-                      <!-- Side Header -->
-                      <div class="content-header content-header-fullrow px-15">
-                        <!-- Mini Mode -->
-                        <div class="content-header-section sidebar-mini-visible-b">
-                          <!-- Logo -->
-                          <span class="content-header-item font-w700 font-size-xl float-left animated fadeIn">
-                                                    <span class="text-dual-primary-dark">c</span><span class="text-primary">b</span>
+<div id="page-container"
+     class="{% block container_class %}sidebar-o sidebar-inverse side-scroll main-content-narrow  page-header-fixed page-header-inverse{% endblock %}">
+    {% block sidebars %}
+    {% include "search/_right_sidebar.html" with context %}
+    <nav id="sidebar">
+        <!-- Sidebar Scroll Container -->
+        <div id="sidebar-scroll">
+            <!-- Sidebar Content -->
+            <div class="sidebar-content">
+                <!-- Side Header -->
+                <div class="content-header content-header-fullrow px-15">
+                    <!-- Mini Mode -->
+                    <div class="content-header-section sidebar-mini-visible-b">
+                        <!-- Logo -->
+                        <span class="content-header-item font-w700 font-size-xl float-left animated fadeIn">
+                                                    <span class="text-dual-primary-dark">c</span><span
+                                class="text-primary">b</span>
                                                 </span>
-                          <!-- END Logo -->
-                        </div>
-                        <!-- END Mini Mode -->
+                        <!-- END Logo -->
+                    </div>
+                    <!-- END Mini Mode -->
 
-                        <!-- Normal Mode -->
-                        <div class="content-header-section text-center align-parent sidebar-mini-hidden">
-                          <!-- Close Sidebar, Visible only on mobile screens -->
-                          <button type="button" class="btn btn-circle btn-dual-secondary d-lg-none align-v-r" data-toggle="layout" data-action="sidebar_close">
+                    <!-- Normal Mode -->
+                    <div class="content-header-section text-center align-parent sidebar-mini-hidden">
+                        <!-- Close Sidebar, Visible only on mobile screens -->
+                        <button type="button" class="btn btn-circle btn-dual-secondary d-lg-none align-v-r"
+                                data-toggle="layout" data-action="sidebar_close">
                             <i class="fa fa-times text-danger"></i>
-                          </button>
-                          <!-- END Close Sidebar -->
+                        </button>
+                        <!-- END Close Sidebar -->
 
-                            <!-- Logo -->
-                            <div class="content-header-item site-logo-name">
-                                <a class="font-w700" href="{{ url("home") }}">
-                                <span class="svg-image inline-logo media-object">
+                        <!-- Logo -->
+                        <div class="content-header-item site-logo-name">
+                            <a class="font-w700" href="{{ url("home") }}">
+                            <span class="svg-image inline-logo media-object">
                                                             <svg preserveAspectRatio="xMidYMid" focusable="false">
                                                                 <use xlink:href="{{ static('img/sprite.svg') }}#logo-color"></use>
                                                             </svg>
                                                         </span>
-                                {% block side_sitename %}<span class="font-size-xl text-dual-primary-dark">RING</span>{% endblock %}
-                                </a>
-                            </div>
-                            <!-- END Logo -->
+                            {% block side_sitename %}<span class="font-size-xl text-dual-primary-dark">RING</span>{%
+                            endblock %}
+                            </a>
                         </div>
-                        <!-- END Normal Mode -->
-                      </div>
-                      <!-- END Side Header -->
-
-                      <!-- Side Navigation -->
-                      <div class="content-side content-side-full">
-                        {% block left_sidebar %}
-                        {% endblock %}
-                        <ul class="nav-main">
-                          <li class="nav-main-heading">
-                            <span class="sidebar-mini-hidden">Навігація</span>
-                          </li>
-                          <li>
-                            <a href="/">
-                              <i class="si si-info"></i>
-                              <span class="sidebar-mini-hide">Про проект</span>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="/">
-                              <i class="si si-magnifier-add"></i>
-                              <span class="sidebar-mini-hide">Інструкція з пошуку</span>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="/">
-                              <i class="si si-magic-wand"></i>
-                              <span class="sidebar-mini-hide">Відкритий API</span>
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                      <!-- END Side Navigation -->
+                        <!-- END Logo -->
                     </div>
-                    <!-- Sidebar Content -->
-                  </div>
-                  <!-- END Sidebar Scroll Container -->
-                </nav>
-                <!-- END Sidebar -->
+                    <!-- END Normal Mode -->
+                </div>
+                <!-- END Side Header -->
 
-                {% include "search/_page_header.html" with context %}
-            {% endblock %}
-            <!-- Main Container -->
-            <main id="main-container">
-                {% block content %}
-                {% endblock %}
-                {% include "search/_footer.html" with context %}
-            </main>
-            <!-- END Main Container -->
+                <!-- Side Navigation -->
+                <div class="content-side content-side-full">
+                    {% block left_sidebar %}
+                    {% endblock %}
+                    <ul class="nav-main">
+                        <li class="nav-main-heading">
+                            <span class="sidebar-mini-hidden">Навігація</span>
+                        </li>
+                        <li>
+                            <a href="/">
+                                <i class="si si-info"></i>
+                                <span class="sidebar-mini-hide">Про проект</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/">
+                                <i class="si si-docs"></i>
+                                <span class="sidebar-mini-hide">Інструкція з пошуку</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/">
+                                <i class="si si-magic-wand"></i>
+                                <span class="sidebar-mini-hide">Відкритий API</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="mailto:ng@bihus.info">
+                                <i class="si si-envelope-letter"></i>
+                                <span class="sidebar-mini-hide">Зворотній зв'язок</span>
+                            </a>
+                        </li>
+                        <li style="padding: 9px 18px">
+                            <a style="padding: 8px 14px; color: white;" title="На головну"
+                               href="https://ring.org.ua"
+                               class="sidebar-mini-hide btn btn-primary min-width-125"
+                               type="button"><i style="position: static;" class="si si-home"></i>
+                                RING.org.ua</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- END Side Navigation -->
+            </div>
+            <!-- Sidebar Content -->
         </div>
-        <!-- END Page Container -->
+        <!-- END Sidebar Scroll Container -->
+    </nav>
+    <!-- END Sidebar -->
 
-        <!-- Core JS -->
-        {% javascript 'js_all' %}
-
-        {% block extra_js %}
+    {% include "search/_page_header.html" with context %}
+    {% endblock %}
+    <!-- Main Container -->
+    <main id="main-container">
+        {% block content %}
         {% endblock %}
-        <script>window.twttr = (function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0],
-                t = window.twttr || {};
-            if (d.getElementById(id)) return t;
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "https://platform.twitter.com/widgets.js";
-            fjs.parentNode.insertBefore(js, fjs);
+        {% include "search/_footer.html" with context %}
+    </main>
+    <!-- END Main Container -->
+</div>
+<!-- END Page Container -->
 
-            t._e = [];
-            t.ready = function(f) {
-                t._e.push(f);
-            };
+<!-- Core JS -->
+{% javascript 'js_all' %}
 
-            return t;
-        }(document, "script", "twitter-wjs"));</script>
+{% block extra_js %}
+{% endblock %}
+<script>window.twttr = (function (d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
 
-        <script src="https://apis.google.com/js/platform.js"></script>
-        <script>
-            function onYtEvent(payload) {
-                if (payload.eventType == 'subscribe') {
-                    // Add code to handle subscribe event.
-                } else if (payload.eventType == 'unsubscribe') {
-                    // Add code to handle unsubscribe event.
-                }
-                if (window.console) { // for debugging only
-                    window.console.log('YT event: ', payload);
-                }
-            }
-        </script>
-    </body>
+  t._e = [];
+  t.ready = function (f) {
+    t._e.push(f);
+  };
+
+  return t;
+}(document, "script", "twitter-wjs"));</script>
+
+<script src="https://apis.google.com/js/platform.js"></script>
+<script>
+  function onYtEvent(payload) {
+    if (payload.eventType == 'subscribe') {
+      // Add code to handle subscribe event.
+    } else if (payload.eventType == 'unsubscribe') {
+      // Add code to handle unsubscribe event.
+    }
+    if (window.console) { // for debugging only
+      window.console.log('YT event: ', payload);
+    }
+  }
+</script>
+</body>
 </html>
