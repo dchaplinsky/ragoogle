@@ -21,6 +21,7 @@ urlpatterns = [
 
     path('smida/', include("smida.urls")),
     path('vkks/', include("vkks.urls")),
+    path('cvk_2015/', include("cvk_2015.urls")),
     path('admin/', admin.site.urls),
 
     path('sitemap.xml',

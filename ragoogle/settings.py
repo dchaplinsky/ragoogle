@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "vkks.apps.VKKSConfig",
     "nacp_declarations.apps.NACPDeclarationsConfig",
     "paper_declarations.apps.PaperDeclarationsConfig",
+    "cvk_2015.apps.CVK2015Config",
 
     # Generalized search
     "search",
