@@ -29,7 +29,7 @@
                 <table class="table table-bordered table-hover">
                     <tr>
                         <th>Кандидат від партії</th>
-                        <td>{{ rec.party }}</td>
+                        <td itemscope="" itemtype="http://schema.org/Organization" itemprop="memberOf"><span itemprop="name">{{ rec.party }}</span></td>
                     </tr>
                     <tr>
                         <th>До</th>
