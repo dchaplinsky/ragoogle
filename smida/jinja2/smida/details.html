@@ -2,12 +2,20 @@
 
 {% block container_class %}sidebar-o sidebar-inverse side-scroll main-content-narrow  page-header-fixed page-header-inverse{% endblock %}
 
+{% block title %}
+{% if rec.company_owner %}{{ rec.company_owner.short_name }}{% if rec.company_owner.code %} ({{ rec.company_owner.code|format_edrpou }}){% endif %}{% else %}{{ rec.company_owner.full_name }}{% endif %}, власник {{ rec.share }}% акцій {{ rec.emitent_name }} ({{ rec.EDRPOU|format_edrpou }})
+{% endblock %}
+
+{% block description %}
+Інформація з реєстру Агентства з розвитку інфраструктури фондового ринку України про власників великих пакетів акцій емітентів цінних паперів.
+{% endblock %}
+
 {% block content %}
 <!-- Page Content -->
 <div class="content" itemscope="" itemtype="http://schema.org/Organization">
     <!-- Frequently Asked Questions -->
     <h1 class="content-heading">
-        <span itemprop="name">{{ rec.emitent_name }}</span> (<span itemprop="taxID">{{ rec.EDRPOU }}</span>)
+        <span itemprop="name">{{ rec.emitent_name }}</span> (<span itemprop="taxID">{{ rec.EDRPOU|format_edrpou }}</span>)
     </h1>
 
     <div class="block document-details">
@@ -29,7 +37,7 @@
                         <th>Акціонер</th>
                         <td>
                             <span itemprop="name">{{ rec.company_owner.short_name }}</span><br/>
-                            {% if rec.company_owner.code %}(<span itemprop="taxID">{{ rec.company_owner.code }}</span>){% endif %}
+                            {% if rec.company_owner.code %}(<span itemprop="taxID">{{ rec.company_owner.code|format_edrpou }}</span>){% endif %}
                             {% if rec.company_owner.foreign_code %}(<span itemprop="taxID">{{rec.company_owner.foreign_code}}</span>){% endif %}
                         </td>
                     </tr>

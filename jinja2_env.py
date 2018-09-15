@@ -64,7 +64,8 @@ def environment(**options):
                 parse_dt(dt) if isinstance(dt, str) else dt, "SHORT_DATE_FORMAT"
             ),
             "nl2br": nl2br,
-            "identify_relation": identify_relation
+            "identify_relation": identify_relation,
+            "format_edrpou": lambda code: str(code).rjust(8, "0")
         }
     )
     env.globals.update(
