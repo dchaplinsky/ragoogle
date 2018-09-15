@@ -3,7 +3,7 @@
 {% block container_class %}sidebar-o sidebar-inverse side-scroll main-content-narrow  page-header-fixed page-header-inverse{% endblock %}
 
 {% block title %}
-{% if rec.company_owner %}{{ rec.company_owner.short_name }}{% if rec.company_owner.code %} ({{ rec.company_owner.code|format_edrpou }}){% endif %}{% else %}{{ rec.company_owner.full_name }}{% endif %}, власник {{ rec.share }}% акцій {{ rec.emitent_name }} ({{ rec.EDRPOU|format_edrpou }})
+{% if rec.company_owner %}{{ rec.company_owner.short_name }}{% if rec.company_owner.code %} ({{ rec.company_owner.code|format_edrpou }}){% endif %}{% else %}{{ rec.person_owner }}{% endif %}, власник {{ rec.share }}% акцій {{ rec.emitent_name }} ({{ rec.EDRPOU|format_edrpou }})
 {% endblock %}
 
 {% block description %}
