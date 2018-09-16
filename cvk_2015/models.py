@@ -46,6 +46,8 @@ class CVK2015Model(AbstractDataset):
             
             if len(splits) == 2:
                 companies.add(splits[1])
+                dt["body_name"] = splits[1]
+                dt["body_region"] = dt["body"].replace(dt["body_name"], "").strip()
             else:
                 logger.warning("Cannot parse body name out of {}".format(dt["body"]))
 

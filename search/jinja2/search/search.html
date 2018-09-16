@@ -2,6 +2,12 @@
 
 {% block container_class %}sidebar-o sidebar-inverse side-scroll main-content-narrow page-header-fixed page-header-inverse{% endblock %}
 
+{% block title %}{{ query }} — Ring, зручний пошук по відкритим даним України{% endblock %}
+
+{% block description %}Результати пошуку по джерелах {% for ds in datasources if ds.name in enabled_datasources %}{{ ds.verbose_name }}{% if not loop.last %}, {% endif %}{% endfor %}
+{% endblock %}
+
+
 {% block content %}
     <div class="content">
         <!-- Search -->

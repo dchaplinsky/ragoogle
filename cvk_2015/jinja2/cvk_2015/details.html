@@ -2,6 +2,12 @@
 
 {% block container_class %}sidebar-o sidebar-inverse side-scroll main-content-narrow  page-header-fixed page-header-inverse{% endblock %}
 
+{% block title %}{{ rec.name }}, кандидат від {{ rec.party }} до органу {{ rec.body_name }}{% endblock %}
+
+{% block description %}
+Інформація з реєстру Центральної виборчой комісії України про учасників місцевих виборів 2015-го року до {{ rec.body_name }} у {{ rec.body_region }}.
+{% endblock %}
+
 {% block content %}
 <!-- Page Content -->
 <div class="content" itemscope="" itemtype="http://schema.org/Person">
