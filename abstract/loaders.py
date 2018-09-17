@@ -22,6 +22,7 @@ class FileLoader(object):
     encoding = "utf-8"
     chunk_size = 1000
     last_updated_param_is_required = False
+    last_updated_path = None
 
     def __init__(self, *args, **kwargs):
         self._pathes = {}
@@ -106,6 +107,11 @@ class FileLoader(object):
 
         return sha1(json.dumps(dct).encode("utf-8")).hexdigest()
 
+    def get_last_updated(self, obj):
+        assert self.last_updated_path
+
+        return timezone.make_aware(dt_parse(jmespath.search(self.last_updated_path, obj)))
+
     def handle_details(self, *args, **options):
         if options.get("last_updated_from_dataset"):
             last_updated = timezone.make_aware(
@@ -127,6 +133,9 @@ class FileLoader(object):
                 ):
                     try:
                         item = self.preprocess(item, options)
+                        if self.last_updated_path is not None:
+                            last_updated = self.get_last_updated(item)
+
                         successful += 1
                     except Exception as e:
                         logger.error(

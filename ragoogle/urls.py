@@ -20,6 +20,7 @@ urlpatterns = [
     path('search/suggest', SuggestView.as_view(), name="search>suggest"),
 
     path('smida/', include("smida.urls")),
+    path('smida_reports/', include("smida_reports.urls")),
     path('vkks/', include("vkks.urls")),
     path('cvk_2015/', include("cvk_2015.urls")),
     path('admin/', admin.site.urls),

@@ -16,9 +16,9 @@ class SmidaConfig(AppConfig):
     
     @property
     def sitemap(self):
-        from .sitemaps import SMIDASitemap
+        from .sitemaps import SmidaSitemap
 
-        return SMIDASitemap
+        return SmidaSitemap
 
     elastic_model = ElasticSmidaModel
     elastic_index = smida_idx

@@ -1,0 +1,184 @@
+{% extends "search/base.html" %}
+
+{% block container_class %}sidebar-o sidebar-inverse side-scroll main-content-narrow  page-header-fixed page-header-inverse{% endblock %}
+
+{% block title %}
+{{ rec.report_title.D_NAME }} ({{ rec.report_title.D_EDRPOU|format_edrpou }}) — звіт до НКЦПФР {% if rec.report_title.STD != rec.report_title.FID %}з {{ rec.report_title.STD|date }} по {{ rec.report_title.FID|date }}{% else %} на {{ rec.report_title.STD|date }}{% endif %}{% endblock %}
+
+{% block description %}
+Інформація з загальнодоступної інформаційної бази даних 
+Національної комісії з цінних паперів та фондового ринку про ринок цінних паперів щодо звіту {{ rec.report_title.D_NAME }} ({{ rec.report_title.D_EDRPOU|format_edrpou }})
+{% endblock %}
+
+{% block content %}
+<!-- Page Content -->
+<div class="content" itemscope="" itemtype="http://schema.org/Organization">
+    <!-- Frequently Asked Questions -->
+    <h1 class="content-heading">
+        <span itemprop="name">{{ rec.report_title.D_NAME }}</span> (<span itemprop="taxID">{{ rec.report_title.D_EDRPOU|format_edrpou }}</span>), звіт {% if rec.report_title.STD != rec.report_title.FID %}з {{ rec.report_title.STD|date }} по {{ rec.report_title.FID|date }}{% else %} на {{ rec.report_title.STD|date }}{% endif %}
+    </h1>
+
+    <div class="block document-details">
+        <div class="block-header block-header-default">
+            <h2 class="block-title">Детальна інформація: </h2>
+            <div class="block-options">
+                <button type="button" class="btn-block-option" onclick="Edrdr.helpers('print-page');">
+                    <i class="si si-printer"></i> Друкувати
+                </button>
+                <button type="button" class="btn-block-option" data-toggle="block-option"
+                        data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
+            </div>
+        </div>
+        <div class="block-content">
+            <div class="table-responsive push">
+                <table class="table table-bordered table-hover">
+                    {% if rec.detailed_title.E_NAME %}
+                    <tr>
+                        <th>Повна назва</th>
+                        <td itemprop="legalName">
+                            {{ rec.detailed_title.E_NAME }}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% if rec.detailed_title.ADR_WWW %}
+                    <tr>
+                        <th>Веб-сторінка</th>
+                        <td>
+                            <a href="{% if "http" not in rec.detailed_title.ADR_WWW %}http://{% endif %}{{ rec.detailed_title.ADR_WWW }}" target="_blank">{{ rec.detailed_title.ADR_WWW }}</a>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% if rec.detailed_title.DAT_ODV %}
+                    <tr>
+                        <th>Річна інформація опублікована</th>
+                        <td>
+                            {{ rec.detailed_title.DAT_ODV|date }}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% if rec.detailed_title.DAT_PODP %}
+                    <tr>
+                        <th>Дата підпису</th>
+                        <td>
+                            {{ rec.detailed_title.DAT_PODP|date }}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% if rec.detailed_title.DAT_WWW %}
+                    <tr>
+                        <th>Дата розміщення в мережі</th>
+                        <td>
+                            {{ rec.detailed_title.DAT_WWW|date }}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% if rec.detailed_title.DAT_ROZM %}
+                    <tr>
+                        <th>Дата розміщення</th>
+                        <td>
+                            {{ rec.detailed_title.DAT_ROZM|date }}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% if rec.detailed_title.E_CONT or rec.detailed_title.E_ADRES or rec.detailed_title.E_POST or rec.detailed_title.E_RAYON or rec.detailed_title.E_STREET %}
+                    <tr>
+                        <th>Адреса</th>
+                        <td itemprop="address">
+                            {% if rec.detailed_title.E_CONT %}{{ rec.detailed_title.E_CONT }}{% endif %}
+                            {% if rec.detailed_title.E_ADRES %}{{ rec.detailed_title.E_ADRES }}{% endif %}
+                            {% if rec.detailed_title.E_POST %}{{ rec.detailed_title.E_POST }}{% endif %}
+                            {% if rec.detailed_title.E_RAYON %}{{ rec.detailed_title.E_RAYON }}{% endif %}
+                            {% if rec.detailed_title.E_STREET %}{{ rec.detailed_title.E_STREET }}{% endif %}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% if rec.detailed_title.E_PHONE or rec.detailed_title.E_MAIL or rec.detailed_title.E_FAX %}
+                    <tr itemprop="contactPoint" itemscope="" itemtype="http://schema.org/ContactPoint">
+                        <th>Контактна інформація</th>
+                        <td>
+                            <meta itemprop="contactType" content="sales">
+                            {% if rec.detailed_title.E_FAX %}<span itemprop="faxNumber">{% if not rec.detailed_title.E_FAX.startswith("+") %}+38{% endif %}{{ rec.detailed_title.E_FAX }}</span><br/>{% endif %}
+                            {% if rec.detailed_title.E_PHONE %}<span itemprop="telephone">{% if not rec.detailed_title.E_PHONE.startswith("+") %}+38{% endif %}{{ rec.detailed_title.E_PHONE }} </span><br/>{% endif %}
+                            {% if rec.detailed_title.E_MAIL %}<span itemprop="email">{{ rec.detailed_title.E_MAIL }}</span><br/>{% endif %}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% if rec.detailed_title.FIO_PODP or rec.detailed_title.POS_PODP %}
+                    <tr itemprop="employee" itemscope="" itemtype="http://schema.org/Person">
+                        <th>Підписано</th>
+                        <td>
+                            {% if rec.detailed_title.FIO_PODP %}<span itemprop="name">{{ rec.detailed_title.FIO_PODP }}</span><br/>
+                            {% for alt_name in parse_and_generate(rec.detailed_title.FIO_PODP) %}<meta itemprop="alternateName" content="{{ alt_name }}" />{% endfor %}
+                            {% endif %}
+                            {% if rec.detailed_title.POS_PODP %}<span>{{ rec.detailed_title.POS_PODP }} </span><br/>{% endif %}
+                        </td>
+                    </tr>
+                    {% endif %}
+                </table>
+
+                {% if rec.dismissed_associates %}
+                <h3 class="block-title">Відомості про зміну складу посадових осіб емітента:</h3>
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th>ПІБ</th>
+                        <th>Посада</th>
+                        <th>Паспортні дані</th>
+                        <th>Зміст</th>
+                    </tr>
+                    {% for assoc in rec.dismissed_associates %}
+                    <tr itemprop="employee" itemscope="" itemtype="http://schema.org/Person">
+                        <td><span itemprop="name">{{ assoc.P_I_B }}{% for alt_name in parse_and_generate(assoc.P_I_B) %}<meta itemprop="alternateName" content="{{ alt_name }}" />{% endfor %}</span></td>
+                        <td>{{ assoc.POSADA }}</td>
+                        <td>
+                            {% if assoc.DAT_PASP %}{{ assoc.DAT_PASP }}<br/>{% endif %}
+                            {% if assoc.NO_PASP %}{{ assoc.NO_PASP }}<br/>{% endif %}
+                            {% if assoc.ORG_PASP %}{{ assoc.ORG_PASP }}<br/>{% endif %}
+                            {% if assoc.OSVITA %}Освіта: {{ assoc.OSVITA }}<br/>{% endif %}
+                            {% if assoc.RIK and assoc.RIK != '0' %}Рік народження: {{ assoc.RIK }}<br/>{% endif %}
+                        </td>
+                        <td>
+                            {% if assoc.ZMIST %}<p>{{ assoc.ZMIST }}</p>{% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% endif %}
+
+                {% if rec.associates %}
+                <h3 class="block-title">Відомості про посадових осіб емітента:</h3>
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th>ПІБ</th>
+                        <th>Посада</th>
+                        <th>Паспортні дані</th>
+                        <th>Попередня посада</th>
+                        <th>Опис</th>
+                    </tr>
+                    {% for assoc in rec.associates %}
+                    <tr itemprop="employee" itemscope="" itemtype="http://schema.org/Person">
+                        <td><span itemprop="name">{{ assoc.P_I_B }}{% for alt_name in parse_and_generate(assoc.P_I_B) %}<meta itemprop="alternateName" content="{{ alt_name }}" />{% endfor %}</span></td>
+                        <td>{{ assoc.POSADA }}</td>
+                        <td>
+                            {% if assoc.DAT_PASP %}{{ assoc.DAT_PASP }}<br/>{% endif %}
+                            {% if assoc.NO_PASP %}{{ assoc.NO_PASP }}<br/>{% endif %}
+                            {% if assoc.ORG_PASP %}{{ assoc.ORG_PASP }}<br/>{% endif %}
+                            {% if assoc.OSVITA %}Освіта: {{ assoc.OSVITA }}<br/>{% endif %}
+                            {% if assoc.RIK and assoc.RIK != '0' %}Рік народження: {{ assoc.RIK }}<br/>{% endif %}
+                        </td>
+                        <td>
+                            {% if assoc.OPYS %}<p>{{ assoc.OPYS }}</p>{% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% endif %}
+            </div>
+            <a href="{{ rec.external_url() }}" target="_blank">Посилання на оригінал</a>
+            <br/>
+            <small>
+                Дата розміщення: {{ rec.timestamp|datetime }}
+            </small>
+        </div>
+    </div>
+</div>
+{% endblock %}

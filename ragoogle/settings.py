@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "nacp_declarations.apps.NACPDeclarationsConfig",
     "paper_declarations.apps.PaperDeclarationsConfig",
     "cvk_2015.apps.CVK2015Config",
+    "smida_reports.apps.SmidaReportConfig",
 
     # Generalized search
     "search",

@@ -1,0 +1,16 @@
+{% extends "abstract/base_infocard.html" %}
+
+{% block header %}
+    <div class="edrpou">{{ res.report_title.D_EDRPOU|format_edrpou }}</div>
+    <h3 class="name">
+        {{ res.report_title.D_NAME }}
+    </h3>
+{% endblock %}
+
+{% block description %}
+    {% if res.report_title.STD != res.report_title.FID %}
+        Звіт з {{ res.report_title.STD|date }} по {{ res.report_title.FID|date }}
+    {% else %}
+        Звіт на {{ res.report_title.STD|date }}
+    {% endif %}
+{% endblock %}
