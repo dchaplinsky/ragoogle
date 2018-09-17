@@ -166,6 +166,9 @@
                             {% if assoc.RIK and assoc.RIK != '0' %}Рік народження: {{ assoc.RIK }}<br/>{% endif %}
                         </td>
                         <td>
+                            {% if assoc.PO_POSAD %}{{ assoc.PO_POSAD }}{% endif %}
+                        </td>
+                        <td>
                             {% if assoc.OPYS %}<p>{{ assoc.OPYS }}</p>{% endif %}
                         </td>
                     </tr>

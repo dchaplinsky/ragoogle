@@ -6,11 +6,12 @@ import jmespath
 from dateutil.parser import parse as dt_parse
 from names_translator.name_utils import (
     parse_and_generate,
-    autocomplete_suggestions
+    autocomplete_suggestions,
+    try_to_fix_mixed_charset
 )
 
 from abstract.models import AbstractDataset
-from abstract.tools.companies import generate_edrpou_options
+from abstract.tools.companies import generate_edrpou_options, deal_with_mixed_lang
 from abstract.tools.languages import is_eng
 
 
@@ -73,18 +74,19 @@ class SmidaReportModel(AbstractDataset):
             addresses.add(address)
 
             res["detailed_title"] = title
-            companies.add(title.get("E_NAME"))
+            companies |= deal_with_mixed_lang(title.get("E_NAME"))
 
             if title.get("FIO_PODP"):
-                persons |= parse_and_generate(
-                    title["FIO_PODP"], title["POS_PODP"] or ""
-                )
+                for p in deal_with_mixed_lang(title["FIO_PODP"]):
+                    persons |= parse_and_generate(
+                        p, title["POS_PODP"] or ""
+                    )
 
-                names_autocomplete |= autocomplete_suggestions(title["FIO_PODP"])
+                    names_autocomplete |= autocomplete_suggestions(p)
 
         res["report_title"] = report_title
         companies |= generate_edrpou_options(report_title.get("D_EDRPOU"))
-        companies.add(report_title.get("D_NAME"))
+        companies |= deal_with_mixed_lang(report_title.get("D_NAME"))
 
         associates = self.current_persons_jmespath.search(dt)
         dismissed_associates = self.fired_persons_jmespath.search(dt)
@@ -93,7 +95,9 @@ class SmidaReportModel(AbstractDataset):
         res["dismissed_associates"] = dismissed_associates
 
         for assoc in associates + dismissed_associates:
-            assoc["DAT_PASP"] = assoc.get("DAT_PASP", "") or ""
+            assoc["DAT_PASP"] = assoc.get("DAT_PASP")
+            if assoc["DAT_PASP"]:
+                assoc["DAT_PASP"] = dt_parse(assoc["DAT_PASP"])
 
             full_name = assoc.get("P_I_B", "") or ""
 
@@ -104,12 +108,8 @@ class SmidaReportModel(AbstractDataset):
                 # TODO: better word splitting
                 for chunk in full_name.split():
                     # TODO: better detection of latin
-                    chunk = (
-                        chunk.replace("i", "і")
-                        .replace("I", "І")
-                        .replace("o", "о")
-                        .replace("O", "О")
-                    )
+                    chunk = try_to_fix_mixed_charset(chunk)
+
                     if (
                         is_eng(chunk)
                         or chunk.startswith("(")
@@ -128,8 +128,14 @@ class SmidaReportModel(AbstractDataset):
                     )
 
                     names_autocomplete |= autocomplete_suggestions(" ".join(parsed_chunks))
+
+                    persons |= parse_and_generate(
+                        full_name, assoc.get("POSADA", "") or ""
+                    )
+                    names_autocomplete |= autocomplete_suggestions(full_name)
                 else:
                     companies.add(" ".join(parsed_chunks))
+                    companies |= deal_with_mixed_lang(full_name)
 
 
         names_autocomplete |= companies
