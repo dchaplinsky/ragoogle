@@ -8,4 +8,4 @@ class CVK2015Sitemap(Sitemap):
     limit = 50000
 
     def items(self):
-        return CVK2015Model.objects.order_by("pk")
+        return CVK2015Model.objects.only("id", "last_updated_from_dataset").order_by("pk")

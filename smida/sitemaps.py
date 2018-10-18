@@ -8,7 +8,7 @@ class SmidaSitemap(Sitemap):
     limit = 50000
 
     def items(self):
-        return SmidaModel.objects.order_by("pk")
+        return SmidaModel.objects.only("id", "last_updated_from_dataset").order_by("pk")
 
     def lastmod(self, obj):
         return obj.last_updated_from_dataset
