@@ -31,6 +31,7 @@
         </div>
         <div class="block-content">
             <div class="table-responsive push">
+                {% if detailed_title %}
                 <table class="table table-bordered table-hover">
                     {% if rec.detailed_title.E_NAME %}
                     <tr>
@@ -115,6 +116,7 @@
                     </tr>
                     {% endif %}
                 </table>
+                {% endif %}
 
                 {% if rec.dismissed_associates %}
                 <h3 class="block-title">Відомості про зміну складу посадових осіб емітента:</h3>
