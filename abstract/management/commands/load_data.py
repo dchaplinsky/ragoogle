@@ -14,7 +14,6 @@ class Command(BaseCommand):
             if hasattr(config, "loader_class"):
                 loader = config.loader_class()
                 subp = subparsers.add_parser(
-                    cmd=self,
                     name=app_label,
                     help="{} dataset".format(config.verbose_name),
                 )
