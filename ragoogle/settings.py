@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     "paper_declarations.apps.PaperDeclarationsConfig",
     "cvk_2015.apps.CVK2015Config",
     "smida_reports.apps.SmidaReportConfig",
+    "dabi_licenses.apps.DabiLicensesConfig",
 
     # Generalized search
     "search",

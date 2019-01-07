@@ -1,6 +1,5 @@
 from elasticsearch_dsl import (
     DocType,
-    Keyword,
     Text,
     Index,
     analyzer,

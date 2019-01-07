@@ -134,7 +134,14 @@ class FileLoader(object):
                     try:
                         item = self.preprocess(item, options)
                         if self.last_updated_path is not None:
-                            last_updated = self.get_last_updated(item)
+                            try:
+                                last_updated = self.get_last_updated(item)
+                            except ValueError as e:
+                                logger.error(
+                                    "Cannot parse last_updated date in rec {}, error message was: {}".format(i, e)
+                                )
+
+                                last_updated = timezone.now()
 
                         successful += 1
                     except Exception as e:

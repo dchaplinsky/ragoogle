@@ -23,6 +23,7 @@ urlpatterns = [
     path('smida_reports/', include("smida_reports.urls")),
     path('vkks/', include("vkks.urls")),
     path('cvk_2015/', include("cvk_2015.urls")),
+    path('dabi_licenses/', include("dabi_licenses.urls")),
     path('admin/', admin.site.urls),
 
     path('sitemap.xml',
