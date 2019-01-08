@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     "cvk_2015.apps.CVK2015Config",
     "smida_reports.apps.SmidaReportConfig",
     "dabi_licenses.apps.DabiLicensesConfig",
+    "dabi_registry.apps.DabiRegistryConfig",
 
     # Generalized search
     "search",

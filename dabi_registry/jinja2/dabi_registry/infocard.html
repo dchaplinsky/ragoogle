@@ -1,0 +1,19 @@
+{% extends "abstract/base_infocard.html" %}
+
+{% block header %}
+    <div class="edrpou">{{ res.number }}</div>
+    <h3 class="name">
+        {{ res.customer }}<br/>
+        {{ res.document }}
+    </h3>
+{% endblock %}
+
+{% block description %}
+    <strong>Категорія:</strong> {{ res.cat }} <br />
+    <strong>Технічний нагляд:</strong> {{ res.tech_oversee }} <br />
+    <strong>Проектувальник:</strong> {{ res.designer }} <br />
+    <strong>Авторський нагляд:</strong> {{ res.authors_oversee }} <br />
+    <strong>Підрядник:</strong> {{ res.contractor }} <br />
+    <br/>
+    {{ res.land_plot_info }}
+{% endblock %}
