@@ -32,11 +32,8 @@ class Command(BaseCommand):
                 sources.append(app_label)
 
         parser.add_argument(
-            "datasource",
-            choices=sources,
-            help="Which source should be reindexed"
-        )        
-
+            "datasource", choices=sources, help="Which source should be reindexed"
+        )
 
     def bulk_write(self, conn, docs_to_index):
         for response in parallel_bulk(conn, (d.to_dict(True) for d in docs_to_index)):
@@ -76,4 +73,6 @@ class Command(BaseCommand):
                     docs_to_index = []
 
         self.bulk_write(conn, docs_to_index)
-        self.stdout.write("{} of {} records indexed into ES".format(qs.count(), config.name))
+        self.stdout.write(
+            "{} of {} records indexed into ES".format(qs.count(), config.name)
+        )
