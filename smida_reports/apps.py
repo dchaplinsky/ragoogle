@@ -1,9 +1,9 @@
-from django.apps import AppConfig
+from abstract.apps import AbstractConfig
 from .loader import SmidaReportLoader
 from .elastic_models import ElasticSmidaReportModel, smida_report_idx
 
 
-class SmidaReportConfig(AppConfig):
+class SmidaReportConfig(AbstractConfig):
     name = "smida_reports"
     verbose_name = "Звіти акціонерних товариств СМІДА"
     loader_class = SmidaReportLoader

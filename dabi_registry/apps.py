@@ -1,9 +1,9 @@
-from django.apps import AppConfig
+from abstract.apps import AbstractConfig
 from .loader import DabiRegistryLoader
 from .elastic_models import ElasticDabiRegistryModel, dabi_registry_idx
 
 
-class DabiRegistryConfig(AppConfig):
+class DabiRegistryConfig(AbstractConfig):
     name = "dabi_registry"
 
     verbose_name = "Реєстр дозволів ДАБІ"

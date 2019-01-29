@@ -1,8 +1,8 @@
-from django.apps import AppConfig
+from abstract.apps import AbstractConfig
 from .elastic_models import ElasticMinionModel, minions_idx
 
 
-class PosipakyInfoConfig(AppConfig):
+class PosipakyInfoConfig(AbstractConfig):
     name = 'posipaky_info'
     verbose_name = "Помічники народних депутатів"
     elastic_model = ElasticMinionModel

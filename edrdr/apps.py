@@ -1,8 +1,8 @@
-from django.apps import AppConfig
+from abstract.apps import AbstractConfig
 from .elastic_models import ElasticEDRDRModel, edrdr_idx
 
 
-class EDRDRConfig(AppConfig):
+class EDRDRConfig(AbstractConfig):
     name = 'edrdr'
     verbose_name = "Єдиний державний реєстр юросіб (ЄДР)"
     elastic_model = ElasticEDRDRModel

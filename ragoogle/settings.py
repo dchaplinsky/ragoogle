@@ -215,6 +215,7 @@ PROXY = None
 
 NUM_THREADS = 8
 CATALOG_PER_PAGE = 24
+MAX_PAGES = 1000
 
 # Setup Elasticsearch default connection
 ELASTICSEARCH_CONNECTIONS = {"default": {"hosts": "localhost", "timeout": 30}}

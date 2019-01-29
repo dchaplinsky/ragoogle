@@ -16,6 +16,7 @@ from search.search_tools import (
 )
 
 from search.paginator import paginated
+from search.api import serialize_for_api
 
 
 class HomeView(TemplateView):
@@ -174,4 +175,16 @@ class SearchView(TemplateView):
             }
         )
 
-        return self.render_to_response(context)
+        if request.GET.get("format", "html") == "json":
+            del context["view"]
+            return JsonResponse(serialize_for_api(context), safe=False)
+        else:
+            return self.render_to_response(context)
+
+
+class AboutSearchView(TemplateView):
+    template_name = "cms/about_search.html"
+
+
+class AboutAPIView(TemplateView):
+    template_name = "cms/about_api.html"

@@ -55,10 +55,10 @@
             <div class="p-10 bg-white push">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link{% if search_type == "strict" %} active{% endif %}" href="{{ url("search>results") }}?{{ updated_querystring(request, {'search_type': "strict"}) }}" data-category-link="all">{{ _("Повне співпадіння") }} ({% if search_type == "strict" %}{{ strict_count }}{% else %}{% if strict_count >= base_count %}+{% endif %}{{ strict_count - base_count }}{% endif %})</a>
+                        <a class="nav-link{% if search_type == "strict" %} active{% endif %}" href="{{ url("search>results") }}?{{ updated_querystring(request, {'search_type': "strict"}) }}" data-category-link="all">{{ _("Повний збіг") }} ({% if search_type == "strict" %}{{ strict_count }}{% else %}{% if strict_count >= base_count %}+{% endif %}{{ strict_count - base_count }}{% endif %})</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link{% if search_type == "loose" %} active{% endif %}" href="{{ url("search>results") }}?{{ updated_querystring(request, {'search_type': "loose"}) }}" data-category-link="ghata">{{ _("Неповне співпадіння") }} ({% if search_type == "loose" %}{{ loose_count }}{% else %}{% if loose_count >= base_count %}+{% endif %}{{ loose_count - base_count }}{% endif %})</a>
+                        <a class="nav-link{% if search_type == "loose" %} active{% endif %}" href="{{ url("search>results") }}?{{ updated_querystring(request, {'search_type': "loose"}) }}" data-category-link="ghata">{{ _("Неповний збіг") }} ({% if search_type == "loose" %}{{ loose_count }}{% else %}{% if loose_count >= base_count %}+{% endif %}{{ loose_count - base_count }}{% endif %})</a>
                     </li>
                 </ul>
             </div>

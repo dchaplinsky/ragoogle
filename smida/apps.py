@@ -1,9 +1,9 @@
-from django.apps import AppConfig
+from abstract.apps import AbstractConfig
 from .loader import SmidaLoader
 from .elastic_models import ElasticSmidaModel, smida_idx
 
 
-class SmidaConfig(AppConfig):
+class SmidaConfig(AbstractConfig):
     name = "smida"
     verbose_name = "Власники значної частки СМІДА"
     loader_class = SmidaLoader

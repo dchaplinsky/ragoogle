@@ -1,9 +1,9 @@
-from django.apps import AppConfig
+from abstract.apps import AbstractConfig
 from .loader import CVK2015Loader
 from .elastic_models import ElasticCVK2015Model, cvk_2015_idx
 
 
-class CVK2015Config(AppConfig):
+class CVK2015Config(AbstractConfig):
     name = "cvk_2015"
     verbose_name = "Учасники місцевих виборів 2015-го року"
     loader_class = CVK2015Loader

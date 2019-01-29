@@ -1,8 +1,8 @@
-from django.apps import AppConfig
+from abstract.apps import AbstractConfig
 from .elastic_models import ElasticGarnahataModel, garnahata_idx
 
 
-class GarnahataInUaConfig(AppConfig):
+class GarnahataInUaConfig(AbstractConfig):
     name = 'garnahata_in_ua'
     verbose_name = "Реєстр власників елітної нерухомості"
     elastic_model = ElasticGarnahataModel

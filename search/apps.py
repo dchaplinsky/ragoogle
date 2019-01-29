@@ -1,5 +1,5 @@
-from django.apps import AppConfig
+from abstract.apps import AbstractConfig
 
 
-class SearchConfig(AppConfig):
+class SearchConfig(AbstractConfig):
     name = 'search'

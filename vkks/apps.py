@@ -1,9 +1,9 @@
-from django.apps import AppConfig
+from abstract.apps import AbstractConfig
 from .elastic_models import ElasticVKKSModel, vkks_idx
 from .loader import VKKSLoader
 
 
-class VKKSConfig(AppConfig):
+class VKKSConfig(AbstractConfig):
     name = "vkks"
     verbose_name = "Декларації родинних зв'язків суддів та кандидатів"
     loader_class = VKKSLoader

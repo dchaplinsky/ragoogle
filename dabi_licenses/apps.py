@@ -1,9 +1,9 @@
-from django.apps import AppConfig
+from abstract.apps import AbstractConfig
 from .loader import DabiLicensesLoader
 from .elastic_models import ElasticDabiLicenseModel, dabi_licenses_idx
 
 
-class DabiLicensesConfig(AppConfig):
+class DabiLicensesConfig(AbstractConfig):
     name = "dabi_licenses"
 
     verbose_name = "Ліцензії ДАБІ"
