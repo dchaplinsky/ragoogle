@@ -91,8 +91,14 @@ class SearchView(TemplateView):
         query = request.GET.get("q", "")
         search_type = request.GET.get("search_type", "strict")
         is_addr = request.GET.get("is_addr", "false") == "true"
+        entities = request.GET.get("entities", "all")
+
         if search_type not in ["strict", "loose"]:
             search_type = "strict"
+
+        if entities not in ["all", "addresses", "persons", "companies", "countries"]:
+            entities = "all"
+
 
         base_q = Search(
             index=get_all_enabled_indices(request.GET.getlist("datasources"))
@@ -108,7 +114,7 @@ class SearchView(TemplateView):
 
             if not is_addr:
                 strict_query = base_q.query(
-                    "match_phrase", all={"query": query, "slop": 6}
+                    "match_phrase", **{entities: {"query": query, "slop": 6}}
                 )
             else:
                 no_zip_q = re.sub(r"\b\d{5,}\W", "", query)
@@ -118,10 +124,12 @@ class SearchView(TemplateView):
 
             loose_query = base_q.query(
                 "match",
-                all={
-                    "query": query,
-                    "operator": "or",
-                    "minimum_should_match": should_match,
+                **{
+                    entities: {
+                        "query": query,
+                        "operator": "or",
+                        "minimum_should_match": should_match,
+                    }
                 },
             )
 
@@ -149,10 +157,7 @@ class SearchView(TemplateView):
         results = qs.highlight_options(
             order="score", pre_tags=['<u class="match">'], post_tags=["</u>"]
         ).highlight(
-            "*",
-            require_field_match=False,
-            fragment_size=100,
-            number_of_fragments=10,
+            "*", require_field_match=False, fragment_size=100, number_of_fragments=10
         )
 
         search_results = paginated(request, results)
