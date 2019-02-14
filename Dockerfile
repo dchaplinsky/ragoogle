@@ -11,6 +11,7 @@ ENV VERSION=${version} \
 		PYTHONPATH=${root} PREFIX=${root} \
 		STATIC_ROOT=/static MEDIA_ROOT=/media \
 		STATIC_ROOT_SOURCE=/static-source \
+		SOURCE_ROOT=/source \
 		APP_NAME="ragoogle.wsgi:application" APP_WORKERS="2"
 
 RUN [ "x${VERSION}" = "x" ] && echo -e '=== build-arg "version" is required for building an image ===' && exit 1 || exit 0
@@ -40,14 +41,14 @@ RUN apk add --no-cache --virtual .build-deps nodejs npm \
 		&& npm config set unsafe-perm true \
 		&& PREFIX=${root}/__build npm install -g sass uglify-js \
 		&& python -m compileall ${root} \
-		&& mkdir -p ${STATIC_ROOT} ${STATIC_ROOT_SOURCE} ${MEDIA_ROOT} \
+		&& mkdir -p ${STATIC_ROOT} ${STATIC_ROOT_SOURCE} ${MEDIA_ROOT} ${SOURCE_ROOT} \
     && PATH=${PATH}:${root}/__build/bin STATIC_ROOT=${STATIC_ROOT_SOURCE} python manage.py collectstatic \
 		&& apk del .build-deps \
 		&& rm -rf ${root}/__build ${root}/docker-entrypoint.sh
 
 ENTRYPOINT [ "docker-entrypoint.sh" ]
 
-VOLUME [ "${STATIC_ROOT}", "${MEDIA_ROOT}" ]
+VOLUME [ "${STATIC_ROOT}", "${MEDIA_ROOT}", "${SOURCE_ROOT}" ]
 
 EXPOSE 8000
 
