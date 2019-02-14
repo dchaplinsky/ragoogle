@@ -1,0 +1,17 @@
+{% extends "abstract/base_infocard.html" %}
+
+{% block header %}
+    <div class="edrpou">{{ res.owner_code }}</div>
+    <h3 class="name">
+        {{ res.owner_name }},
+        Дозвіл №{{ res.reg_no }}
+    </h3>
+{% endblock %}
+
+{% block description %}
+    {{ res.kind }}
+    <br/>
+    {{ res.obj }}
+    <br/>
+    {{ res.mineral }}
+{% endblock %}

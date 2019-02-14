@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     "smida_reports.apps.SmidaReportConfig",
     "dabi_licenses.apps.DabiLicensesConfig",
     "dabi_registry.apps.DabiRegistryConfig",
+    "geoinf_licenses.apps.GeoinfLicensesConfig",
 
     # Generalized search
     "search",
