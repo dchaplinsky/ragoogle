@@ -11,24 +11,32 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import raven
+
+def get_env_str(k, default):
+    return os.environ.get(k, default)
+
+def get_env_str_list(k, default=""):
+    if os.environ.get(k) is not None:
+        return os.environ.get(k).strip().split(" ")
+    return default
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "tg=jh69mhw%*rd)o93^e5d8gu6+2v!)y5dy+$o$o&qt_io*#)c"
+SECRET_KEY = get_env_str('SECRET_KEY', "tg=jh69mhw%*rd)o93^e5d8gu6+2v!)y5dy+$o$o&qt_io*#)c")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = get_env_str_list('ALLOWED_HOSTS', [])
 LANGUAGE_CODE = "uk"
 SITE_ID = 1
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = get_env_str('STATIC_ROOT', os.path.join(BASE_DIR, "static"))
 
 # Application definition
 
@@ -169,10 +177,10 @@ DATABASES = {
     "default": {
         # Strictly PostgreSQL
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "ragoogle",
-        "USER": "ragoogle",
-        "PASSWORD": "",
-        "HOST": "127.0.0.1",
+        "NAME": get_env_str('DB_NAME', "ragoogle"),
+        "USER": get_env_str('DB_USER', "ragoogle"),
+        "PASSWORD": get_env_str('DB_PASS', ""),
+        "HOST": get_env_str('DB_HOST', "127.0.0.1"),
         "PORT": "5432",
     }
 }
@@ -213,14 +221,19 @@ CKEDITOR_IMAGE_BACKEND = "pillow"
 
 STATIC_URL = "/static/"
 
-PROXY = None
+PROXY = get_env_str('PROXY', None)
 
-NUM_THREADS = 8
+NUM_THREADS = int(get_env_str('NUM_THREADS', '8'))
 CATALOG_PER_PAGE = 24
 MAX_PAGES = 1000
 
 # Setup Elasticsearch default connection
-ELASTICSEARCH_CONNECTIONS = {"default": {"hosts": "localhost", "timeout": 30}}
+ELASTICSEARCH_CONNECTIONS = {
+    "default": {
+        "hosts": get_env_str('ELASTICSEARCH_DSN', "localhost:9200"),
+        "timeout": 30
+    }
+}
 
 LOGGING = {
     'version': 1,
@@ -240,6 +253,17 @@ LOGGING = {
             'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
         }
     },
+}
+
+try:
+    GIT_VERSION = raven.fetch_git_sha(os.path.abspath(os.path.join(BASE_DIR, "..")))
+except raven.exceptions.InvalidGitRepository:
+    GIT_VERSION = "undef"
+    pass
+
+RAVEN_CONFIG = {
+    'dsn': get_env_str('SENTRY_DSN', None),
+    'release': get_env_str('VERSION', GIT_VERSION),
 }
 
 try:
