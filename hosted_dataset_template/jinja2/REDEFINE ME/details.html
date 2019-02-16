@@ -1,0 +1,45 @@
+{% templatetag openblock %} extends "search/base.html" {% templatetag closeblock %}
+
+{% templatetag openblock %} block container_class {% templatetag closeblock %}sidebar-o sidebar-inverse side-scroll main-content-narrow  page-header-fixed page-header-inverse{% templatetag openblock %} endblock {% templatetag closeblock %}
+
+{% templatetag openblock %} block title {% templatetag closeblock %}REDEFINE ME{% templatetag openblock %} endblock {% templatetag closeblock %}
+
+{% templatetag openblock %} block description {% templatetag closeblock %}
+REDEFINE ME
+{% templatetag openblock %} endblock {% templatetag closeblock %}
+
+{% templatetag openblock %} block content {% templatetag closeblock %}
+<!-- Page Content -->
+<div class="content" itemscope="" itemtype="http://schema.org/Organization">
+    <!-- Frequently Asked Questions -->
+    <h1 class="content-heading">
+        REDEFINE ME
+    </h1>
+
+    <div class="block document-details">
+        <div class="block-header block-header-default">
+            <h2 class="block-title">Детальна інформація: </h2>
+            <div class="block-options">
+                <button type="button" class="btn-block-option" onclick="Edrdr.helpers('print-page');">
+                    <i class="si si-printer"></i> Друкувати
+                </button>
+                <button type="button" class="btn-block-option" data-toggle="block-option"
+                        data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
+            </div>
+        </div>
+        <div class="block-content">
+            <div class="table-responsive push">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th>REDEFINE ME</th>
+                        <td>REDEFINE ME</td>
+                    </tr>
+                </table>
+                {% templatetag openblock %} if rec.details_url {% templatetag closeblock %}
+                <a href="{% templatetag openvariable %} rec.details_url {% templatetag closevariable %}" target="_blank">Посилання на оригінал</a>
+                {% templatetag openblock %} endif {% templatetag closeblock %}
+            </div>
+        </div>
+    </div>
+</div>
+{% templatetag openblock %} endblock {% templatetag closeblock %}

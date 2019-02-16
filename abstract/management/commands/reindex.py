@@ -58,7 +58,7 @@ class Command(BaseCommand):
 
             conn.indices.put_settings(
                 index=ElasticModel._doc_type.index,
-                body={"index.max_result_window": int(Model.objects.count() * 1.1)},
+                body={"index.max_result_window": int(Model.objects.count() * 1.1 + 1)},
             )
 
         qs = Model.objects.filter()

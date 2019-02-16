@@ -1,0 +1,22 @@
+from abstract.loaders import FileLoader
+
+class {{ camel_case_app_name }}Loader(FileLoader):
+    # filetype = "REDEFINE ME"
+    # last_updated_param_is_required = False
+    # last_updated_path = "REDEFINE ME"
+
+    @property
+    def model(self):
+        from .models import {{ camel_case_app_name }}Model
+        return {{ camel_case_app_name }}Model
+
+    def preprocess(self, record, options):
+        assert set(self.get_dedup_fields()).issubset(
+            record.keys()
+        )
+
+        return record
+
+    def get_dedup_fields(self):
+        return ["REDEFINE_ME"]
+

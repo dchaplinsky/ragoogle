@@ -1,0 +1,67 @@
+{% extends "search/base.html" %}
+
+{% block container_class %}sidebar-o sidebar-inverse side-scroll main-content-narrow  page-header-fixed page-header-inverse{% endblock %}
+
+{% block title %}
+Містобудівні умови, видані {{ rec.customer }}
+{% endblock %}
+
+{% block description %}
+Містобудівні умови, видані КМДА для {{ rec.customer }} щодо {{ rec.obj }} за адресою {{ rec.address }}, м. Київ
+{% endblock %}
+
+{% block content %}
+<!-- Page Content -->
+<div class="content" itemscope="" itemtype="http://schema.org/Organization">
+    <!-- Frequently Asked Questions -->
+    <h1 class="content-heading">
+        Наказ департаменту містобудування та архітектури КМДА №{{ rec.order_no }} від {{ rec.order_date }}
+    </h1>
+
+    <div class="block document-details">
+        <div class="block-header block-header-default">
+            <h2 class="block-title">Детальна інформація: </h2>
+            <div class="block-options">
+                <button type="button" class="btn-block-option" onclick="Edrdr.helpers('print-page');">
+                    <i class="si si-printer"></i> Друкувати
+                </button>
+                <button type="button" class="btn-block-option" data-toggle="block-option"
+                        data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
+            </div>
+        </div>
+        <div class="block-content">
+            <div class="table-responsive push">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th>Замовник</th>
+                        <td>{{ rec.customer }}</td>
+                    </tr>
+                    <tr>
+                        <th>Назва об'єкта будівництва</th>
+                        <td>{{ rec.obj }}</td>
+                    </tr>
+                    <tr>
+                        <th>Адреса об'єкта будівництва</th>
+                        <td>{{ rec.address }}, м. Київ</td>
+                    </tr>
+                    {% if rec.changes %}
+                    <tr>
+                        <th>Інформація про внесення змін до містобудівних умов та обмежень</th>
+                        <td>{{ rec.changes }}</td>
+                    </tr>
+                    {% endif %}
+                    {% if rec.cancellation %}
+                    <tr>
+                        <th>Підстава для скасування або зупинення дії містобудівних умов та обмежень</th>
+                        <td>{{ rec.cancellation }}</td>
+                    </tr>
+                    {% endif %}
+                </table>
+                {% if rec.scan_url %}
+                <a href="{{ rec.scan_url }}" target="_blank">Посилання на оригінал</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

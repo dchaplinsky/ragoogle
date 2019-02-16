@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     "dabi_licenses.apps.DabiLicensesConfig",
     "dabi_registry.apps.DabiRegistryConfig",
     "geoinf_licenses.apps.GeoinfLicensesConfig",
+    "mbu.apps.MbuConfig",
 
     # Generalized search
     "search",

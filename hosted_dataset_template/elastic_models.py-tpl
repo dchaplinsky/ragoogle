@@ -1,0 +1,47 @@
+from django.template.loader import render_to_string
+from elasticsearch_dsl import Keyword
+from django.urls import reverse
+
+from abstract.elastic_models import (
+    BASIC_INDEX_SETTINGS,
+    AbstractDatasetMapping,
+    namesAutocompleteAnalyzer,
+    namesAutocompleteSearchAnalyzer,
+    ukrainianAddressesStopwordsAnalyzer,
+)
+from elasticsearch_dsl import DocType, Index
+
+{{ app_name|upper }}_INDEX = "ragoogle_{{ app_name }}"
+{{ app_name }}_idx = Index({{ app_name|upper }}_INDEX)
+{{ app_name }}_idx.settings(**BASIC_INDEX_SETTINGS)
+
+
+{{ app_name }}_idx.analyzer(namesAutocompleteAnalyzer)
+{{ app_name }}_idx.analyzer(namesAutocompleteSearchAnalyzer)
+{{ app_name }}_idx.analyzer(ukrainianAddressesStopwordsAnalyzer)
+
+
+@{{ app_name }}_idx.doc_type
+class Elastic{{ camel_case_app_name }}Model(AbstractDatasetMapping):
+    start_date = Keyword()
+    end_date = Keyword()
+
+    def render_infocard(self):
+        from .apps import {{ camel_case_app_name }}Config as AppConfig
+
+        return render_to_string(
+            "{{ app_name }}/infocard.html",
+            {
+                "res": self,
+                "url": self.get_absolute_url(),
+                "datasource_name": AppConfig.name,
+                "datasource_verbose_name": AppConfig.verbose_name,
+            },
+        )
+
+    def get_absolute_url(self):
+        return reverse('{{ app_name }}>details', kwargs={'pk': self._id})
+
+    class Meta:
+        index = {{ app_name|upper }}_INDEX
+        doc_type = "ragoogle_{{ app_name }}_doctype"

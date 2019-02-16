@@ -35,6 +35,7 @@ urlpatterns = [
     path("dabi_licenses/", include("dabi_licenses.urls")),
     path("dabi_registry/", include("dabi_registry.urls")),
     path("geoinf_licenses/", include("geoinf_licenses.urls")),
+    path("mbu/", include("mbu.urls")),
     path("admin/", admin.site.urls),
     path(
         "sitemap.xml",
