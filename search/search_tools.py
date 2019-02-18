@@ -26,3 +26,11 @@ def get_all_enabled_models(filter_by=None):
 
 def get_all_enabled_indices(filter_by=None):
     return [model._doc_type.index for model in get_all_enabled_models(filter_by)]
+
+
+def get_all_doctypes(filter_by=None):
+    return {
+        config.elastic_model._doc_type.name: config
+        for config in get_all_enabled_datasources()
+        if (filter_by is None) or (config.name in filter_by)
+    }

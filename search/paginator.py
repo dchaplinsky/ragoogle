@@ -47,7 +47,7 @@ class AbstractPage(Page):
         return {
             "paginator": self.paginator.to_api(),
             "number": self.number,
-            "object_list": self.object_list,
+            "object_list": self.object_list
         }
 
 
@@ -63,6 +63,13 @@ class ElasticPage(AbstractPage):
         if not isinstance(self.object_list, Response):
             self.object_list = self.object_list.execute()
         return self.object_list[index]
+
+    @property
+    def aggregations(self):
+        if not isinstance(self.object_list, Response):
+            self.object_list = self.object_list.execute()
+
+        return self.object_list.aggregations        
 
 
 class ElasticPageRangePaginator(Paginator):

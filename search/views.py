@@ -13,6 +13,7 @@ from search.search_tools import (
     get_all_enabled_indices,
     get_all_enabled_models,
     get_all_enabled_datasources,
+    get_all_doctypes,
 )
 
 from search.paginator import paginated
@@ -99,10 +100,11 @@ class SearchView(TemplateView):
         if entities not in ["all", "addresses", "persons", "companies", "countries"]:
             entities = "all"
 
-
         base_q = Search(
             index=get_all_enabled_indices(request.GET.getlist("datasources"))
         ).doc_type(*get_all_enabled_models())
+
+        doctypes = get_all_doctypes(request.GET.getlist("datasources"))
 
         if query:
             nwords = len(re.findall(r"\w{2,}", query))
@@ -159,8 +161,10 @@ class SearchView(TemplateView):
         ).highlight(
             "*", require_field_match=False, fragment_size=100, number_of_fragments=10
         )
+        results.aggs.bucket("count_by_type", "terms", field="_type")
 
         search_results = paginated(request, results)
+
         for res in search_results:
             res.hl = []
             for h_field in getattr(res.meta, "highlight", {}):
@@ -177,11 +181,13 @@ class SearchView(TemplateView):
                 "base_count": base_count,
                 "enabled_datasources": request.GET.getlist("datasources"),
                 "datasources": get_all_enabled_datasources(),
+                "doctypes_mapping": doctypes,
             }
         )
 
         if request.GET.get("format", "html") == "json":
             del context["view"]
+            del context["doctypes_mapping"]
             return JsonResponse(serialize_for_api(context), safe=False)
         else:
             return self.render_to_response(context)

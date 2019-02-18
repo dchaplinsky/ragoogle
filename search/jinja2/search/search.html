@@ -61,6 +61,16 @@
                         <a class="nav-link{% if search_type == "loose" %} active{% endif %}" href="{{ url("search>results") }}?{{ updated_querystring(request, {'search_type': "loose"}) }}" data-category-link="ghata">{{ _("Неповний збіг") }} ({% if search_type == "loose" %}{{ loose_count }}{% else %}{% if loose_count >= base_count %}+{% endif %}{{ loose_count - base_count }}{% endif %})</a>
                     </li>
                 </ul>
+
+                {% if search_results.aggregations and search_results.aggregations.count_by_type.buckets|length > 1 %}
+                    <ul class="nav nav-pills">
+                        {% for bucket in search_results.aggregations.count_by_type.buckets %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url("search>results") }}?{{ updated_querystring(request, {'datasources': doctypes_mapping[bucket.key].name}) }}" data-category-link="ghata">{{ doctypes_mapping[bucket.key].verbose_name }} ({{ bucket.doc_count }})</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
             </div>
             <div class="row items-push">
                 {% for res in search_results %}
