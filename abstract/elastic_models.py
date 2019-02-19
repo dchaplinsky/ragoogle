@@ -24,7 +24,12 @@ namesAutocompleteAnalyzer = analyzer(
 )
 
 namesAutocompleteSearchAnalyzer = analyzer(
-    "namesAutocompleteSearchAnalyzer", tokenizer=tokenizer("lowercase")
+    "namesAutocompleteSearchAnalyzer",
+    tokenizer=tokenizer("whitespace"),
+
+    filter=[
+        "lowercase"
+    ]
 )
 
 ukrainianAddressesStopwordsAnalyzer = analyzer(
