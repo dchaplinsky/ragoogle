@@ -20,5 +20,7 @@ $(function () {
     }
   );
 
-  //$('.select-multiselect').select2();
+  $("#clearall").click(function () {
+    $(this).closest('.form-group').find('.custom-control-input').prop('checked', $(this).prop('checked'));
+  });
 });

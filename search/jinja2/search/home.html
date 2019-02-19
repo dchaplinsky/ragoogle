@@ -1,10 +1,106 @@
 {% extends "search/base.html" %}
 
 {% block sidebars %}
+{% include "search/_right_sidebar.html" with context %}
+<nav id="sidebar">
+    <!-- Sidebar Scroll Container -->
+    <div id="sidebar-scroll">
+        <!-- Sidebar Content -->
+        <div class="sidebar-content">
+            <!-- Side Header -->
+            <div class="content-header content-header-fullrow px-15">
+                <!-- Mini Mode -->
+                <div class="content-header-section sidebar-mini-visible-b">
+                    <!-- Logo -->
+                    <span class="content-header-item font-w700 font-size-xl float-left animated fadeIn">
+                                                    <span class="text-dual-primary-dark">c</span><span
+                      class="text-primary">b</span>
+                                                </span>
+                    <!-- END Logo -->
+                </div>
+                <!-- END Mini Mode -->
+
+                <!-- Normal Mode -->
+                <div class="content-header-section text-center align-parent sidebar-mini-hidden">
+                    <!-- Close Sidebar, Visible only on mobile screens -->
+                    <button type="button" class="btn btn-circle btn-dual-secondary d-lg-none align-v-r"
+                            data-toggle="layout" data-action="sidebar_close">
+                        <i class="fa fa-times text-danger"></i>
+                    </button>
+                    <!-- END Close Sidebar -->
+
+                    <!-- Logo -->
+                    <div class="content-header-item site-logo-name">
+                        <a class="font-w700" href="{{ url("home") }}">
+                        <span class="svg-image inline-logo media-object">
+                                                            <svg preserveAspectRatio="xMidYMid" focusable="false">
+                                                                <use xlink:href="{{ static('img/sprite.svg') }}#logo-color"></use>
+                                                            </svg>
+                                                        </span>
+                        {% block side_sitename %}<span class="font-size-xl text-dual-primary-dark">RING</span>{%
+                        endblock %}
+                        </a>
+                    </div>
+                    <!-- END Logo -->
+                </div>
+                <!-- END Normal Mode -->
+            </div>
+            <!-- END Side Header -->
+
+            <!-- Side Navigation -->
+            <div class="content-side content-side-full">
+                {% block left_sidebar %}
+                {% endblock %}
+                <ul class="nav-main">
+                    <li class="nav-main-heading">
+                        <span class="sidebar-mini-hidden">Навігація</span>
+                    </li>
+                    <li>
+                        <a href="/">
+                            <i class="si si-info"></i>
+                            <span class="sidebar-mini-hide">Про проект</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url("about_search") }}">
+                        <i class="si si-docs"></i>
+                        <span class="sidebar-mini-hide">Інструкція з пошуку</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url("about_api") }}">
+                        <i class="si si-magic-wand"></i>
+                        <span class="sidebar-mini-hide">Відкритий API</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="mailto:bihus.info+ring@gmail.com">
+                            <i class="si si-envelope-letter"></i>
+                            <span class="sidebar-mini-hide">Зворотній зв'язок</span>
+                        </a>
+                    </li>
+                    <li style="padding: 9px 18px">
+                        <a style="padding: 8px 14px; color: white;" title="На головну"
+                           href="https://ring.org.ua"
+                           class="sidebar-mini-hide btn btn-primary min-width-125"
+                           type="button"><i style="position: static;" class="si si-home"></i>
+                            RING.org.ua</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- END Side Navigation -->
+        </div>
+        <!-- Sidebar Content -->
+    </div>
+    <!-- END Sidebar Scroll Container -->
+</nav>
+<!-- END Sidebar -->
+
+{% include "search/_page_header.html" with context %}
 {% endblock %}
 
 {% block body_class %}front{% endblock %}
-{% block container_class %}main-content-narrow{% endblock %}
+{% block container_class %}main-content-narrow sidebar-inverse side-scroll main-content-narrow  page-header-fixed page-header-inverse{% endblock %}
 
 {% block content %}
     <!-- Hero -->
@@ -46,6 +142,10 @@
                             <div class="block-content">
                                 <div class="form-group row">
                                     <div class="col-12">
+                                        <div class="custom-control custom-checkbox mb-5">
+                                            <input class="custom-control-input" type="checkbox" name="clearall" checked="checked" id="clearall">
+                                            <label class="custom-control-label" for="clearall">Всі</label>
+                                        </div>
                                         {% for ds in datasources %}
                                         <div class="custom-control custom-checkbox mb-5">
                                             <input class="custom-control-input" type="checkbox" name="datasources" checked="" id="datasources-{{ loop.index }}" value="{{ ds.name }}">

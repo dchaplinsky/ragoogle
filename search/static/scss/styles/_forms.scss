@@ -165,3 +165,11 @@ textarea.form-control {
 .br-10 {
     border-radius: 10px;
 }
+
+.nav-tabs-alt.nav-tabs-alt-classic {
+    background-color: #fbfbfc;
+
+    .nav-link.active {
+        background: white;
+    }
+}
