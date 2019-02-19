@@ -104,7 +104,7 @@ class SearchView(TemplateView):
             index=get_all_enabled_indices(request.GET.getlist("datasources"))
         ).doc_type(*get_all_enabled_models())
 
-        doctypes = get_all_doctypes(request.GET.getlist("datasources"))
+        doctypes = get_all_doctypes()
 
         if query:
             nwords = len(re.findall(r"\w{2,}", query))
