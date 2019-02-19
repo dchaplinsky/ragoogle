@@ -168,4 +168,18 @@
             overflow-y: hidden;
         }
     }
+
+    .front & {
+        &.page-header-inverse #page-header {
+            background: transparent;
+
+            .header-search-button {
+                display: none;
+            }
+        }
+
+        &.page-header-fixed #main-container {
+            padding-top: 0;
+        }
+    }
 }

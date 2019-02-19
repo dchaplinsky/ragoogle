@@ -38,6 +38,10 @@
                 <div class="block-content">
                     <div class="form-group row">
                         <div class="col-12">
+                            <div class="custom-control custom-checkbox mb-5">
+                                <input class="custom-control-input" type="checkbox" name="clearall" checked="checked" id="clearall">
+                                <label class="custom-control-label" for="clearall">Всі</label>
+                            </div>
                             {% for ds in datasources %}
                             <div class="custom-control custom-checkbox mb-5">
                                 <input class="custom-control-input" type="checkbox" name="datasources" {% if ds.name in enabled_datasources %}checked="" {% endif %} id="datasources-{{ loop.index }}" value="{{ ds.name }}">
@@ -52,8 +56,8 @@
         <!-- END Search -->
 
         <div class="js-filter" data-numbers="true">
-            <div class="p-10 bg-white push">
-                <ul class="nav nav-pills">
+            <div class="block">
+                <ul class="nav nav-tabs nav-tabs-alt nav-tabs-alt-classic js-tabs-enabled" data-toggle="tabs" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link{% if search_type == "strict" %} active{% endif %}" href="{{ url("search>results") }}?{{ updated_querystring(request, {'search_type': "strict"}) }}" data-category-link="all">{{ _("Повний збіг") }} ({% if search_type == "strict" %}{{ strict_count }}{% else %}{% if strict_count >= base_count %}+{% endif %}{{ strict_count - base_count }}{% endif %})</a>
                     </li>
@@ -61,16 +65,19 @@
                         <a class="nav-link{% if search_type == "loose" %} active{% endif %}" href="{{ url("search>results") }}?{{ updated_querystring(request, {'search_type': "loose"}) }}" data-category-link="ghata">{{ _("Неповний збіг") }} ({% if search_type == "loose" %}{{ loose_count }}{% else %}{% if loose_count >= base_count %}+{% endif %}{{ loose_count - base_count }}{% endif %})</a>
                     </li>
                 </ul>
-
-                {% if search_results.aggregations and search_results.aggregations.count_by_type.buckets|length > 1 %}
-                    <ul class="nav nav-pills">
-                        {% for bucket in search_results.aggregations.count_by_type.buckets %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url("search>results") }}?{{ updated_querystring(request, {'datasources': doctypes_mapping[bucket.key].name}) }}" data-category-link="ghata">{{ doctypes_mapping[bucket.key].verbose_name }} ({{ bucket.doc_count }})</a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
+                <div class="block-content tab-content">
+                    <div class="tab-pane active show" role="tabpanel">
+                        {% if search_results.aggregations and search_results.aggregations.count_by_type.buckets|length > 1 %}
+                        <ul class="nav nav-pills">
+                            {% for bucket in search_results.aggregations.count_by_type.buckets %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url("search>results") }}?{{ updated_querystring(request, {'datasources': doctypes_mapping[bucket.key].name}) }}" data-category-link="ghata">{{ doctypes_mapping[bucket.key].verbose_name }} ({{ bucket.doc_count }})</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
             <div class="row items-push">
                 {% for res in search_results %}
