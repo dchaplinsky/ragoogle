@@ -1,5 +1,5 @@
 import re
-from collections import defaultdict
+from collections import defaultdict, Counter, OrderedDict
 
 from django.http import JsonResponse
 from django.views import View
@@ -18,6 +18,7 @@ from search.search_tools import (
 
 from search.paginator import paginated
 from search.api import serialize_for_api
+from edrdr.elastic_models import ElasticEDRDRModel
 
 
 class HomeView(TemplateView):
@@ -32,16 +33,33 @@ class HomeView(TemplateView):
 
 
 class SuggestView(View):
+    def merge_sources(self, sources):
+        if not sources:
+            return []
+
+        models = get_all_doctypes()
+
+        res = []
+        seen = OrderedDict()
+        for s in sources:
+            if s in models:
+                model = models.get(s)
+                seen.setdefault(model.short_name, []).append(model.name)
+
+        return seen
+
     def get(self, request):
         q = request.GET.get("q", "").strip()
 
         suggestions = []
-        seen = set()
+        max_suggestions = 20
+
+        base_q = Search(
+            index=get_all_enabled_indices(request.GET.getlist("datasources"))
+        ).doc_type(*get_all_enabled_models())
 
         s = (
-            Search(index=get_all_enabled_indices(request.GET.getlist("datasources")))
-            .doc_type(*get_all_enabled_models())
-            .source(["names_autocomplete"])
+            base_q
             .highlight("names_autocomplete")
             .highlight_options(
                 order="score",
@@ -62,22 +80,60 @@ class SuggestView(View):
                     names_autocomplete__raw={"query": q, "boost": 2},
                 ),
             ],
-        )[:200]
+        )[:400]
 
-        res = s.execute()
+        res = s.source(False).execute()
+        seen = defaultdict(Counter)
 
         for r in res:
             if "names_autocomplete" in r.meta.highlight:
                 for candidate in r.meta.highlight["names_autocomplete"]:
+
                     if candidate.lower() not in seen:
                         suggestions.append(candidate)
-                        seen.add(candidate.lower())
+                    seen[candidate.lower()].update([r.meta.doc_type])
 
-        # Add number of sources where it was found
+        aux_requests_index = []
+        aux_requests = MultiSearch()
+
+        suggestions = suggestions[:max_suggestions]
+
+        # Pulling extra info on company names
+        aux_results_index = defaultdict(dict)
+        if len(q) > 5:
+            for k in suggestions:
+                sugg = k.replace("<strong>", "").replace("</strong>", "")
+
+                if len(sugg) > 5 and sugg.isdigit():
+                    aux_requests_index.append({"key": k, "type": "company"})
+
+                    aux_requests = aux_requests.add(
+                        ElasticEDRDRModel.search()
+                        .query("match_phrase", all={"query": sugg})
+                        .source(["latest_record"])[:1]
+                    )
+
+        if aux_requests_index:
+            aux_results = aux_requests.execute()
+
+            # Stitching it all together
+            for i, r in zip(aux_requests_index, aux_results):
+                aux_results_index[i["key"]][i["type"]] = r
 
         rendered_result = [
-            render_to_string("search/autocomplete.html", {"result": {"hl": k}})
-            for k in suggestions[:20]
+            render_to_string(
+                "search/autocomplete.html",
+                {
+                    "request": request,
+                    "result": {
+                        "hl": k,
+                        "q": k.replace("<strong>", "").replace("</strong>", ""),
+                        "company_data": aux_results_index[k].get("company", None),
+                        "sources_data": self.merge_sources(seen[k.lower()].keys()),
+                    },
+                },
+            )
+            for k in suggestions
         ]
 
         return JsonResponse(rendered_result, safe=False)

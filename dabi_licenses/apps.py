@@ -7,6 +7,7 @@ class DabiLicensesConfig(AbstractConfig):
     name = "dabi_licenses"
 
     verbose_name = "Ліцензії ДАБІ"
+    short_name = "ДАБІ"
     loader_class = DabiLicensesLoader
 
     @property
