@@ -7,6 +7,7 @@ class GeoinfLicensesConfig(AbstractConfig):
     name = "geoinf_licenses"
 
     verbose_name = "Ліцензії ДП Геоінформ"
+    short_name = "Геологія"
     loader_class = GeoinfLicensesLoader
 
     @property

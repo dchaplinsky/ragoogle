@@ -8,6 +8,10 @@ $(function() {
                 this.$element.closest("form").find("input").serialize())
                 .done(function(data) {
                     process(data);
+
+                    $("a.autocomplete-hint").on("click", function(e) {
+                        e.stopPropagation();
+                    });
                 })
         },
         matcher: function() {

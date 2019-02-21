@@ -7,6 +7,7 @@ class MbuConfig(AbstractConfig):
     name = "mbu"
 
     verbose_name = "Містобудівні умови м. Київа"
+    short_name = "КГГА"
     loader_class = MbuLoader
 
     @property

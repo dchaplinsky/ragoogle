@@ -17,6 +17,8 @@ def get_all_enabled_datasources():
 
 
 def get_all_enabled_models(filter_by=None):
+    filter_by = filter_by or None
+
     return [
         config.elastic_model
         for config in get_all_enabled_datasources()
@@ -29,6 +31,8 @@ def get_all_enabled_indices(filter_by=None):
 
 
 def get_all_doctypes(filter_by=None):
+    filter_by = filter_by or None
+
     return {
         config.elastic_model._doc_type.name: config
         for config in get_all_enabled_datasources()

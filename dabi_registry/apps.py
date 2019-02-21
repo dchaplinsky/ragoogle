@@ -7,6 +7,7 @@ class DabiRegistryConfig(AbstractConfig):
     name = "dabi_registry"
 
     verbose_name = "Реєстр дозволів ДАБІ"
+    short_name = "ДАБІ"
     loader_class = DabiRegistryLoader
 
     @property

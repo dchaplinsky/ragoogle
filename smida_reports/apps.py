@@ -6,6 +6,7 @@ from .elastic_models import ElasticSmidaReportModel, smida_report_idx
 class SmidaReportConfig(AbstractConfig):
     name = "smida_reports"
     verbose_name = "Звіти акціонерних товариств СМІДА"
+    short_name = "СМІДА"
     loader_class = SmidaReportLoader
 
     @property

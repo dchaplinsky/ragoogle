@@ -6,6 +6,7 @@ from .elastic_models import ElasticCVK2015Model, cvk_2015_idx
 class CVK2015Config(AbstractConfig):
     name = "cvk_2015"
     verbose_name = "Учасники місцевих виборів 2015-го року"
+    short_name = "Регіони"
     loader_class = CVK2015Loader
 
     @property

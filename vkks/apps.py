@@ -6,6 +6,7 @@ from .loader import VKKSLoader
 class VKKSConfig(AbstractConfig):
     name = "vkks"
     verbose_name = "Декларації родинних зв'язків суддів та кандидатів"
+    short_name = "ВККС"
     loader_class = VKKSLoader
 
     @property
