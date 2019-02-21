@@ -107,7 +107,7 @@
     <div class="bg-image" style="background-image: url({{ static('img/photos/sauron.gif') }});">
         <div class="hero bg-black-op">
             <div class="hero-inner">
-                <div class="content content-full text-center border-white-op-b">
+                <div class="content content-full text-center">
                     <h1 class="display-3 font-w700 mb-10 invisible" data-toggle="appear" data-class="animated fadeInDown">
                         <span class="svg-image inline-logo media-object">
                                 <svg preserveAspectRatio="xMidYMid" focusable="false">
@@ -116,7 +116,7 @@
                             </span>RING</span>
                     </h1>
                     <h2 class="font-w400 mb-50 invisible" data-toggle="appear" data-class="animated fadeInDown">Пошук в державних реєстрах та проектах Канцелярської сотні</h2>
-                    <form class="br-10 bg-white push col-sm-6 ml-auto mr-auto" action="{{ url('search>results') }}" method="get" _lpchecked="1" autocomplete="off">
+                    <form class="br-10 bg-white push col-sm-8 ml-auto mr-auto" action="{{ url('search>results') }}" method="get" _lpchecked="1" autocomplete="off">
                         <div class="input-group input-group-lg">
                             <input type="text" class="form-control search-form-q" name="q" data-provide="typeahead" id="search-form" placeholder="{{ _("Пошук") }}" data-endpoint="{{ url("search>suggest") }}" autocomplete="off">
                             <div class="input-group-append">
@@ -141,7 +141,7 @@
                             </div>
                             <div class="block-content">
                                 <div class="form-group row">
-                                    <div class="col-12">
+                                    <div class="col-12 data-sources-checkboxes">
                                         <div class="custom-control custom-checkbox mb-5">
                                             <input class="custom-control-input" type="checkbox" name="clearall" checked="checked" id="clearall">
                                             <label class="custom-control-label" for="clearall">Всі</label>

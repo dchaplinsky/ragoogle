@@ -11,7 +11,7 @@
 {% block content %}
     <div class="content">
         <!-- Search -->
-        <form class="push col-sm-6 ml-auto mr-auto" action="{{ url('search>results') }}" method="get" _lpchecked="1">
+        <form class="push col-sm-8 ml-auto mr-auto" action="{{ url('search>results') }}" method="get" _lpchecked="1">
             <div class="input-group input-group-lg">
                 <input type="text" class="form-control search-form-q" name="q" data-provide="typeahead" id="search-form" placeholder="{{ _("Пошук") }}" data-endpoint="{{ url("search>suggest") }}" value="{{ query }}">
                 <div class="input-group-append">
@@ -37,7 +37,7 @@
                 </div>
                 <div class="block-content">
                     <div class="form-group row">
-                        <div class="col-12">
+                        <div class="col-12 data-sources-checkboxes">
                             <div class="custom-control custom-checkbox mb-5">
                                 <input class="custom-control-input" type="checkbox" name="clearall" checked="checked" id="clearall">
                                 <label class="custom-control-label" for="clearall">Всі</label>
