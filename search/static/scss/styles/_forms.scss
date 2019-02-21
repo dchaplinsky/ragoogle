@@ -119,11 +119,11 @@ textarea.form-control {
             outline: 0;
         }
 
-        > span {
+        .autosuggest-row {
             display: flex;
             flex-direction: row;
             flex-wrap: nowrap;
-            justify-content: flex-start;
+            justify-content: space-between;
             align-content: center;
             align-items: center;
 
@@ -171,5 +171,13 @@ textarea.form-control {
 
     .nav-link.active {
         background: white;
+    }
+}
+
+.data-sources-checkboxes {
+    column-count: 2;
+
+    label {
+        font-size: 12px;
     }
 }
