@@ -127,14 +127,19 @@ textarea.form-control {
             align-content: center;
             align-items: center;
 
-            span:first-child {
+            .autocomplete-name {
                 font-size: 15px;
                 max-width: 65%
+            }
+
+            .autocomplete-hints {
+                max-width: 35%;
+                overflow: hidden;
+                display: flex;
             }
         }
 
         strong {
-            //color: #e95000;
             color: $bihus-red;
         }
 
@@ -142,14 +147,12 @@ textarea.form-control {
             color: white;
             border-radius: 2px;
             padding: 0 7px 2px 7px;
-            margin-right: 10px;
             white-space: nowrap;
             margin-right: 0;
             margin-left: 10px;
             background: #10cb6c;
             cursor: pointer;
             float: none;
-            max-width: 35%;
             overflow: hidden;
 
             &.long {
