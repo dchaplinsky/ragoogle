@@ -1,26 +1,28 @@
 import re
 import argparse
+import json
+from hashlib import sha1
 from csv import DictReader
+from collections import OrderedDict
 
 from django.core.management.base import BaseCommand
-
-from elasticsearch.helpers import streaming_bulk
-from elasticsearch_dsl.connections import connections
-from names_translator.name_utils import is_eng
+from names_translator.name_utils import is_eng, title
 from tqdm import tqdm
 
 
-from search.elastic_models import Names, names_idx
+from search.models import NamesDict
 
 
 class Command(BaseCommand):
+    chunk_size = 10000
+
     def add_arguments(self, parser):
         parser.add_argument(
-            '--drop_indices',
+            '--wipe',
             action='store_true',
-            dest='drop_indices',
+            dest='wipe',
             default=False,
-            help='Delete indices before reindex',
+            help='Wipe db table with previously imported translations',
         )
 
         parser.add_argument(
@@ -30,40 +32,60 @@ class Command(BaseCommand):
             help='Input file to index',
         )
 
-    def bulk_write(self, conn, docs_to_index):
-        for response in streaming_bulk(
-                conn, (d.to_dict(True) for d in docs_to_index)):
-            pass
+        parser.add_argument(
+            '--type',
+            required=True,
+            choices=["full_name", "chunk"],
+            help='Type of file being imported: dict of name chunks or full names',
+        )
+
+
+    def get_doc_hash(self, doc):
+        dct = OrderedDict({"term": doc["term"], "translation": doc["translation"]})
+
+        return sha1(json.dumps(dct).encode("utf-8")).hexdigest()
+
+    def normalize_term(self, term):
+        return term.lower().strip(" ,.").replace("`", "'").replace("&#39", "'")
+
+    def normalize_translation(self, term):
+        return title(term.strip(" ,.").replace("`", "'").replace("&#39", "'"))
+
 
     def handle(self, *args, **options):
-        conn = connections.get_connection('default')
+        if options["wipe"]:
+            NamesDict.objects.all().delete()
 
-        if options["drop_indices"]:
-            names_idx.delete(ignore=404)
-            names_idx.create()
-
-        docs_to_index = []
-        seen = set()
+        rec_type = (0 if options["type"] == "chunk" else 1)
+        existing_hashes = set(NamesDict.objects.values_list("pk", flat=True))
+        existing_hashes_len = len(existing_hashes)
+        bulk_add = []
 
         for fp in options["in_files"]:
             r = DictReader(fp)
 
             for l in tqdm(r):
-                if is_eng(l["name"]) or len(l["name"]) > 30 or len(l["name"]) < 3:
+                if is_eng(l["translation"]) or len(l["term"]) > 30 or len(l["term"]) < 3:
                     continue
+                
+                doc_hash = self.get_doc_hash(l)
+                if doc_hash not in existing_hashes:
+                    bulk_add.append(
+                        NamesDict(
+                            id=doc_hash,
+                            term=self.normalize_term(l["term"]),
+                            translation=self.normalize_translation(l["translation"]),
+                            rec_type=rec_type,
+                            comment=l.get("comment", "")
+                        )
+                    )
 
-                if re.search(r"\d", l["name"]):
-                    continue
+                existing_hashes.add(doc_hash)
 
-                if l["name"].lower() in seen:
-                    continue
-                else:
-                    seen.add(l["name"].lower())
+                if len(bulk_add) >= self.chunk_size:
+                    NamesDict.objects.bulk_create(bulk_add)
+                    bulk_add = []
 
-                docs_to_index.append(Names(**l))
-                if len(docs_to_index) > 10000:
-                    self.bulk_write(conn, docs_to_index)
-                    docs_to_index = []
 
-        self.bulk_write(conn, docs_to_index)
-        self.stdout.write("Unique names loaded: {}".format(len(seen)))
+        NamesDict.objects.bulk_create(bulk_add)
+        self.stdout.write("Unique names loaded: {}".format(len(existing_hashes) - existing_hashes_len))

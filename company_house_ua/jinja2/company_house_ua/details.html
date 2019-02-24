@@ -1,0 +1,72 @@
+{% extends "search/base.html" %}
+
+{% block container_class %}sidebar-o sidebar-inverse side-scroll main-content-narrow  page-header-fixed page-header-inverse{% endblock %}
+
+{% block title %}{{ rec.name }}, {{ rec.occupation or rec.role }} в британській компанії {{ rec.company_name }}{% endblock %}
+
+{% block description %}
+Інформація про {{ rec.name }} ({{ rec.translated_names|join(", ") }}) з британського реєстру компаній
+{% endblock %}
+
+{% block content %}
+<!-- Page Content -->
+<div class="content" itemscope="" itemtype="http://schema.org/Organization">
+    <!-- Frequently Asked Questions -->
+    <h1 class="content-heading">
+        <span itemprop="legalName">{{ rec.company_name }}</span> (<span itemprop="taxID">{{ rec.company_number }}</span>)
+    </h1>
+
+
+    <div class="block document-details" itemscope="" itemtype="http://schema.org/Person" itemprop="employee">
+        <div class="block-header block-header-default">
+            <h2 class="block-title">
+                <span itemprop="name">{{ rec.name }}</span>, {{ rec.occupation }}{% if rec.position %}, {{ rec.position }} {% endif %}
+            </h2>
+            <div class="block-options">
+                <button type="button" class="btn-block-option" onclick="Edrdr.helpers('print-page');">
+                    <i class="si si-printer"></i> Друкувати
+                </button>
+                <button type="button" class="btn-block-option" data-toggle="block-option"
+                        data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
+            </div>
+        </div>
+        <div class="block-content">
+            <div class="table-responsive push">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th>Дата народження</th>
+                        <td itemprop="birthDate">{{ rec.dob }}</td>
+                    </tr>
+                    {% if rec.translated_names %}
+                    <tr>
+                        <th>Переклади імен</th>
+                        <td itemprop="alternateName">{{ rec.translated_names|join(", ") }}</td>
+                    </tr>
+                    {% endif %}
+                    <tr>
+                        <th>Національність</th>
+                        <td>{{ rec.nationality }}</td>
+                    </tr>
+                    <tr>
+                        <th>Країна проживання</th>
+                        <td>{{ rec.residence }}</td>
+                    </tr>
+                    <tr>
+                        <th>Адреса</th>
+                        <td>{{ rec.address }}</td>
+                    </tr>
+                    {% if company_name_aka %}
+                    <tr>
+                        <th>Інші назви компанії</th>
+                        <td>{{ company_name_aka }}</td>
+                    </tr>
+                    {% endif %}
+                </table>
+                {% if rec.company_url %}
+                <a href="{{ rec.company_url }}" target="_blank">Посилання на оригінал</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

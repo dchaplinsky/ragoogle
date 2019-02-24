@@ -61,6 +61,7 @@ class Command(BaseCommand):
                 body={"index.max_result_window": int(Model.objects.count() * 1.1 + 1)},
             )
 
+        Model.setup_indexing()
         qs = Model.objects.filter()
 
         docs_to_index = []

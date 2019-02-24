@@ -23,5 +23,9 @@ class AbstractDataset(models.Model):
     def to_dict(self):
         raise NotImplementedError()
 
+    @classmethod
+    def setup_indexing(cls):
+        pass
+
     class Meta:
         abstract = True

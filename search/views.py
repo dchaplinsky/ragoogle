@@ -58,16 +58,12 @@ class SuggestView(View):
             index=get_all_enabled_indices(request.GET.getlist("datasources"))
         ).doc_type(*get_all_enabled_models())
 
-        s = (
-            base_q
-            .highlight("names_autocomplete")
-            .highlight_options(
-                order="score",
-                fragment_size=100,
-                number_of_fragments=10,
-                pre_tags=["<strong>"],
-                post_tags=["</strong>"],
-            )
+        s = base_q.highlight("names_autocomplete").highlight_options(
+            order="score",
+            fragment_size=100,
+            number_of_fragments=10,
+            pre_tags=["<strong>"],
+            post_tags=["</strong>"],
         )
 
         s = s.query(
@@ -171,9 +167,25 @@ class SearchView(TemplateView):
                 should_match = "100%"
 
             if not is_addr:
-                strict_query = base_q.query(
-                    "match_phrase", **{entities: {"query": query, "slop": 6}}
-                )
+                clauses = []
+
+                if entities in ["all", "persons"] and nwords >= 3:
+                    clauses.append(Q(
+                        "match",
+                        **{
+                            "incomplete_persons": {
+                                "query": query,
+                                "operator": "or",
+                                "minimum_should_match": nwords - 1,
+                            }
+                        },
+                    ))
+
+                compiled_query = Q("match_phrase", **{entities: {"query": query, "slop": 6}})
+                for sub_q in clauses:
+                    compiled_query |= sub_q
+
+                strict_query = base_q.query(compiled_query)
             else:
                 no_zip_q = re.sub(r"\b\d{5,}\W", "", query)
                 strict_query = base_q.query(
