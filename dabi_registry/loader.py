@@ -4,7 +4,8 @@ from abstract.loaders import FileLoader
 
 
 class DabiRegistryLoader(FileLoader):
-    filetype = "csv"
+    filetype = "mongo"
+    mongo_collection = "dabi_gov_ua__registry"
     last_updated_param_is_required = False
     last_updated_path = "not_used"
 

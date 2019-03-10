@@ -1,7 +1,8 @@
 from abstract.loaders import FileLoader
 
 class GeoinfLicensesLoader(FileLoader):
-    filetype = "csv"
+    filetype = "mongo"
+    mongo_collection = "geoinf_kiev_ua__licenses"
     last_updated_param_is_required = False
     last_updated_path = "start_date"
 
