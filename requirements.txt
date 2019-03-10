@@ -16,3 +16,4 @@ Pillow==5.1.0
 jmespath==0.9.3
 gunicorn==19.9.0
 pymongo==3.7.2
+django-prometheus-1.0.15

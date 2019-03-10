@@ -24,6 +24,9 @@ def get_env_str_list(k, default=""):
 def get_env_int(k, default):
     return int(get_env_str(k, default))
 
+def get_env_bool(k, default):
+    return str(get_env_str(k, default)).lower() in ["1", "y", "yes", "true"]
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -175,6 +178,10 @@ PIPELINE = {
 STATIC_URL = '/static/'
 WSGI_APPLICATION = "ragoogle.wsgi.application"
 
+PROMETHEUS_ENABLE = get_env_bool("PROMETHEUS_ENABLE", False)
+db_backend = "django.db.backends.postgresql_psycopg2"
+if PROMETHEUS_ENABLE:
+    db_backend = "django_prometheus.db.backends.postgresql_psycopg2"
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -182,7 +189,7 @@ WSGI_APPLICATION = "ragoogle.wsgi.application"
 DATABASES = {
     "default": {
         # Strictly PostgreSQL
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "ENGINE": db_backend,
         "NAME": get_env_str('DB_NAME', "ragoogle"),
         "USER": get_env_str('DB_USER', "ragoogle"),
         "PASSWORD": get_env_str('DB_PASS', ""),
@@ -297,3 +304,12 @@ if DEBUG:
     MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
 
     INTERNAL_IPS = ["127.0.0.1"]
+
+if PROMETHEUS_ENABLE:
+    MIDDLEWARE = (
+        ['django_prometheus.middleware.PrometheusBeforeMiddleware',] +
+        MIDDLEWARE +
+        ['django_prometheus.middleware.PrometheusAfterMiddleware',]
+    )
+
+    INSTALLED_APPS = INSTALLED_APPS + ['django_prometheus',]
