@@ -21,6 +21,10 @@ def get_env_str_list(k, default=""):
         return os.environ.get(k).strip().split(" ")
     return default
 
+def get_env_int(k, default):
+    return int(get_env_str(k, default))
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -49,6 +53,7 @@ INSTALLED_APPS = [
     "django.contrib.sitemaps",
     "django.contrib.sites",
     "django.contrib.staticfiles",
+    "django.contrib.postgres",
     "pipeline",
     "ckeditor",
     "ckeditor_uploader",
@@ -266,6 +271,14 @@ RAVEN_CONFIG = {
     'dsn': get_env_str('SENTRY_DSN', None),
     'release': get_env_str('VERSION', GIT_VERSION),
 }
+
+MONGODB_HOST = get_env_str("MONGODB_HOST", "localhost")
+MONGODB_PORT = get_env_int("MONGODB_PORT", 27017)
+MONGODB_USERNAME = get_env_str("MONGODB_USERNAME", "")
+MONGODB_PASSWORD = get_env_str("MONGODB_PASSWORD", "")
+MONGODB_AUTH_DB = get_env_str("MONGODB_AUTH_DB", "admin")
+MONGODB_DB = get_env_str("MONGODB_DB", "ragoogle_spiders")
+MONGODB_CONNECTION_POOL_KWARGS = {}
 
 try:
     from .local_settings import *

@@ -1,7 +1,8 @@
 from abstract.loaders import FileLoader
 
 class MbuLoader(FileLoader):
-    filetype = "csv"
+    filetype = "mongo"
+    mongo_collection = "kga_gov_ua"
     last_updated_param_is_required = False
     last_updated_path = "order_date"
 

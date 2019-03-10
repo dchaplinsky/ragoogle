@@ -7,11 +7,14 @@ from hashlib import sha1
 from collections import OrderedDict
 
 from django.utils import timezone
+from django.conf import settings
 from django.db import transaction
 
 import tqdm
+import pymongo
 from dateutil.parser import parse as dt_parse
 import jmespath
+from urllib.parse import quote_plus
 
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger("importer")
@@ -32,6 +35,30 @@ class FileLoader(object):
 
         return super().__init__(*args, **kwargs)
 
+
+    def get_mongo_db(self):
+        if settings.MONGODB_USERNAME:
+            uri = "mongodb://{}:{}@{}:{}".format(
+                quote_plus(settings.MONGODB_USERNAME),
+                quote_plus(settings.MONGODB_PASSWORD),
+                quote_plus(settings.MONGODB_HOST),
+                settings.MONGODB_PORT
+            )
+        else:
+            uri = "mongodb://{}:{}".format(
+                quote_plus(settings.MONGODB_HOST),
+                settings.MONGODB_PORT
+            )
+
+        connection = pymongo.MongoClient(
+            uri,
+            authSource=settings.MONGODB_AUTH_DB,
+            **settings.MONGODB_CONNECTION_POOL_KWARGS
+        )
+
+        return connection[settings.MONGODB_DB]
+
+
     def get_dedup_fields(self):
         raise NotImplementedError
 
@@ -44,17 +71,26 @@ class FileLoader(object):
         raise NotImplementedError
 
     def inject_params(self, parser):
-        parser.add_argument(
-            "dataset_file",
-            type=argparse.FileType("r", encoding=self.encoding),
-            help="Any dataset in the following formats: json, jsonlines, csv",
-        )
+        if self.filetype != "mongo":
+            parser.add_argument(
+                "dataset_file",
+                type=argparse.FileType("r", encoding=self.encoding),
+                help="Any dataset in the following formats: json, jsonlines, csv",
+            )
 
         parser.add_argument(
             "--filetype",
-            choices=("json", "jsonlines", "csv"),
+            choices=("json", "jsonlines", "csv", "mongo"),
             default=self.filetype,
             help="Format of the dataset",
+        )
+
+        parser.add_argument(
+            "--mongo_collection",
+            help="Mongo collection to harvest (for --filetype=mongo only)",
+            type=str,
+            default=getattr(self, "mongo_collection", ""),
+            required=False
         )
 
         parser.add_argument(
@@ -69,8 +105,20 @@ class FileLoader(object):
             type=argparse.FileType("w", encoding=self.encoding),
         )
 
-    def iter_dataset(self, fp, filetype):
-        if filetype == "json":
+    def iter_dataset(self, options):
+        fp = options.get("dataset_file")
+        filetype = options["filetype"]
+
+        if filetype == "mongo":
+            assert options["mongo_collection"]
+            db = self.get_mongo_db()
+            coll = db[options["mongo_collection"]]
+
+            for l in coll.find():
+                del l["_id"]
+                yield l
+
+        elif filetype == "json":
             for l in json.load(fp):
                 yield l
 
@@ -129,7 +177,7 @@ class FileLoader(object):
         with tqdm.tqdm() as pbar:
             with transaction.atomic():
                 for i, item in enumerate(
-                    self.iter_dataset(options["dataset_file"], options["filetype"])
+                    self.iter_dataset(options)
                 ):
                     try:
                         item = self.preprocess(item, options)
@@ -181,3 +229,8 @@ class FileLoader(object):
                 i + 1, successful, broken
             )
         )
+
+
+class DummyLoader(FileLoader):
+    def get_dedup_fields(self):
+        return []
