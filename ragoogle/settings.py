@@ -181,7 +181,7 @@ WSGI_APPLICATION = "ragoogle.wsgi.application"
 PROMETHEUS_ENABLE = get_env_bool("PROMETHEUS_ENABLE", False)
 db_backend = "django.db.backends.postgresql_psycopg2"
 if PROMETHEUS_ENABLE:
-    db_backend = "django_prometheus.db.backends.postgresql_psycopg2"
+    db_backend = "django_prometheus.db.backends.postgresql"
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
