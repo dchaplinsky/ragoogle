@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.views import View
 from django.views.generic import TemplateView
 from django.template.loader import render_to_string
+from django.core.paginator import EmptyPage
 from django.shortcuts import render
 
 from elasticsearch_dsl import Search, Q, MultiSearch

@@ -109,7 +109,9 @@
                         <th>Підписано</th>
                         <td>
                             {% if rec.detailed_title.FIO_PODP %}<span itemprop="name">{{ rec.detailed_title.FIO_PODP }}</span><br/>
+                            {% if rec.detailed_title.FIO_PODP %}
                             {% for alt_name in parse_and_generate(rec.detailed_title.FIO_PODP) %}<meta itemprop="alternateName" content="{{ alt_name }}" />{% endfor %}
+                            {% endif %}
                             {% endif %}
                             {% if rec.detailed_title.POS_PODP %}<span>{{ rec.detailed_title.POS_PODP }} </span><br/>{% endif %}
                         </td>
@@ -158,7 +160,7 @@
                     </tr>
                     {% for assoc in rec.associates %}
                     <tr itemprop="employee" itemscope="" itemtype="http://schema.org/Person">
-                        <td><span itemprop="name">{{ assoc.P_I_B }}{% for alt_name in parse_and_generate(assoc.P_I_B) %}<meta itemprop="alternateName" content="{{ alt_name }}" />{% endfor %}</span></td>
+                        <td>{% if assoc.P_I_B %}<span itemprop="name">{{ assoc.P_I_B }}{% for alt_name in parse_and_generate(assoc.P_I_B) %}<meta itemprop="alternateName" content="{{ alt_name }}" />{% endfor %}</span>{% endif %}</td>
                         <td>{{ assoc.POSADA }}</td>
                         <td>
                             {% if assoc.DAT_PASP %}{{ assoc.DAT_PASP }}<br/>{% endif %}

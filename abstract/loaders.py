@@ -173,6 +173,7 @@ class FileLoader(object):
         bulk_add = []
         successful = 0
         broken = 0
+        i = 0
 
         with tqdm.tqdm() as pbar:
             with transaction.atomic():
