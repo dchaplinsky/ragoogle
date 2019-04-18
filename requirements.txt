@@ -1,5 +1,5 @@
 Django==2.1.7
-Jinja2==2.10
+Jinja2==2.10.1
 requests==2.21.0
 tokenize-uk==0.2.0
 translitua==1.2.4
