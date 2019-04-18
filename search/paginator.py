@@ -97,4 +97,4 @@ def paginated(
     try:
         return paginator.page(page)
     except EmptyPage:
-        return AbstractPage([], int(page), paginator)
+        return AbstractPage([], min(int(page), paginator.num_pages + 1), paginator)
