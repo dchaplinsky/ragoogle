@@ -50,7 +50,11 @@ class SmidaReportModel(AbstractDataset):
 
         title1 = self.title1_jmespath.search(dt)
         title2 = self.title2_jmespath.search(dt)
-        report_title = self.title3_jmespath.search(dt)[0]
+        report_title = self.title3_jmespath.search(dt)
+        if not report_title:
+            return None
+
+        report_title = report_title[0]
 
         report_title["STD"] = dt_parse(report_title["STD"])
         report_title["FID"] = dt_parse(report_title["FID"])
