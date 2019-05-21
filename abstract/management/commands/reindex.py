@@ -69,11 +69,11 @@ class Command(BaseCommand):
             for p in qs.iterator():
                 pbar.update(1)
                 doc = p.to_dict()
-                if p is None:
+                if doc is None:
                     self.stderr.write("Cannot parse {} document".format(p))
                     continue
 
-                docs_to_index.append(ElasticModel(**p))
+                docs_to_index.append(ElasticModel(**doc))
                 if len(docs_to_index) > options["batch_size"]:
                     self.bulk_write(conn, docs_to_index)
                     docs_to_index = []
