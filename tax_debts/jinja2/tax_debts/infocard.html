@@ -1,0 +1,12 @@
+{% extends "abstract/base_infocard.html" %}
+
+{% block header %}
+    <div class="edrpou">{{ res.TIN_S }}</div>
+    <h3 class="name">{{ res.NAME }}</h3>
+{% endblock %}
+
+{% block description %}
+    На {{ res.last_updated_from_dataset|date }}<br />
+    податковий борг перед {{ res.DPI }}<br />
+    склав <strong>{{ ((res.SUM_D + res.SUM_M) * 1000)|curformat }}</strong> грн.
+{% endblock %}

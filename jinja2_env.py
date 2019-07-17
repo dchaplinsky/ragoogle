@@ -1,7 +1,7 @@
 import re
 
 from django.contrib.staticfiles.storage import staticfiles_storage
-from django.utils import formats
+from django.utils import formats, timezone
 from django.urls import reverse
 from django.utils.translation import gettext, ngettext
 
@@ -39,7 +39,14 @@ def identify_relation(rel):
     if rel in ["дружина", "чоловік"]:
         return "spouse"
 
-    if rel in ["брат", "сестра", "двоюрідний брат", "двоюрідна сестра", "рідний брат", "рідна сестра"]:
+    if rel in [
+        "брат",
+        "сестра",
+        "двоюрідний брат",
+        "двоюрідна сестра",
+        "рідний брат",
+        "рідна сестра",
+    ]:
         return "sibling"
 
     if rel in ["мати", "батько"]:
@@ -50,6 +57,35 @@ def identify_relation(rel):
 
     return "knows"
 
+
+def curformat(value):
+    value = str(value)
+    if value and value != "0":
+        currency = ""
+        if "$" in value:
+            value = value.replace("$", "")
+            currency = "USD "
+
+        if "£" in value:
+            value = value.replace("£", "")
+            currency = "GBP "
+
+        if "€" in value or "Є" in value:
+            value = value.replace("€", "").replace("Є", "")
+            currency = "EUR "
+
+        try:
+            return (
+                "{}{:,.2f}".format(currency, float(value.replace(",", ".")))
+                .replace(",", " ")
+                .replace(".", ",")
+            )
+        except ValueError:
+            return value
+    else:
+        return ""
+
+
 def environment(**options):
     env = Environment(**options)
     env.globals.update({"static": staticfiles_storage.url, "url": reverse})
@@ -58,14 +94,21 @@ def environment(**options):
     env.filters.update(
         {
             "datetime": lambda dt: formats.date_format(
-                parse_dt(dt) if isinstance(dt, str) else dt, "SHORT_DATETIME_FORMAT"
+                timezone.localtime(
+                    timezone.make_aware(parse_dt(dt)) if isinstance(dt, str) else dt
+                ),
+                "SHORT_DATETIME_FORMAT",
             ),
             "date": lambda dt: formats.date_format(
-                parse_dt(dt) if isinstance(dt, str) else dt, "SHORT_DATE_FORMAT"
+                timezone.localtime(
+                    timezone.make_aware(parse_dt(dt)) if isinstance(dt, str) else dt
+                ),
+                "SHORT_DATE_FORMAT",
             ),
             "nl2br": nl2br,
             "identify_relation": identify_relation,
-            "format_edrpou": lambda code: str(code).rjust(8, "0")
+            "curformat": curformat,
+            "format_edrpou": lambda code: str(code).rjust(8, "0"),
         }
     )
     env.globals.update(

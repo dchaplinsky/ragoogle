@@ -1,5 +1,5 @@
 import json
-from csv import DictReader
+from csv import DictReader, Sniffer
 import logging
 import argparse
 from copy import copy
@@ -21,6 +21,7 @@ logger = logging.getLogger("importer")
 
 
 class FileLoader(object):
+    csv_dialect = None
     filetype = None
     encoding = "utf-8"
     chunk_size = 1000
@@ -128,7 +129,13 @@ class FileLoader(object):
                     yield json.loads(l)
 
         elif filetype == "csv":
-            r = DictReader(fp)
+            if self.csv_dialect is None:
+                dialect = Sniffer().sniff(fp.read(1024 * 16))
+                fp.seek(0)
+            else:
+                dialect = self.csv_dialect
+
+            r = DictReader(fp, dialect=dialect)
             for l in r:
                 yield l
         else:

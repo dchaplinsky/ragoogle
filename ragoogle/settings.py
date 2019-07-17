@@ -78,6 +78,7 @@ INSTALLED_APPS = [
     "geoinf_licenses.apps.GeoinfLicensesConfig",
     "mbu.apps.MbuConfig",
     "company_house_ua.apps.CompanyHouseUaConfig",
+    "tax_debts.apps.TaxDebtsConfig",
 
     # Generalized search
     "search",
