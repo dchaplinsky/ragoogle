@@ -104,13 +104,13 @@ def environment(**options):
                     ensure_aware(parse_dt(dt) if isinstance(dt, str) else dt)
                 ),
                 "SHORT_DATETIME_FORMAT",
-            ),
+            ) if dt else "",
             "date": lambda dt: formats.date_format(
                 timezone.localtime(
                     ensure_aware(parse_dt(dt) if isinstance(dt, str) else dt)
                 ),
                 "SHORT_DATE_FORMAT",
-            ),
+            ) if dt else "",
             "nl2br": nl2br,
             "identify_relation": identify_relation,
             "curformat": curformat,
