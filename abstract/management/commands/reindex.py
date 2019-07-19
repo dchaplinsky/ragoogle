@@ -62,7 +62,7 @@ class Command(BaseCommand):
             )
 
         Model.setup_indexing()
-        qs = Model.objects.filter()
+        qs = Model.objects.all()
 
         docs_to_index = []
         with tqdm(total=qs.count()) as pbar:

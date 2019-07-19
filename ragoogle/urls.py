@@ -38,6 +38,7 @@ urlpatterns = [
     path("mbu/", include("mbu.urls")),
     path("company_house_ua/", include("company_house_ua.urls")),
     path("tax_debts/", include("tax_debts.urls")),
+    path("procurement_winners/", include("procurement_winners.urls")),
     path("admin/", admin.site.urls),
     path(
         "sitemap.xml",

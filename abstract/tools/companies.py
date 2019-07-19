@@ -27,8 +27,11 @@ def unify_cyprus_codes(company_code):
 
 
 def generate_edrpou_options(company_code):
-    company_code = str(company_code)
-    return set((company_code.lstrip("0"), company_code, company_code.rjust(8, "0")))
+    if company_code:
+        company_code = str(company_code)
+        return set((company_code.lstrip("0"), company_code, company_code.rjust(8, "0")))
+    else:
+        return set()
 
 
 def deal_with_mixed_lang(company_name):

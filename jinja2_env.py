@@ -85,6 +85,12 @@ def curformat(value):
     else:
         return ""
 
+def ensure_aware(dt):
+    if timezone.is_aware(dt):
+        return dt
+    else:
+        return timezone.make_aware(dt)
+
 
 def environment(**options):
     env = Environment(**options)
@@ -95,13 +101,13 @@ def environment(**options):
         {
             "datetime": lambda dt: formats.date_format(
                 timezone.localtime(
-                    timezone.make_aware(parse_dt(dt)) if isinstance(dt, str) else dt
+                    ensure_aware(parse_dt(dt) if isinstance(dt, str) else dt)
                 ),
                 "SHORT_DATETIME_FORMAT",
             ),
             "date": lambda dt: formats.date_format(
                 timezone.localtime(
-                    timezone.make_aware(parse_dt(dt)) if isinstance(dt, str) else dt
+                    ensure_aware(parse_dt(dt) if isinstance(dt, str) else dt)
                 ),
                 "SHORT_DATE_FORMAT",
             ),

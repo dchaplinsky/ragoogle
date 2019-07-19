@@ -79,6 +79,7 @@ INSTALLED_APPS = [
     "mbu.apps.MbuConfig",
     "company_house_ua.apps.CompanyHouseUaConfig",
     "tax_debts.apps.TaxDebtsConfig",
+    "procurement_winners.apps.ProcurementWinnersConfig",
 
     # Generalized search
     "search",

@@ -1,0 +1,110 @@
+{% extends "search/base.html" %} 
+
+{% block container_class %} sidebar-o sidebar-inverse side-scroll main-content-narrow  page-header-fixed page-header-inverse{% endblock %} 
+
+{% block title %}{{ rec.seller.name }} ({{ rec.seller.code }}) — переможець тендеру{% endblock %} 
+
+{% block description %} 
+Закупівля на {{ rec.volume_uah|curformat }} грн., переможець {{ rec.seller.name }} ({{ rec.seller.code }})
+{% endblock %} 
+
+{% block content %} 
+<!-- Page Content -->
+<div class="content" itemscope="" itemtype="http://schema.org/Organization">
+    <!-- Frequently Asked Questions -->
+    <h1 class="content-heading">
+        Тендер на суму {{ rec.volume_uah|curformat }} грн., переможець {{ rec.seller.name }} (<a href="{{ url('search>results') }}?q={{ rec.seller.code }}" target="_blank">{{ rec.seller.code|format_edrpou }}</a>)
+    </h1>
+
+    <div class="block document-details">
+        <div class="block-header block-header-default">
+            <h2 class="block-title">Детальна інформація: </h2>
+            <div class="block-options">
+                <button type="button" class="btn-block-option" onclick="Edrdr.helpers('print-page');">
+                    <i class="si si-printer"></i> Друкувати
+                </button>
+                <button type="button" class="btn-block-option" data-toggle="block-option"
+                        data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
+            </div>
+        </div>
+        <div class="block-content">
+            <div class="table-responsive push">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th>Продавець</th>
+                        <td><span itemprop="name">{{ rec.seller.name }}</span> (<a href="{{ url('search>results') }}?q={{ rec.seller.code }}" target="_blank">{{ rec.seller.code|format_edrpou }}</a>)
+                        <meta itemprop="taxID" content="{{ rec.seller.code|format_edrpou }}" /></td>
+                    </tr>
+                    <tr>
+                        <th>Адреса продавця</th>
+                        <td itemprop="address">{{ rec.seller.address }}</td>
+                    </tr>
+                    {% if rec.seller.phone %}
+                    <tr itemprop="contactPoint" itemscope="" itemtype="http://schema.org/ContactPoint">
+                        <th>Контактні дані продавця</th>
+                        <td itemprop="telelphone">{{ rec.seller.phone }}</td>
+                    </tr>
+                    {% endif %}
+
+                    <tr itemprop="knowsAbout" itemscope="" itemtype="http://schema.org/Organization">
+                        <th>Замовник</th>
+                        <td><span itemprop="name">{{ rec.purchase.buyer.name }}</span> (<a href="{{ url('search>results') }}?q={{ rec.purchase.buyer.code }}" target="_blank">{{ rec.purchase.buyer.code|format_edrpou }}</a>)
+                            <meta itemprop="taxID" content="{{ rec.purchase.buyer.code|format_edrpou }}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Адреса замовника</th>
+                        <td>{{ rec.purchase.buyer.address }}</td>
+                    </tr>
+
+                    {% if rec.purchase.buyer.person %}
+                    <tr>
+                        <th>Представник замовника</th>
+                        <td>{{ rec.purchase.buyer.person }}</td>
+                    </tr>
+                    {% endif %}
+
+                    <tr>
+                        <th>Контактні дані замовника</th>
+                        <td>{% if rec.purchase.buyer.email %}{{ rec.purchase.buyer.email }}, {% endif %}{% if rec.purchase.buyer.phone %}{{ rec.purchase.buyer.phone }}, {% endif %}{% if rec.purchase.buyer.fax %}{{ rec.purchase.buyer.fax }}{% endif %}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Предмет закупівлі</th>
+                        <td>
+                        {% if rec.purchase.goods_name %}{{ rec.purchase.goods_name|replace("\n", "<br/>")|safe }} {% endif %}
+                        {% if rec.purchase.goods_name_short %}<br/>({{ rec.purchase.goods_name_short }}) {% endif %}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>Сума</th>
+                        <td>
+                            <strong>Актуальна: </strong>{{ rec.volume_uah|curformat }} грн. <br/>
+                            {% if rec.expected_volume %}<strong>Очікувана: </strong>{{ rec.expected_volume|curformat }} грн.{% endif %}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>Дата закупівлі</th>
+                        <td>
+                            {{ rec.date|date }}
+                        </td>
+                    </tr>
+
+                    {% if rec.prozorro_number %}
+                    <tr>
+                        <th>Тендер на Prozorro</th>
+                        <td><a href="https://prozorro.gov.ua/tender/{{ rec.prozorro_number }}" target="_blank">{{ rec.prozorro_number }}</a></td>
+                    </tr>
+                    {% endif %}
+
+                </table>
+                {% if rec.details_url %} 
+                <a href="{{ rec.details_url }}" target="_blank">Посилання на оригінал</a>
+                {% endif %} 
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

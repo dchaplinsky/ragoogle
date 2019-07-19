@@ -14,7 +14,7 @@
 <div class="content" itemscope="" itemtype="http://schema.org/Organization">
     <!-- Frequently Asked Questions -->
     <h1 class="content-heading">
-        Податковий борг <span itemprop="name">{{ rec.NAME }}</span>(<span itemprop="taxID">{{ rec.TIN_S }}</span>)
+        Податковий борг <span itemprop="name">{{ rec.NAME }}</span>(<a href="{{ url('search>results') }}?q={{ rec.TIN_S }}" target="_blank" itemprop="taxID">{{ rec.TIN_S }}</span>)
     </h1>
 {% else %}
 <div class="content" itemscope="" itemtype="http://schema.org/Person">
