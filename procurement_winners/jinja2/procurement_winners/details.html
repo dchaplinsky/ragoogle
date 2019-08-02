@@ -95,7 +95,7 @@
                     {% if rec.prozorro_number %}
                     <tr>
                         <th>Тендер на Prozorro</th>
-                        <td><a href="https://prozorro.gov.ua/tender/{{ rec.prozorro_number }}" target="_blank">{{ rec.prozorro_number }}</a></td>
+                        <td><a href="https://prozorro.gov.ua/tender/{{ rec.prozorro_number[:-3] }}" target="_blank">{{ rec.prozorro_number }}</a></td>
                     </tr>
                     {% endif %}
 
