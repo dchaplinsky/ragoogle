@@ -19,7 +19,10 @@ class TaxDebtsModel(AbstractDataset):
 
     def to_dict(self):
         dt = self.data
-        res = {"_id": self.pk, "last_updated_from_dataset": self.last_updated_from_dataset}
+        res = {
+            "_id": self.pk,
+            "last_updated_from_dataset": self.last_updated_from_dataset,
+        }
 
         companies = set()
         addresses = set()

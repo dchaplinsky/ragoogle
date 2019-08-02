@@ -85,11 +85,38 @@ def curformat(value):
     else:
         return ""
 
+
 def ensure_aware(dt):
     if timezone.is_aware(dt):
         return dt
     else:
         return timezone.make_aware(dt)
+
+
+def datetime_filter(dt, dayfirst=False):
+    return (
+        formats.date_format(
+            timezone.localtime(
+                ensure_aware(parse_dt(dt, dayfirst=dayfirst) if isinstance(dt, str) else dt)
+            ),
+            "SHORT_DATETIME_FORMAT",
+        )
+        if dt
+        else ""
+    )
+
+
+def date_filter(dt, dayfirst=False):
+    return (
+        formats.date_format(
+            timezone.localtime(
+                ensure_aware(parse_dt(dt, dayfirst=dayfirst) if isinstance(dt, str) else dt)
+            ),
+            "SHORT_DATE_FORMAT",
+        )
+        if dt
+        else ""
+    )
 
 
 def environment(**options):
@@ -99,18 +126,8 @@ def environment(**options):
 
     env.filters.update(
         {
-            "datetime": lambda dt: formats.date_format(
-                timezone.localtime(
-                    ensure_aware(parse_dt(dt) if isinstance(dt, str) else dt)
-                ),
-                "SHORT_DATETIME_FORMAT",
-            ) if dt else "",
-            "date": lambda dt: formats.date_format(
-                timezone.localtime(
-                    ensure_aware(parse_dt(dt) if isinstance(dt, str) else dt)
-                ),
-                "SHORT_DATE_FORMAT",
-            ) if dt else "",
+            "datetime": datetime_filter,
+            "date": date_filter,
             "nl2br": nl2br,
             "identify_relation": identify_relation,
             "curformat": curformat,

@@ -13,7 +13,7 @@
 <div class="content" itemscope="" itemtype="http://schema.org/Person">
     <!-- Frequently Asked Questions -->
     <h1 class="content-heading">
-        <span itemprop="name">{{ rec.name }}</span>, народився(-лась) <span itemprop="birthDate">{{ rec.dob|date }}</span>
+        <span itemprop="name">{{ rec.name }}</span>, народився(-лась) <span itemprop="birthDate">{{ rec.dob|date(dayfirst=True) }}</span>
     </h1>
 
     <div class="block document-details">
