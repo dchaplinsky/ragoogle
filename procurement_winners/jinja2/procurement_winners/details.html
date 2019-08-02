@@ -72,7 +72,7 @@
                     <tr>
                         <th>Предмет закупівлі</th>
                         <td>
-                        {% if rec.purchase.goods_name %}{{ rec.purchase.goods_name|replace("\n", "<br/>")|safe }} {% endif %}
+                        {% if rec.purchase.goods_name %}{{ rec.purchase.goods_name|replace("\\n", "<br/>")|safe }} {% endif %}
                         {% if rec.purchase.goods_name_short %}<br/>({{ rec.purchase.goods_name_short }}) {% endif %}
                         </td>
                     </tr>
