@@ -67,6 +67,7 @@ class ProcurementWinnersModel(AbstractDataset):
                 "addresses": list(filter(None, addresses)),
                 "persons": list(filter(None, persons)),
                 "names_autocomplete": list(filter(None, names_autocomplete)),
+                "raw_records": list(filter(None, raw_records)),
             }
         )
 

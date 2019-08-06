@@ -30,16 +30,18 @@ class TaxDebtsModel(AbstractDataset):
 
         if dt["TIN_S"]:
             companies |= deal_with_mixed_lang(dt["NAME"])
-            companies |= deal_with_mixed_lang(dt["DPI"])
             companies |= generate_edrpou_options(dt["TIN_S"])
             persons |= parse_and_generate(dt["PIB"], "боржник")
         else:
             persons |= parse_and_generate(dt["NAME"], "боржник")
-            persons |= parse_and_generate(dt["DPI_BOSS"], "керівник податкової")
+
+        companies |= deal_with_mixed_lang(dt["DPI"])
+        persons |= parse_and_generate(dt["DPI_BOSS"], "керівник податкової")
 
         names_autocomplete = (
             companies
             | autocomplete_suggestions(dt["NAME"])
+            | autocomplete_suggestions(dt["PIB"])
             | autocomplete_suggestions(dt["DPI_BOSS"])
         )
 
