@@ -36,19 +36,17 @@ class FileLoader(object):
 
         return super().__init__(*args, **kwargs)
 
-
     def get_mongo_db(self):
         if settings.MONGODB_USERNAME:
             uri = "mongodb://{}:{}@{}:{}".format(
                 quote_plus(settings.MONGODB_USERNAME),
                 quote_plus(settings.MONGODB_PASSWORD),
                 quote_plus(settings.MONGODB_HOST),
-                settings.MONGODB_PORT
+                settings.MONGODB_PORT,
             )
         else:
             uri = "mongodb://{}:{}".format(
-                quote_plus(settings.MONGODB_HOST),
-                settings.MONGODB_PORT
+                quote_plus(settings.MONGODB_HOST), settings.MONGODB_PORT
             )
 
         connection = pymongo.MongoClient(
@@ -58,7 +56,6 @@ class FileLoader(object):
         )
 
         return connection[settings.MONGODB_DB]
-
 
     def get_dedup_fields(self):
         raise NotImplementedError
@@ -91,7 +88,7 @@ class FileLoader(object):
             help="Mongo collection to harvest (for --filetype=mongo only)",
             type=str,
             default=getattr(self, "mongo_collection", ""),
-            required=False
+            required=False,
         )
 
         parser.add_argument(
@@ -141,6 +138,18 @@ class FileLoader(object):
         else:
             raise NotImplementedError()
 
+    def get_payload_for_create(self, item, doc_hash, **kwargs):
+        params = kwargs.copy()
+
+        params.update({"id": doc_hash, "data": item})
+        return params
+
+    def get_payload_for_update(self, item, doc_hash, **kwargs):
+        params = kwargs.copy()
+
+        params.update({"data": item})
+        return params
+
     def get_doc_hash(self, doc, options):
         dedup_fields = sorted(self.get_dedup_fields())
 
@@ -165,7 +174,9 @@ class FileLoader(object):
     def get_last_updated(self, obj):
         assert self.last_updated_path
 
-        return timezone.make_aware(dt_parse(jmespath.search(self.last_updated_path, obj)))
+        return timezone.make_aware(
+            dt_parse(jmespath.search(self.last_updated_path, obj))
+        )
 
     def handle_details(self, *args, **options):
         if options.get("last_updated_from_dataset"):
@@ -184,9 +195,7 @@ class FileLoader(object):
 
         with tqdm.tqdm() as pbar:
             with transaction.atomic():
-                for i, item in enumerate(
-                    self.iter_dataset(options)
-                ):
+                for i, item in enumerate(self.iter_dataset(options)):
                     try:
                         item = self.preprocess(item, options)
                         if self.last_updated_path is not None:
@@ -194,7 +203,9 @@ class FileLoader(object):
                                 last_updated = self.get_last_updated(item)
                             except ValueError as e:
                                 logger.error(
-                                    "Cannot parse last_updated date in rec {}, error message was: {}".format(i, e)
+                                    "Cannot parse last_updated date in rec {}, error message was: {}".format(
+                                        i, e
+                                    )
                                 )
 
                                 last_updated = timezone.now()
@@ -214,16 +225,20 @@ class FileLoader(object):
                     if doc_hash not in existing_hashes:
                         bulk_add.append(
                             model(
-                                id=doc_hash,
-                                data=item,
-                                last_updated_from_dataset=last_updated,
-                                first_updated_from_dataset=last_updated,
+                                **self.get_payload_for_create(
+                                    item,
+                                    doc_hash,
+                                    last_updated_from_dataset=last_updated,
+                                    first_updated_from_dataset=last_updated,
+                                )
                             )
                         )
                         existing_hashes.add(doc_hash)
                     else:
                         model.objects.filter(pk=doc_hash).update(
-                            data=item, last_updated_from_dataset=last_updated
+                            **self.get_payload_for_update(
+                                item, doc_hash, last_updated_from_dataset=last_updated
+                            )
                         )
 
                     if len(bulk_add) >= self.chunk_size:

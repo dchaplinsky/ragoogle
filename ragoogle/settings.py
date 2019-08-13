@@ -80,6 +80,7 @@ INSTALLED_APPS = [
     "company_house_ua.apps.CompanyHouseUaConfig",
     "tax_debts.apps.TaxDebtsConfig",
     "procurement_winners.apps.ProcurementWinnersConfig",
+    "lets_party.apps.LetsPartyConfig",
 
     # Generalized search
     "search",
