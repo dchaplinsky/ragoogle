@@ -19,10 +19,13 @@ logger = logging.getLogger("LetsParty")
 class LetsPartyModel(AbstractDataset):
     TYPES = {
         "nacp": "Звіти партій (НАЗК)",
-        "parliament": "Звіти парламентських виборів (ЦВК)",
-        "president": "Звіти президентських виборів (ЦВК)",
+        "parliament": "Попередні звіти парламентських виборів (ЦВК)",
+        "president": "Попередні звіти президентських виборів (ЦВК)",
+        "parliament_final": "Звіти парламентських виборів (ЦВК)",
+        "president_final": "Звіти президентських виборів (ЦВК)",
     }
-    type = models.CharField("Джерело даних", max_length=10, choices=TYPES.items())
+    type = models.CharField("Джерело даних", max_length=20, choices=TYPES.items())
+    period = models.CharField("Період звіту", max_length=30)
     ultimate_recepient = models.CharField("Кінцевий отримувач коштів", max_length=255, db_index=True)
 
     def get_absolute_url(self):

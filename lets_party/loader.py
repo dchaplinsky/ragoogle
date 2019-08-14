@@ -1,5 +1,5 @@
 import argparse
-from csv import DictReader, Sniffer
+from csv import DictReader, Sniffer, excel
 
 from glob2 import iglob
 from abstract.loaders import FileLoader
@@ -8,7 +8,8 @@ from abstract.loaders import FileLoader
 class LetsPartyLoader(FileLoader):
     filetype = "csv"
     # last_updated_param_is_required = False
-    # last_updated_path = "REDEFINE ME"
+    csv_dialect = excel
+    last_updated_path = "donation_date"
 
     @property
     def model(self):
@@ -27,7 +28,10 @@ class LetsPartyLoader(FileLoader):
             help="Glob2 filemask to find files",
         )
 
-
+        parser.add_argument(
+            "--period",
+            help="Period for report"
+        )
         parser.add_argument(
             "--last_updated_from_dataset",
             help="The date of the export of the dataset",
@@ -42,21 +46,64 @@ class LetsPartyLoader(FileLoader):
 
     def preprocess(self, record, options):
         mapping = {
-            "Номер розрахункового документу": "transaction_doc_number"
+            "Дата надходження внеску": "donation_date",
+            "Код платника (ЄДРПОУ)": "donator_code",
+            "Місцезнаходження платника": "donator_location",
+            "Найменування платника": "donator_name",
+            "Партія": "party",
+            "Сума (грн)": "amount",
+            "Тип внескодавця": "donator_type",
+            "ПІБ кандидата": "candidate_name",
+            "Ідентифікаційний код (для фіз. осіб)/Код ЄДРПОУ (для юр. осіб)": "donator_code",
+            "Місце проживання (для фіз. осіб)/Юридична адреса (для юр. осіб)": "donator_location",
+            "ПІБ (для фіз. осіб)/Назва (для юр. осіб)": "donator_name",
+            "Номер розрахункового документа": "transaction_doc_number",
+            "Номер розрахункового документу": "transaction_doc_number",
+            "Географічний обʼєкт": "geo",
+            "Географічний об’єкт": "geo",
+            "Вид рахунку": "account_type",
+            "Квартал": "quarter",
+            "Код ЄДРПОУ осередку": "branch_code",
+            "Місцева організація": "branch_name",
+            "Найменування банку": "bank_name",
+            "Номер рахунку": "account_number",
+            "Призначення (для спонсорських внесків)": "payment_subject",
+            "Рік": "year",
+            "Примітки": "notes",
+            "type": "type",
+            "Column": ""
         }
 
         record["type"] = options["type"]
+        if None in record:
+            print(record)
 
-        record = {mapping.get(k, k): v for k, v in record.items()}
+        record = {mapping[k]: v for k, v in record.items() if mapping[k]}
+        if options["type"] == "nacp":
+            if record["quarter"] == "5":
+                record["period"] = "Річний звіт за {}".format(record["year"])
+            else:
+                record["period"] = "Звіт за {} квартал {}".format(record["quarter"], record["year"])
+        else:
+            record["period"] = options["period"]
 
         return record
+
+    def get_ultimate_recepient(self, item):
+        if item["type"] == "nacp":
+            return item["party"]
+        if item["type"] == "parliament":
+            return item["party"]
+        if item["type"] == "president":
+            return item["candidate_name"]
 
     def get_payload_for_create(self, item, doc_hash, **kwargs):
         params = super().get_payload_for_create(item, doc_hash, **kwargs)
 
         params.update({
             "type": item["type"],
-            "ultimate_recepient": "dummy",
+            "period": item["period"],
+            "ultimate_recepient": self.get_ultimate_recepient(item),
         })
 
         return params
@@ -66,7 +113,7 @@ class LetsPartyLoader(FileLoader):
 
         params.update({
             "type": item["type"],
-            "ultimate_recepient": "dummy",
+            "ultimate_recepient": self.get_ultimate_recepient(item),
         })
 
         return params
@@ -88,4 +135,23 @@ class LetsPartyLoader(FileLoader):
 
 
     def get_dedup_fields(self):
-        return ["transaction_doc_number"]
+        return [
+            "donation_date",
+            "donator_code",
+            "donator_location",
+            "donator_name",
+            "party",
+            "amount",
+            "donator_type",
+            "candidate_name",
+            "transaction_doc_number",
+            "geo",
+            "account_type",
+            "quarter",
+            "branch_code",
+            "branch_name",
+            "bank_name",
+            "account_number",
+            "payment_subject",
+            "year",
+        ]

@@ -155,7 +155,7 @@ class FileLoader(object):
 
         def get_value(pth, expression):
             if not (("." in pth) or ("[" in pth) or ("]" in pth)):
-                return doc[pth]
+                return doc.get(pth)
 
             val = expression.search(doc)
 
@@ -217,7 +217,7 @@ class FileLoader(object):
                         )
                         broken += 1
                         if options["store_broken_to"]:
-                            options["store_broken_to"].write(json.dumps(item) + "\n")
+                            options["store_broken_to"].write(json.dumps(item, sort_keys=True, ensure_ascii=False) + "\n")
                         continue
 
                     pbar.update(1)
@@ -252,6 +252,8 @@ class FileLoader(object):
                 i + 1, successful, broken
             )
         )
+
+        logger.info("Total amount of records in this datasouce is now {}".format(model.objects.count()))
 
 
 class DummyLoader(FileLoader):
