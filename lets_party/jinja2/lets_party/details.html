@@ -2,10 +2,10 @@
 
 {% block container_class %}sidebar-o sidebar-inverse side-scroll main-content-narrow  page-header-fixed page-header-inverse{% endblock %}
 
-{% block title %}REDEFINE ME{% endblock %}
+{% block title %}{{ rec.ultimate_recepient }}, пожертва {{ rec.amount|curformat }} грн. від {{ rec.donator_name }}{% endblock %}
 
 {% block description %}
-REDEFINE ME
+    {{ rec.type }}, донорський внесок у {{ rec.amount|curformat }} гривень для {{ rec.ultimate_recepient }} від {{ rec.donator_name }} {% if rec.donator_code %} ({{ rec.donator_code|format_edrpou }}){% endif %}
 {% endblock %}
 
 {% block content %}
@@ -13,7 +13,7 @@ REDEFINE ME
 <div class="content" itemscope="" itemtype="http://schema.org/Organization">
     <!-- Frequently Asked Questions -->
     <h1 class="content-heading">
-        REDEFINE ME
+        {{ rec.ultimate_recepient }} ({{ rec.type }}, {{ rec.period|lower }})
     </h1>
 
     <div class="block document-details">
@@ -30,10 +30,53 @@ REDEFINE ME
         <div class="block-content">
             <div class="table-responsive push">
                 <table class="table table-bordered table-hover">
-                    <tr>
-                        <th>REDEFINE ME</th>
-                        <td>REDEFINE ME</td>
+                    <tr itemscope="" itemtype="{% if rec.donator_code %}http://schema.org/Organization{% else %}http://schema.org/Person{% endif %}" itemprop="sponsor">
+                        <th>Донор</th>
+                        <td><span itemprop="name">{{ rec.donator_name }}</span> {% if rec.donator_code %}(<a href="{{ url('search>results') }}?q={{ rec.donator_code }}" target="_blank"><span itemprop="taxId">{{ rec.donator_code|format_edrpou }}</a>)</span>{% endif %}<br/>
+                        <span itemprop="address">{{ rec.donator_location }}</span>, {{ rec.donator_type }}</td>
                     </tr>
+
+                    <tr>
+                        <th>Сума пожертви</th>
+                        <td>{{ rec.amount|curformat }} грн.</td>
+                    </tr>
+                    <tr>
+                        <th>Дата пожертви</th>
+                        <td>{{ rec.donation_date|date }}</td>
+                    </tr>
+                    <tr>
+                        <th>Отримувач</th>
+                        <td>{% if rec.candidate_name %}<span itemscope="" itemtype="http://schema.org/Person" itemprop="alumni"><span itemprop="name">{{ rec.candidate_name }}, </span></span>{% endif %}<span itemprop="legalName">{{ rec.party }}</span></td>
+                    </tr>
+                    {% if rec.branch_code or rec.branch_name or rec.geo %}
+                    <tr itemscope="" itemtype="http://schema.org/Organization" itemprop="subOrganization">
+                        <th>Осередок</th>
+                        <td>
+                            {% if rec.branch_name %}<span itemprop="legalName">{{ rec.branch_name }}</span>{% endif %}
+                            {% if rec.branch_code %}(<a href="{{ url('search>results') }}?q={{ rec.branch_code }}" target="_blank"><span itemprop="taxId">{{ rec.branch_code|format_edrpou }}</span></a>){% endif %}{% if rec.geo %}, <span itemprop="address">{{ rec.geo }}</span>{% endif %}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% if rec.bank_name or rec.account_number or rec.payment_subject %}
+                    <tr>
+                        <th>Платіж</th>
+                        <td>
+                            {% if rec.account_number %}{{ rec.account_number }}{% endif %}
+                            {% if rec.bank_name %}({{ rec.bank_name }}){% endif %}{% if rec.payment_subject %}<br/>{{ rec.payment_subject }}{% endif %}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% if rec.transaction_doc_number %}
+                    <tr>
+                        <th>Номер розрахункового документа</th>
+                        <td>
+                            {{ rec.transaction_doc_number }}
+                        </td>
+                    </tr>
+                    {% endif %}
+
+
+
                 </table>
                 {% if rec.details_url %}
                 <a href="{{ rec.details_url }}" target="_blank">Посилання на оригінал</a>

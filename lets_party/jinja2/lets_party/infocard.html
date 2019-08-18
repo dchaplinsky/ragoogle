@@ -1,10 +1,11 @@
 {% extends "abstract/base_infocard.html" %}
 
 {% block header %}
-    <div class="edrpou">REDEFINE ME</div>
-    <h3 class="name">REDEFINE ME</h3>
+    <div class="edrpou">{{ res.period }}</div>
+    <h3 class="name">{{ res.ultimate_recepient }}</h3>
 {% endblock %}
 
 {% block description %}
-    REDEFINE ME
+    Пожертва у <strong>{{ res.amount|curformat }}</strong> грн.<br />
+    від {{ res.donator_name }}{% if res.donator_code %} ({{ res.donator_code }}){% endif %}, {{ res.donation_date|date }}
 {% endblock %}
