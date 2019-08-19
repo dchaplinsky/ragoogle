@@ -32,7 +32,9 @@
                 <table class="table table-bordered table-hover">
                     <tr itemscope="" itemtype="{% if rec.donator_code %}http://schema.org/Organization{% else %}http://schema.org/Person{% endif %}" itemprop="sponsor">
                         <th>Донор</th>
-                        <td><span itemprop="name">{{ rec.donator_name }}</span> {% if rec.donator_code %}(<a href="{{ url('search>results') }}?q={{ rec.donator_code }}" target="_blank"><span itemprop="taxId">{{ rec.donator_code|format_edrpou }}</a>)</span>{% endif %}<br/>
+                        <td><span itemprop="name">{{ rec.donator_name }}</span> {% if rec.donator_code %}(<a href="{{ url('search>results') }}?q={{ rec.donator_code }}" target="_blank"><span itemprop="taxId">{{ rec.donator_code|format_edrpou }}</a>)</span>{% else %}
+                        {% for alt_name in parse_and_generate(rec.donator_name) %}<meta itemprop="alternateName" content="{{ alt_name }}" />{% endfor %}
+                        {% endif %}<br/>
                         <span itemprop="address">{{ rec.donator_location }}</span>, {{ rec.donator_type }}</td>
                     </tr>
 
@@ -46,7 +48,7 @@
                     </tr>
                     <tr>
                         <th>Отримувач</th>
-                        <td>{% if rec.candidate_name %}<span itemscope="" itemtype="http://schema.org/Person" itemprop="alumni"><span itemprop="name">{{ rec.candidate_name }}, </span></span>{% endif %}<span itemprop="legalName">{{ rec.party }}</span></td>
+                        <td>{% if rec.candidate_name %}<span itemscope="" itemtype="http://schema.org/Person" itemprop="alumni"><span itemprop="name">{{ rec.candidate_name }}</span>,{% for alt_name in parse_and_generate(rec.candidate_name) %}<meta itemprop="alternateName" content="{{ alt_name }}" />{% endfor %}</span>{% endif %}<span itemprop="legalName">{{ rec.party }}</span></td>
                     </tr>
                     {% if rec.branch_code or rec.branch_name or rec.geo %}
                     <tr itemscope="" itemtype="http://schema.org/Organization" itemprop="subOrganization">

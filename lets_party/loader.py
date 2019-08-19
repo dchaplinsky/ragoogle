@@ -7,7 +7,6 @@ from abstract.loaders import FileLoader
 
 class LetsPartyLoader(FileLoader):
     filetype = "csv"
-    # last_updated_param_is_required = False
     csv_dialect = excel
     last_updated_path = "donation_date"
 

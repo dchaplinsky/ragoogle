@@ -1,0 +1,105 @@
+{% extends "search/base.html" %}
+
+{% block container_class %}sidebar-o sidebar-inverse side-scroll main-content-narrow  page-header-fixed page-header-inverse{% endblock %}
+
+{% block title %}{{ rec.CORRUPTIONER_LAST_NAME }} {{ rec.CORRUPTIONER_FIRST_NAME }} {{ rec.CORRUPTIONER_SURNAME }}, інформація з реєстру корупціонерів НАЗК{% endblock %}
+
+{% block description %}
+{{ rec.OFFENSE_NAME|truncate(325) }}
+{% endblock %}
+
+{% block content %}
+<!-- Page Content -->
+<div class="content" itemscope="" itemtype="http://schema.org/Person">
+    <!-- Frequently Asked Questions -->
+    <h1 class="content-heading">
+        <span itemprop="familyName">{{ rec.CORRUPTIONER_LAST_NAME }}</span> <span itemprop="givenName">{{ rec.CORRUPTIONER_FIRST_NAME }}</span> <span itemprop="additionalName">{{ rec.CORRUPTIONER_SURNAME }}</span>
+        {% for alt_name in generate_all_names(rec.CORRUPTIONER_LAST_NAME, rec.CORRUPTIONER_FIRST_NAME, rec.CORRUPTIONER_SURNAME) %}<meta itemprop="alternateName" content="{{ alt_name }}" />{% endfor %}
+    </h1>
+    <p itemprop="worksFor" itemscope="" itemtype="http://schema.org/Organization">
+        {{ rec.CORR_WORK_POS }}{% if rec.CORR_WORK_PLACE %}, <span itemprop="legalName">{{ rec.CORR_WORK_PLACE }}</span>{% endif %}
+    </p>
+
+    <div class="block document-details">
+        <div class="block-header block-header-default">
+            <h2 class="block-title">Детальна інформація: </h2>
+            <div class="block-options">
+                <button type="button" class="btn-block-option" onclick="Edrdr.helpers('print-page');">
+                    <i class="si si-printer"></i> Друкувати
+                </button>
+                <button type="button" class="btn-block-option" data-toggle="block-option"
+                        data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
+            </div>
+        </div>
+        <div class="block-content">
+            <div class="table-responsive push">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th>Склад правопорушення</th>
+                        <td>{{ rec.OFFENSE_NAME }}</td>
+                    </tr>
+                    {% if rec.ACTIVITY_SPH_NAME %}
+                    <tr>
+                        <th>Сфера діяльності</th>
+                        <td>{{ rec.ACTIVITY_SPH_NAME }}</td>
+                    </tr>
+                    {% endif %}
+                    {% if rec.PUNISHMENT %}
+                    <tr>
+                        <th>Суть задоволення позовних вимог</th>
+                        <td>{{ rec.PUNISHMENT }}</td>
+                    </tr>
+                    {% endif %}
+                    {% if rec.COURT_NAME %}
+                    <tr>
+                        <th>Найменування суду, який ухвалив рішення</th>
+                        <td>{{ rec.COURT_NAME }}</td>
+                    </tr>
+                    {% endif %}
+
+                    {% if rec.COURT_CASE_NUM %}
+                    <tr>
+                        <th>Номер справи</th>
+                        <td>{{ rec.COURT_CASE_NUM }}</td>
+                    </tr>
+                    {% endif %}
+
+                    {% if rec.SENTENCE_NUMBER %}
+                    <tr>
+                        <th>Номер рішення</th>
+                        <td>{{ rec.SENTENCE_NUMBER }}</td>
+                    </tr>
+                    {% endif %}
+
+                    {% if rec.SENTENCE_DATE %}
+                    <tr>
+                        <th>Дата рішення</th>
+                        <td>{{ rec.SENTENCE_DATE|date }}</td>
+                    </tr>
+                    {% endif %}
+
+                    {% if rec.PUN_START %}
+                    <tr>
+                        <th>Дата набрання законної сили</th>
+                        <td>{{ rec.PUN_START|date }}</td>
+                    </tr>
+                    {% endif %}
+
+                    {% if rec.CODEX_ARTICLES_LIST_CODEX_ART_NUMBER or rec.CODEX_ARTICLES_LIST_CODEX_ART_NAME %}
+                    <tr>
+                        <th>Cтаття</th>
+                        <td>{{ rec.CODEX_ARTICLES_LIST_CODEX_ART_NUMBER }}<br />
+                        {{ rec.CODEX_ARTICLES_LIST_CODEX_ART_NAME }}</td>
+                    </tr>
+                    {% endif %}
+
+
+                </table>
+                {% if rec.details_url %}
+                <a href="{{ rec.details_url }}" target="_blank">Посилання на оригінал</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -40,6 +40,7 @@ urlpatterns = [
     path("tax_debts/", include("tax_debts.urls")),
     path("procurement_winners/", include("procurement_winners.urls")),
     path("lets_party/", include("lets_party.urls")),
+    path("corrupt/", include("corrupt.urls")),
     path("admin/", admin.site.urls),
     path(
         "sitemap.xml",

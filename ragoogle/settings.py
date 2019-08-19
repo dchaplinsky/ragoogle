@@ -81,6 +81,7 @@ INSTALLED_APPS = [
     "tax_debts.apps.TaxDebtsConfig",
     "procurement_winners.apps.ProcurementWinnersConfig",
     "lets_party.apps.LetsPartyConfig",
+    "corrupt.apps.CorruptConfig",
 
     # Generalized search
     "search",
