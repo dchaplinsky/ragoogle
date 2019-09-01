@@ -16,10 +16,8 @@ logger = logging.getLogger("LetsParty")
 class LetsPartyModel(AbstractDataset):
     TYPES = {
         "nacp": "Звіти партій до НАЗК",
-        "parliament": "Попередні звіти парламентських виборів до ЦВК",
-        "president": "Попередні звіти президентських виборів до ЦВК",
-        "parliament_final": "Звіти парламентських виборів до ЦВК",
-        "president_final": "Звіти президентських виборів до ЦВК",
+        "parliament": "Звіти парламентських виборів до ЦВК",
+        "president": "Звіти президентських виборів до ЦВК",
     }
     type = models.CharField("Джерело даних", max_length=20, choices=TYPES.items())
     period = models.CharField("Період звіту", max_length=30)
