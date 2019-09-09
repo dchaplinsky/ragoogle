@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.apps import apps as django_apps
+from search.search_tools import get_apps_with_loader
 
 
 class Command(BaseCommand):
@@ -10,12 +11,13 @@ class Command(BaseCommand):
             dest="datasource", help="Invididual data sources"
         )
 
-        for app_label, config in django_apps.app_configs.items():
+        for app_label in get_apps_with_loader():
+            config = django_apps.app_configs[app_label]
+
             if hasattr(config, "loader_class"):
                 loader = config.loader_class()
                 subp = subparsers.add_parser(
-                    name=app_label,
-                    help="{} dataset".format(config.verbose_name),
+                    name=app_label, help="{} dataset".format(config.verbose_name)
                 )
                 loader.inject_params(subp)
 

@@ -1,0 +1,5 @@
+RingCompany:
+  extends: Company
+  label: Ring Company
+  plural: Ring Companies
+  matchable: true

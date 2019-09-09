@@ -1,9 +1,10 @@
 import re
 from collections import defaultdict, Counter, OrderedDict
 
-from django.http import JsonResponse
+from django.db.models import Max, Min
+from django.http import JsonResponse, Http404
 from django.views import View
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, DetailView
 from django.template.loader import render_to_string
 from django.core.paginator import EmptyPage
 from django.shortcuts import render
@@ -19,6 +20,7 @@ from search.search_tools import (
 
 from search.paginator import paginated
 from search.api import serialize_for_api
+from search.models import DataSource
 from edrdr.elastic_models import ElasticEDRDRModel
 
 
@@ -28,7 +30,7 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context.update({"datasources": get_all_enabled_datasources()})
+        context.update({"datasources": get_all_enabled_datasources().values()})
 
         return context
 
@@ -171,18 +173,22 @@ class SearchView(TemplateView):
                 clauses = []
 
                 if entities in ["all", "persons"] and nwords >= 3:
-                    clauses.append(Q(
-                        "match",
-                        **{
-                            "incomplete_persons": {
-                                "query": query,
-                                "operator": "or",
-                                "minimum_should_match": nwords - 1,
-                            }
-                        },
-                    ))
+                    clauses.append(
+                        Q(
+                            "match",
+                            **{
+                                "incomplete_persons": {
+                                    "query": query,
+                                    "operator": "or",
+                                    "minimum_should_match": nwords - 1,
+                                }
+                            },
+                        )
+                    )
 
-                compiled_query = Q("match_phrase", **{entities: {"query": query, "slop": 6}})
+                compiled_query = Q(
+                    "match_phrase", **{entities: {"query": query, "slop": 6}}
+                )
                 for sub_q in clauses:
                     compiled_query |= sub_q
 
@@ -249,8 +255,9 @@ class SearchView(TemplateView):
                 "loose_count": loose_count,
                 "base_count": base_count,
                 "enabled_datasources": request.GET.getlist("datasources"),
-                "datasources": get_all_enabled_datasources(),
+                "datasources": get_all_enabled_datasources().values(),
                 "doctypes_mapping": doctypes,
+                "foobar": "foobar"
             }
         )
 
@@ -268,3 +275,31 @@ class AboutSearchView(TemplateView):
 
 class AboutAPIView(TemplateView):
     template_name = "cms/about_api.html"
+
+
+class DataSourceView(DetailView):
+    template_name = "search/datasource.html"
+    model = DataSource
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        datasource = get_all_enabled_datasources().get(context["object"].slug)
+
+        if not datasource:
+            raise Http404("Записа не існує")
+
+        context["datasource"] = datasource
+
+        if hasattr(datasource, "data_model"):
+            context["rec_count"] = datasource.data_model.objects.count()
+
+            stats = datasource.data_model.objects.aggregate(
+                last_updated=Max("last_updated_from_dataset"),
+                first_updated=Min("first_updated_from_dataset")
+            )
+
+            context.update(stats)
+        else:
+            context["rec_count"] = datasource.elastic_model.search().count()
+
+        return context

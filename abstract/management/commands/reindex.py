@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.apps import apps as django_apps
 
+from search.search_tools import get_apps_with_data_model
 from elasticsearch.helpers import parallel_bulk
 from elasticsearch_dsl.connections import connections
 from tqdm import tqdm
@@ -26,13 +27,10 @@ class Command(BaseCommand):
             help="Size of batch to send to elasticsearch",
         )
 
-        sources = []
-        for app_label, config in django_apps.app_configs.items():
-            if hasattr(config, "data_model") and hasattr(config, "elastic_model"):
-                sources.append(app_label)
-
         parser.add_argument(
-            "datasource", choices=sources, help="Which source should be reindexed"
+            "datasource",
+            choices=get_apps_with_data_model(),
+            help="Which source should be reindexed",
         )
 
     def bulk_write(self, conn, docs_to_index):

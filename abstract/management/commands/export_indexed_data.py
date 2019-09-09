@@ -5,6 +5,7 @@ import tqdm
 from django.apps import apps as django_apps
 from django.core.management.base import BaseCommand
 from elasticsearch.serializer import JSONSerializer
+from search.search_tools import get_apps_with_data_model
 
 
 class Command(BaseCommand):
@@ -21,13 +22,10 @@ class Command(BaseCommand):
             "--outfile", nargs="?", type=argparse.FileType("w"), default=sys.stdout
         )
 
-        sources = []
-        for app_label, config in django_apps.app_configs.items():
-            if hasattr(config, "data_model") and hasattr(config, "elastic_model"):
-                sources.append(app_label)
-
         parser.add_argument(
-            "datasource", choices=sources, help="Which source should be exported"
+            "datasource",
+            choices=get_apps_with_data_model(),
+            help="Which source should be exported",
         )
 
     def handle(self, *args, **options):

@@ -5,6 +5,7 @@ from django.views.generic import TemplateView
 from elasticsearch.exceptions import NotFoundError
 
 from .elastic_models import ElasticTaxDebtsModel
+from .apps import TaxDebtsConfig as DataSourceConfig
 
 
 class TaxDebtsDetailsView(TemplateView):
@@ -19,5 +20,6 @@ class TaxDebtsDetailsView(TemplateView):
             raise Http404("Записа не існує")
 
         context["rec"] = rec
+        context["datasource"] = DataSourceConfig
 
         return context

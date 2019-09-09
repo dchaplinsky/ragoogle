@@ -5,6 +5,8 @@ from django.views.generic import TemplateView
 from elasticsearch.exceptions import NotFoundError
 
 from .elastic_models import ElasticSmidaModel
+from .apps import SmidaConfig as DataSourceConfig
+
 
 class SmidaDetailsView(TemplateView):
     template_name = "smida/details.html"
@@ -18,5 +20,6 @@ class SmidaDetailsView(TemplateView):
             raise Http404("Записа не існує")
 
         context["rec"] = rec
+        context["datasource"] = DataSourceConfig
 
         return context

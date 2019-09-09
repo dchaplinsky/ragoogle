@@ -5,6 +5,7 @@ from django.views.generic import TemplateView
 from elasticsearch.exceptions import NotFoundError
 
 from .elastic_models import ElasticMbuModel
+from .apps import MbuConfig as DataSourceConfig
 
 
 class MbuDetailsView(TemplateView):
@@ -19,5 +20,6 @@ class MbuDetailsView(TemplateView):
             raise Http404("Записа не існує")
 
         context["rec"] = rec
+        context["datasource"] = DataSourceConfig
 
         return context

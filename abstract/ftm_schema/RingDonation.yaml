@@ -1,0 +1,6 @@
+RingDonation:
+  label: "Ring Donation"
+  plural: "Ring Donations"
+  description: "A monetary donation between two parties."
+  extends: 
+    - Payment

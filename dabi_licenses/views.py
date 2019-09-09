@@ -5,8 +5,10 @@ from django.views.generic import TemplateView
 from elasticsearch.exceptions import NotFoundError
 
 from .elastic_models import ElasticDabiLicenseModel
+from .apps import DabiLicensesConfig as DataSourceConfig
 
-class DabiLicenseDetailsView(TemplateView):
+
+class DabiLicensesDetailsView(TemplateView):
     template_name = "dabi_licenses/details.html"
 
     def get_context_data(self, **kwargs):
@@ -18,5 +20,6 @@ class DabiLicenseDetailsView(TemplateView):
             raise Http404("Записа не існує")
 
         context["rec"] = rec
+        context["datasource"] = DataSourceConfig
 
         return context

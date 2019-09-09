@@ -13,6 +13,7 @@ from search.views import (
     SuggestView,
     AboutSearchView,
     AboutAPIView,
+    DataSourceView,
 )
 
 
@@ -41,6 +42,7 @@ urlpatterns = [
     path("procurement_winners/", include("procurement_winners.urls")),
     path("lets_party/", include("lets_party.urls")),
     path("corrupt/", include("corrupt.urls")),
+    path("source/<slug:slug>", DataSourceView.as_view(), name="about_datasource"),
     path("admin/", admin.site.urls),
     path(
         "sitemap.xml",

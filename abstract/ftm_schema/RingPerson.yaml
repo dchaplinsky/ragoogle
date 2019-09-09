@@ -1,0 +1,6 @@
+RingPerson:
+  extends: Person
+  label: Ring Person
+  plural: Ring People
+  description: "An individual"
+  matchable: true

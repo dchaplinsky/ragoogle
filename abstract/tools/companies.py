@@ -2,6 +2,10 @@ import re
 from names_translator.name_utils import try_to_fix_mixed_charset
 
 
+def format_edrpou(code):
+    return str(code).rjust(8, "0")
+
+
 def unify_cyprus_codes(company_code):
     company_code = re.sub("^HE\s?", "HE", company_code)
     company_code = re.sub("^ΗΕ\s?", "HE", company_code)

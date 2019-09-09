@@ -24,7 +24,7 @@
             </div>
         </div>
         <footer>
-            {% block footer %}{{ datasource_verbose_name }}{% endblock %}
+            {% block footer %}{% if datasource_name in datasource_pages %}<a href="{{ datasource_pages[datasource_name].get_absolute_url() }}">{{ datasource_verbose_name }}</a>{% else %}{{ datasource_verbose_name }}{% endif %}{% endblock %}
         </footer>
     </div>
     <div class="box active-box full-box">
@@ -47,7 +47,7 @@
             </div>
             <hr>
             <footer>
-                {% block footer2 %}{{ datasource_verbose_name }}{% endblock %}
+                {% block footer2 %}{% if datasource_name in datasource_pages %}<a href="{{ datasource_pages[datasource_name].get_absolute_url() }}">{{ datasource_verbose_name }}</a>{% else %}{{ datasource_verbose_name }}{% endif %}{% endblock %}
             </footer>
         </a>
     </div>

@@ -143,6 +143,15 @@
     <main id="main-container">
         {% block content %}
         {% endblock %}
+        {% if datasource and datasource.name in datasource_pages %}
+        <div class="content">
+            <div class="block document-details">
+                <div class="block-header block-header-default" style="display: block">
+                    Джерело: <a href="{{ datasource_pages[datasource.name].get_absolute_url() }}">{{ datasource.verbose_name }}</a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
         {% include "search/_footer.html" with context %}
     </main>
     <!-- END Main Container -->

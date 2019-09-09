@@ -3,7 +3,7 @@ Jinja2==2.10.1
 requests==2.21.0
 tokenize-uk==0.2.0
 translitua==1.2.4
-psycopg2==2.7.3.2
+psycopg2-binary==2.8.3
 tqdm==4.23.0
 python-dateutil==2.7.2
 elasticsearch-dsl>=5.0.0,<6.0.0
@@ -11,10 +11,11 @@ python-Levenshtein==0.12.0
 names-translator==1.2.0
 django-pipeline==1.6.14
 raven==6.9.0
-django-ckeditor==5.5.0
+django-ckeditor==5.7.1
 Pillow==5.1.0
 jmespath==0.9.3
 gunicorn==19.9.0
 pymongo==3.7.2
 django-prometheus==1.0.15
 glob2==0.7
+followthemoney==1.18.2

@@ -1,357 +1,76 @@
-{% extends "companies/base.html" %}
+{% extends "search/base.html" %}
 
-{% block container_class %}sidebar-o sidebar-inverse side-scroll main-content-narrow  page-header-fixed page-header-inverse{% endblock %}
+{% block title %}Відкритий API - реєстр реєстрів RING{% endblock %}
+
+{% block body_class %}page-company{% endblock %}
+{% block container_class %}sidebar-o sidebar-inverse side-scroll main-content-narrow page-header-fixed page-header-inverse{% endblock %}
 
 {% block content %}
-    <!-- Page Content -->
-    <div class="content">
-        <!-- Frequently Asked Questions -->
-        <h2 class="content-heading">Frequently Asked Questions</h2>
-
-        <!-- Introduction -->
-        <div class="block">
-            <div class="block-header block-header-default">
-                <h3 class="block-title">
-                    <strong>1.</strong> Introduction
+    <!-- Feature: Powerful Layout -->
+    <div class="bg-white section-2">
+        <div class="content">
+            <div class="pb-50">
+                <h3 class="h1 font-w700 text-center mb-10">
+                    Відкритий API
                 </h3>
-                <div class="block-options">
-                    <button type="button" class="btn-block-option">
-                        <i class="si si-question"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="block-content block-content-full">
-                <div id="faq1" role="tablist" aria-multiselectable="true">
-                    <div class="block block-bordered block-rounded mb-5">
-                        <div class="block-header" role="tab" id="faq1_h1">
-                            <a class="font-w600 text-body-color-dark" data-toggle="collapse" data-parent="#faq1" href="#faq1_q1" aria-expanded="true" aria-controls="faq1_q1">1.1 Welcome to your own dashboard</a>
+                <div class="row nice-copy my-10">
+                    <div class="col-md-12 py-20">
+                        <div class="alert alert-info" role="alert">
+                            Знаходиться у стадії бета-тестування. Надсилайте ваші відгуки на адресу <a href="mailto:bihus.info+ring@gmail.com">bihus.info+ring@gmail.com</a>
                         </div>
-                        <div id="faq1_q1" class="collapse show" role="tabpanel" aria-labelledby="faq1_h1">
-                            <div class="block-content border-t">
-                                <p>Potenti elit lectus augue eget iaculis vitae etiam, ullamcorper etiam bibendum ad feugiat magna accumsan dolor, nibh molestie cras hac ac ad massa, fusce ante convallis ante urna molestie vulputate bibendum tempus ante justo arcu erat accumsan adipiscing risus, libero condimentum venenatis sit nisl nisi ultricies sed, fames aliquet consectetur consequat nostra molestie neque nullam scelerisque neque commodo turpis quisque etiam egestas vulputate massa, curabitur tellus massa venenatis congue dolor enim integer luctus, nisi suscipit gravida fames quis vulputate nisi viverra luctus id leo dictum lorem, inceptos nibh orci.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="block block-bordered block-rounded mb-5">
-                        <div class="block-header" role="tab" id="faq1_h2">
-                            <a class="font-w600 text-body-color-dark" data-toggle="collapse" data-parent="#faq1" href="#faq1_q2" aria-expanded="true" aria-controls="faq1_q2">1.2 The team behind the project</a>
-                        </div>
-                        <div id="faq1_q2" class="collapse" role="tabpanel" aria-labelledby="faq1_h2">
-                            <div class="block-content border-t">
-                                <div class="row">
-                                    <div class="col-md-6 col-xl-3">
-                                        <a class="block block-link-pop" href="javascript:void(0)">
-                                            <div class="block-content block-content-full text-center">
-                                                <img class="img-avatar" src="assets/img/avatars/avatar6.jpg" alt="">
-                                            </div>
-                                            <div class="block-content block-content-full bg-body-light text-center">
-                                                <div class="font-w600 mb-5">Marie Duncan</div>
-                                                <div class="font-size-sm text-muted">Web Designer</div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="col-md-6 col-xl-3">
-                                        <a class="block block-link-pop" href="javascript:void(0)">
-                                            <div class="block-content block-content-full text-center">
-                                                <img class="img-avatar" src="assets/img/avatars/avatar10.jpg" alt="">
-                                            </div>
-                                            <div class="block-content block-content-full bg-body-light text-center">
-                                                <div class="font-w600 mb-5">Justin Hunt</div>
-                                                <div class="font-size-sm text-muted">Web Development</div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="col-md-6 col-xl-3">
-                                        <a class="block block-link-pop" href="javascript:void(0)">
-                                            <div class="block-content block-content-full text-center">
-                                                <img class="img-avatar" src="assets/img/avatars/avatar9.jpg" alt="">
-                                            </div>
-                                            <div class="block-content block-content-full bg-body-light text-center">
-                                                <div class="font-w600 mb-5">Albert Ray</div>
-                                                <div class="font-size-sm text-muted">Photographer</div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="col-md-6 col-xl-3">
-                                        <a class="block block-link-pop" href="javascript:void(0)">
-                                            <div class="block-content block-content-full text-center">
-                                                <img class="img-avatar" src="assets/img/avatars/avatar5.jpg" alt="">
-                                            </div>
-                                            <div class="block-content block-content-full bg-body-light text-center">
-                                                <div class="font-w600 mb-5">Megan Fuller</div>
-                                                <div class="font-size-sm text-muted">Graphic Designer</div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="block block-bordered block-rounded mb-5">
-                        <div class="block-header" role="tab" id="faq1_h3">
-                            <a class="font-w600 text-body-color-dark" data-toggle="collapse" data-parent="#faq1" href="#faq1_q3" aria-expanded="true" aria-controls="faq1_q3">1.3 What are our values?</a>
-                        </div>
-                        <div id="faq1_q3" class="collapse" role="tabpanel" aria-labelledby="faq1_h3">
-                            <div class="block-content border-t">
-                                <p>Potenti elit lectus augue eget iaculis vitae etiam, ullamcorper etiam bibendum ad feugiat magna accumsan dolor, nibh molestie cras hac ac ad massa, fusce ante convallis ante urna molestie vulputate bibendum tempus ante justo arcu erat accumsan adipiscing risus, libero condimentum venenatis sit nisl nisi ultricies sed, fames aliquet consectetur consequat nostra molestie neque nullam scelerisque neque commodo turpis quisque etiam egestas vulputate massa, curabitur tellus massa venenatis congue dolor enim integer luctus, nisi suscipit gravida fames quis vulputate nisi viverra luctus id leo dictum lorem, inceptos nibh orci.</p>
-                                <p>Potenti elit lectus augue eget iaculis vitae etiam, ullamcorper etiam bibendum ad feugiat magna accumsan dolor, nibh molestie cras hac ac ad massa, fusce ante convallis ante urna molestie vulputate bibendum tempus ante justo arcu erat accumsan adipiscing risus, libero condimentum venenatis sit nisl nisi ultricies sed, fames aliquet consectetur consequat nostra molestie neque nullam scelerisque neque commodo turpis quisque etiam egestas vulputate massa, curabitur tellus massa venenatis congue dolor enim integer luctus, nisi suscipit gravida fames quis vulputate nisi viverra luctus id leo dictum lorem, inceptos nibh orci.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="block block-bordered block-rounded mb-5">
-                        <div class="block-header" role="tab" id="faq1_h4">
-                            <a class="font-w600 text-body-color-dark" data-toggle="collapse" data-parent="#faq1" href="#faq1_q4" aria-expanded="true" aria-controls="faq1_q4">1.4 What are our future plans?</a>
-                        </div>
-                        <div id="faq1_q4" class="collapse" role="tabpanel" aria-labelledby="faq1_h4">
-                            <div class="block-content border-t">
-                                <p>Potenti elit lectus augue eget iaculis vitae etiam, ullamcorper etiam bibendum ad feugiat magna accumsan dolor, nibh molestie cras hac ac ad massa, fusce ante convallis ante urna molestie vulputate bibendum tempus ante justo arcu erat accumsan adipiscing risus, libero condimentum venenatis sit nisl nisi ultricies sed, fames aliquet consectetur consequat nostra molestie neque nullam scelerisque neque commodo turpis quisque etiam egestas vulputate massa, curabitur tellus massa venenatis congue dolor enim integer luctus, nisi suscipit gravida fames quis vulputate nisi viverra luctus id leo dictum lorem, inceptos nibh orci.</p>
-                                <p>Potenti elit lectus augue eget iaculis vitae etiam, ullamcorper etiam bibendum ad feugiat magna accumsan dolor, nibh molestie cras hac ac ad massa, fusce ante convallis ante urna molestie vulputate bibendum tempus ante justo arcu erat accumsan adipiscing risus, libero condimentum venenatis sit nisl nisi ultricies sed, fames aliquet consectetur consequat nostra molestie neque nullam scelerisque neque commodo turpis quisque etiam egestas vulputate massa, curabitur tellus massa venenatis congue dolor enim integer luctus, nisi suscipit gravida fames quis vulputate nisi viverra luctus id leo dictum lorem, inceptos nibh orci.</p>
-                            </div>
+                        <p>Щоб скористатися API до нашого реєстру реєстрів, просто додайте параметр <code>format=json</code> до адреси сторінки з результатами пошуку, наприклад, так:
+                        </p>
+                        <code>
+                            https://ring.org.ua/search?q=кононенко&datasources=smida&datasources=posipaky_info&datasources=posipaky_2_info&datasources=edrdr&datasources=garnahata_in_ua&datasources=vkks&datasources=nacp_declarations&datasources=paper_declarations&datasources=cvk_2015&datasources=smida_reports&datasources=dabi_licenses&datasources=dabi_registry<strong>&format=json</strong>
+                        </code>
+                        <p>
+                            <br/>
+                            Таким чином, ви отримаєте ті самі результати, але в форматі машиночитних даних. Документ з результатами складається з наступних розділів:
+                            <ul>
+                                <li><strong>search_results</strong> — знайдені документи та інформація щодо поточної сторінки</li>
+                                <li><strong>query</strong> — ваш запит до системи</li>
+                                <li><strong>search_type</strong> — режим пошуку (<code>strict</code> — повний збіг, <code>loose</code> — неповний збіг)</li>
+                                <li><strong>strict_count</strong> — кількість результатів в режимі повного збіг</li>
+                                <li><strong>loose_count</strong> — кількість результатів в режимі неповного збіг</li>
+                                <li><strong>base_count</strong> — кількість результатів в поточному режимі пошуку</li>
+                                <li><strong>enabled_datasources</strong> — джерела по котрим проводиться пошук</li>
+                                <li><strong>datasources</strong> — додаткова інформація по джерелам пошуку, включно з назвою українською</li>
+                            </ul>
+                        </p>
+                        <p>
+                            Вміст <code>search_results</code> складається з наступних полів:
+                            <ul>
+                                <li><strong>paginator</strong> — інформація про поточну сторінку та розбивку на сторінки, де <code>count</code> — загальна кількість результатів, <code>num_pages</code> — кількість сторінок, <code>per_page</code> — кількість результатів на сторінку</li>
+                                <li><strong>number</strong> — номер поточної сторінки</li>
+                                <li><strong>object_list</strong> — власне, результати пошуку</li>
+                            </ul>
+                        </p>
+                        <p>
+                            Звісно, що документи з різних джерел пошуку (наприклад, декларацій та реєстру компаній) будуть мати різну структуру, але деякі з полів будуть єдині для всіх джерел:
+                            <ul>
+                                <li><strong>id</strong> — унікальний ідентифікатор документа</li>
+                                <li><strong>source</strong> — датасет-джерело (використовуйте поле <code>datasources</code> щоб отримати більше інформації про датасет)</li>
+                                <li><strong>last_updated_from_dataset</strong> — остання дата, коли ми знайшли цей запис в оригінальному датасеті (може бути відсутня)</li>
+                                <li><strong>first_updated_from_dataset</strong> — перша дата, коли ми знайшли цей запис в оригінальному датасеті (може бути відсутня)</li>
+                            </ul>
+
+                            Окрім того ми витягаємо, чистимо та доповнюємо (наприклад, перекладаємо російською) наступні сутності:
+                            <ul>
+                                <li><strong>persons</strong> — перелік осіб, що були зазначені в документі (може бути відсутній)</li>
+                                <li><strong>companies</strong> — перелік компаній, що були зазначені в документі (може бути відсутній)</li>
+                                <li><strong>addresses</strong> — перелік адрес, що були зазначені в документі (може бути відсутній)</li>
+                                <li><strong>countries</strong> — перелік країн, що були зазначені в документі (може бути відсутній)</li>
+                            </ul>
+                        </p>
+                        <p>
+                            Ви також можете використовувати параметр <code>entities</code> в параметрах запиту щоб обмежити пошук тільки по компаніях (<code>companies</code>), персонах (<code>persons</code>), країнах (<code>countries</code>) або адресах (<code>addresses</code>).
+                        </p>
+                        <div class="alert alert-warning" role="alert">
+                            Майте на увазі, що API повертає тільки першу тисячу сторінок результатів, якщо вам потрібен увесь набір даних (наприклад, всі звіти СМІДА) — напишіть нам за адресою <a href="mailto:bihus.info+ring@gmail.com">bihus.info+ring@gmail.com</a> щоб отримати повний файл
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- END Introduction -->
-
-        <!-- Functionality -->
-        <div class="block">
-            <div class="block-header block-header-default">
-                <h3 class="block-title">
-                    <strong>2.</strong> Functionality
-                </h3>
-                <div class="block-options">
-                    <button type="button" class="btn-block-option">
-                        <i class="si si-question"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="block-content block-content-full">
-                <div id="faq2" role="tablist" aria-multiselectable="true">
-                    <div class="block block-bordered block-rounded mb-5">
-                        <div class="block-header" role="tab" id="faq2_h1">
-                            <a class="font-w600 text-body-color-dark" data-toggle="collapse" data-parent="#faq2" href="#faq2_q1" aria-expanded="true" aria-controls="faq2_q1">What are the key features?</a>
-                        </div>
-                        <div id="faq2_q1" class="collapse" role="tabpanel" aria-labelledby="faq2_h1">
-                            <div class="block-content border-t">
-                                <p>Potenti elit lectus augue eget iaculis vitae etiam, ullamcorper etiam bibendum ad feugiat magna accumsan dolor, nibh molestie cras hac ac ad massa, fusce ante convallis ante urna molestie vulputate bibendum tempus ante justo arcu erat accumsan adipiscing risus, libero condimentum venenatis sit nisl nisi ultricies sed, fames aliquet consectetur consequat nostra molestie neque nullam scelerisque neque commodo turpis quisque etiam egestas vulputate massa, curabitur tellus massa venenatis congue dolor enim integer luctus, nisi suscipit gravida fames quis vulputate nisi viverra luctus id leo dictum lorem, inceptos nibh orci.</p>
-                                <ul class="fa-ul list-li-push-sm">
-                                    <li>
-                                        <i class="fa fa-check fa-li"></i> Fully Responsive
-                                    </li>
-                                    <li>
-                                        <i class="fa fa-check fa-li"></i> API Support
-                                    </li>
-                                    <li>
-                                        <i class="fa fa-check fa-li"></i> Dynamic and real time data
-                                    </li>
-                                    <li>
-                                        <i class="fa fa-check fa-li"></i> Security
-                                    </li>
-                                </ul>
-                                <p>Potenti elit lectus augue eget iaculis vitae etiam, ullamcorper etiam bibendum ad feugiat magna accumsan dolor, nibh molestie cras hac ac ad massa, fusce ante convallis ante urna molestie vulputate bibendum tempus ante justo arcu erat accumsan adipiscing risus, libero condimentum venenatis sit nisl nisi ultricies sed, fames aliquet consectetur consequat nostra molestie neque nullam scelerisque neque commodo turpis quisque etiam egestas vulputate massa, curabitur tellus massa venenatis congue dolor enim integer luctus, nisi suscipit gravida fames quis vulputate nisi viverra luctus id leo dictum lorem, inceptos nibh orci.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="block block-bordered block-rounded mb-5">
-                        <div class="block-header" role="tab" id="faq2_h2">
-                            <a class="font-w600 text-body-color-dark" data-toggle="collapse" data-parent="#faq2" href="#faq2_q2" aria-expanded="true" aria-controls="faq2_q2">How to use your dashboard?</a>
-                        </div>
-                        <div id="faq2_q2" class="collapse" role="tabpanel" aria-labelledby="faq2_h2">
-                            <div class="block-content border-t">
-                                <p>Potenti elit lectus augue eget iaculis vitae etiam, ullamcorper etiam bibendum ad feugiat magna accumsan dolor, nibh molestie cras hac ac ad massa, fusce ante convallis ante urna molestie vulputate bibendum tempus ante justo arcu erat accumsan adipiscing risus, libero condimentum venenatis sit nisl nisi ultricies sed, fames aliquet consectetur consequat nostra molestie neque nullam scelerisque neque commodo turpis quisque etiam egestas vulputate massa, curabitur tellus massa venenatis congue dolor enim integer luctus, nisi suscipit gravida fames quis vulputate nisi viverra luctus id leo dictum lorem, inceptos nibh orci.</p>
-                                <p>Potenti elit lectus augue eget iaculis vitae etiam, ullamcorper etiam bibendum ad feugiat magna accumsan dolor, nibh molestie cras hac ac ad massa, fusce ante convallis ante urna molestie vulputate bibendum tempus ante justo arcu erat accumsan adipiscing risus, libero condimentum venenatis sit nisl nisi ultricies sed, fames aliquet consectetur consequat nostra molestie neque nullam scelerisque neque commodo turpis quisque etiam egestas vulputate massa, curabitur tellus massa venenatis congue dolor enim integer luctus, nisi suscipit gravida fames quis vulputate nisi viverra luctus id leo dictum lorem, inceptos nibh orci.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="block block-bordered block-rounded mb-5">
-                        <div class="block-header" role="tab" id="faq2_h3">
-                            <a class="font-w600 text-body-color-dark" data-toggle="collapse" data-parent="#faq2" href="#faq2_q3" aria-expanded="true" aria-controls="faq2_q3">How easy can I connect to third party services?</a>
-                        </div>
-                        <div id="faq2_q3" class="collapse" role="tabpanel" aria-labelledby="faq2_h3">
-                            <div class="block-content border-t">
-                                <p>Potenti elit lectus augue eget iaculis vitae etiam, ullamcorper etiam bibendum ad feugiat magna accumsan dolor, nibh molestie cras hac ac ad massa, fusce ante convallis ante urna molestie vulputate bibendum tempus ante justo arcu erat accumsan adipiscing risus, libero condimentum venenatis sit nisl nisi ultricies sed, fames aliquet consectetur consequat nostra molestie neque nullam scelerisque neque commodo turpis quisque etiam egestas vulputate massa, curabitur tellus massa venenatis congue dolor enim integer luctus, nisi suscipit gravida fames quis vulputate nisi viverra luctus id leo dictum lorem, inceptos nibh orci.</p>
-                                <p>Potenti elit lectus augue eget iaculis vitae etiam, ullamcorper etiam bibendum ad feugiat magna accumsan dolor, nibh molestie cras hac ac ad massa, fusce ante convallis ante urna molestie vulputate bibendum tempus ante justo arcu erat accumsan adipiscing risus, libero condimentum venenatis sit nisl nisi ultricies sed, fames aliquet consectetur consequat nostra molestie neque nullam scelerisque neque commodo turpis quisque etiam egestas vulputate massa, curabitur tellus massa venenatis congue dolor enim integer luctus, nisi suscipit gravida fames quis vulputate nisi viverra luctus id leo dictum lorem, inceptos nibh orci.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="block block-bordered block-rounded mb-5">
-                        <div class="block-header" role="tab" id="faq2_h4">
-                            <a class="font-w600 text-body-color-dark" data-toggle="collapse" data-parent="#faq2" href="#faq2_q4" aria-expanded="true" aria-controls="faq2_q4">How secure is my data?</a>
-                        </div>
-                        <div id="faq2_q4" class="collapse" role="tabpanel" aria-labelledby="faq2_h4">
-                            <div class="block-content border-t">
-                                <p>Potenti elit lectus augue eget iaculis vitae etiam, ullamcorper etiam bibendum ad feugiat magna accumsan dolor, nibh molestie cras hac ac ad massa, fusce ante convallis ante urna molestie vulputate bibendum tempus ante justo arcu erat accumsan adipiscing risus, libero condimentum venenatis sit nisl nisi ultricies sed, fames aliquet consectetur consequat nostra molestie neque nullam scelerisque neque commodo turpis quisque etiam egestas vulputate massa, curabitur tellus massa venenatis congue dolor enim integer luctus, nisi suscipit gravida fames quis vulputate nisi viverra luctus id leo dictum lorem, inceptos nibh orci.</p>
-                                <p>Potenti elit lectus augue eget iaculis vitae etiam, ullamcorper etiam bibendum ad feugiat magna accumsan dolor, nibh molestie cras hac ac ad massa, fusce ante convallis ante urna molestie vulputate bibendum tempus ante justo arcu erat accumsan adipiscing risus, libero condimentum venenatis sit nisl nisi ultricies sed, fames aliquet consectetur consequat nostra molestie neque nullam scelerisque neque commodo turpis quisque etiam egestas vulputate massa, curabitur tellus massa venenatis congue dolor enim integer luctus, nisi suscipit gravida fames quis vulputate nisi viverra luctus id leo dictum lorem, inceptos nibh orci.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- END Functionality -->
-
-        <!-- Payments -->
-        <div class="block">
-            <div class="block-header block-header-default">
-                <h3 class="block-title">
-                    <strong>3.</strong> Payments
-                </h3>
-                <div class="block-options">
-                    <button type="button" class="btn-block-option">
-                        <i class="si si-question"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="block-content block-content-full">
-                <div id="faq3" role="tablist" aria-multiselectable="true">
-                    <div class="block block-bordered block-rounded mb-5">
-                        <div class="block-header" role="tab" id="faq3_h1">
-                            <a class="font-w600 text-body-color-dark" data-toggle="collapse" data-parent="#faq3" href="#faq3_q1" aria-expanded="true" aria-controls="faq3_q1">What are the available plans?</a>
-                        </div>
-                        <div id="faq3_q1" class="collapse" role="tabpanel" aria-labelledby="faq3_h1">
-                            <div class="block-content border-t">
-                                <div class="row">
-                                    <div class="col-md-6 col-xl-3">
-                                        <!-- Developer Plan -->
-                                        <a class="block block-link-pop block-rounded block-bordered text-center" href="javascript:void(0)">
-                                            <div class="block-header">
-                                                <h3 class="block-title">Developer</h3>
-                                            </div>
-                                            <div class="block-content bg-gray-lighter">
-                                                <div class="h1 font-w700 mb-10">$19</div>
-                                                <div class="h5 text-muted">per month</div>
-                                            </div>
-                                            <div class="block-content">
-                                                <p><strong>2</strong> Projects</p>
-                                                <p><strong>10GB</strong> Storage</p>
-                                                <p><strong>15</strong> Clients</p>
-                                                <p><strong>Email</strong> Support</p>
-                                            </div>
-                                            <div class="block-content block-content-full bg-gray-lighter">
-                                                <span class="btn btn-hero btn-sm btn-rounded btn-noborder btn-success">Sign Up</span>
-                                            </div>
-                                        </a>
-                                        <!-- END Developer Plan -->
-                                    </div>
-                                    <div class="col-md-6 col-xl-3">
-                                        <!-- Startup Plan -->
-                                        <a class="block block-link-pop block-rounded block-bordered text-center" href="javascript:void(0)">
-                                            <div class="block-header">
-                                                <h3 class="block-title">Startup</h3>
-                                            </div>
-                                            <div class="block-content bg-gray-lighter">
-                                                <div class="h1 font-w700 mb-10">$39</div>
-                                                <div class="h5 text-muted">per month</div>
-                                            </div>
-                                            <div class="block-content">
-                                                <p><strong>10</strong> Projects</p>
-                                                <p><strong>30GB</strong> Storage</p>
-                                                <p><strong>100</strong> Clients</p>
-                                                <p><strong>FULL</strong> Support</p>
-                                            </div>
-                                            <div class="block-content block-content-full bg-gray-lighter">
-                                                <span class="btn btn-hero btn-sm btn-rounded btn-noborder btn-success">Sign Up</span>
-                                            </div>
-                                        </a>
-                                        <!-- END Startup Plan -->
-                                    </div>
-                                    <div class="col-md-6 col-xl-3">
-                                        <!-- Business Plan -->
-                                        <a class="block block-link-pop block-rounded block-bordered text-center" href="javascript:void(0)">
-                                            <div class="block-header">
-                                                <h3 class="block-title">Business</h3>
-                                            </div>
-                                            <div class="block-content bg-gray-lighter">
-                                                <div class="h1 font-w700 mb-10">$99</div>
-                                                <div class="h5 text-muted">per month</div>
-                                            </div>
-                                            <div class="block-content">
-                                                <p><strong>50</strong> Projects</p>
-                                                <p><strong>100GB</strong> Storage</p>
-                                                <p><strong>1000</strong> Clients</p>
-                                                <p><strong>FULL</strong> Support</p>
-                                            </div>
-                                            <div class="block-content block-content-full bg-gray-lighter">
-                                                <span class="btn btn-hero btn-sm btn-rounded btn-noborder btn-success">Sign Up</span>
-                                            </div>
-                                        </a>
-                                        <!-- END Business Plan -->
-                                    </div>
-                                    <div class="col-md-6 col-xl-3">
-                                        <!-- VIP Plan -->
-                                        <a class="block block-link-pop block-rounded block-bordered text-center" href="javascript:void(0)">
-                                            <div class="block-header">
-                                                <h3 class="block-title">VIP</h3>
-                                            </div>
-                                            <div class="block-content bg-gray-lighter">
-                                                <div class="h1 font-w700 mb-10">$249</div>
-                                                <div class="h5 text-muted">per month</div>
-                                            </div>
-                                            <div class="block-content">
-                                                <p><strong>Unlimited</strong> Projects</p>
-                                                <p><strong>Unlimited</strong> Storage</p>
-                                                <p><strong>Unlimited</strong> Clients</p>
-                                                <p><strong>FULL</strong> Support</p>
-                                            </div>
-                                            <div class="block-content block-content-full bg-gray-lighter">
-                                                <span class="btn btn-hero btn-sm btn-rounded btn-noborder btn-success">Sign Up</span>
-                                            </div>
-                                        </a>
-                                        <!-- END VIP Plan -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="block block-bordered block-rounded mb-5">
-                        <div class="block-header" role="tab" id="faq3_h2">
-                            <a class="font-w600 text-body-color-dark" data-toggle="collapse" data-parent="#faq3" href="#faq3_q2" aria-expanded="true" aria-controls="faq3_q2">What are the available withdrawal options?</a>
-                        </div>
-                        <div id="faq3_q2" class="collapse" role="tabpanel" aria-labelledby="faq3_h2">
-                            <div class="block-content border-t">
-                                <div class="row">
-                                    <div class="col-md-6 col-xl-4">
-                                        <a class="block block-link-pop" href="javascript:void(0)">
-                                            <div class="block-content block-content-full text-center">
-                                                <i class="fa fa-paypal fa-2x"></i>
-                                            </div>
-                                            <div class="block-content block-content-full bg-body-light text-center">
-                                                <div class="font-w600 mb-5">Paypal</div>
-                                                <div class="font-size-sm text-muted">0.5% + .25c</div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="col-md-6 col-xl-4">
-                                        <a class="block block-link-pop" href="javascript:void(0)">
-                                            <div class="block-content block-content-full text-center">
-                                                <i class="fa fa-credit-card fa-2x"></i>
-                                            </div>
-                                            <div class="block-content block-content-full bg-body-light text-center">
-                                                <div class="font-w600 mb-5">Credit Card</div>
-                                                <div class="font-size-sm text-muted">$7.50 flat fee</div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="col-md-12 col-xl-4">
-                                        <a class="block block-link-pop" href="javascript:void(0)">
-                                            <div class="block-content block-content-full text-center">
-                                                <i class="fa fa-bank fa-2x"></i>
-                                            </div>
-                                            <div class="block-content block-content-full bg-body-light text-center">
-                                                <div class="font-w600 mb-5">Bank Transfer</div>
-                                                <div class="font-size-sm text-muted">$20.00 flat fee</div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- END Payments -->
-        <!-- END Frequently Asked Questions -->
     </div>
 {% endblock %}

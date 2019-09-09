@@ -184,3 +184,22 @@ textarea.form-control {
         font-size: 12px;
     }
 }
+
+.datasource-tag {
+    color: white;
+    border-radius: 2px;
+    padding: 0 7px 2px 7px;
+    white-space: nowrap;
+    margin: 0;
+    background: #10cb6c;
+    cursor: pointer;
+    float: none;
+    overflow: hidden;
+
+    &.long {
+        &:after {
+            content: '...';
+            display: inline;
+        }
+    }
+}

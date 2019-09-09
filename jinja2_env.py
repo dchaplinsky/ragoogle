@@ -8,6 +8,8 @@ from django.utils.translation import gettext, ngettext
 from dateutil.parser import parse as parse_dt
 from jinja2 import Environment, evalcontextfilter, Markup, escape
 from names_translator.name_utils import parse_and_generate, generate_all_names
+from abstract.tools.companies import format_edrpou
+from search.models import get_datasource_pages
 
 _paragraph_re = re.compile(r"(?:\r\n|\r|\n){2,}")
 
@@ -97,7 +99,9 @@ def datetime_filter(dt, dayfirst=False):
     return (
         formats.date_format(
             timezone.localtime(
-                ensure_aware(parse_dt(dt, dayfirst=dayfirst) if isinstance(dt, str) else dt)
+                ensure_aware(
+                    parse_dt(dt, dayfirst=dayfirst) if isinstance(dt, str) else dt
+                )
             ),
             "SHORT_DATETIME_FORMAT",
         )
@@ -110,7 +114,9 @@ def date_filter(dt, dayfirst=False):
     return (
         formats.date_format(
             timezone.localtime(
-                ensure_aware(parse_dt(dt, dayfirst=dayfirst) if isinstance(dt, str) else dt)
+                ensure_aware(
+                    parse_dt(dt, dayfirst=dayfirst) if isinstance(dt, str) else dt
+                )
             ),
             "SHORT_DATE_FORMAT",
         )
@@ -131,7 +137,8 @@ def environment(**options):
             "nl2br": nl2br,
             "identify_relation": identify_relation,
             "curformat": curformat,
-            "format_edrpou": lambda code: str(code).rjust(8, "0"),
+            "format_number": lambda x: "{:,d}".format(x).replace(",", " "),
+            "format_edrpou": format_edrpou,
         }
     )
     env.globals.update(
@@ -139,6 +146,7 @@ def environment(**options):
             "updated_querystring": updated_querystring,
             "parse_and_generate": parse_and_generate,
             "generate_all_names": generate_all_names,
+            "datasource_pages": get_datasource_pages(),
         }
     )
 
