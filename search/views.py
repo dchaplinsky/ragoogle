@@ -255,7 +255,7 @@ class SearchView(TemplateView):
                 "loose_count": loose_count,
                 "base_count": base_count,
                 "enabled_datasources": request.GET.getlist("datasources"),
-                "datasources": get_all_enabled_datasources().values(),
+                "datasources": list(get_all_enabled_datasources().values()),
                 "doctypes_mapping": doctypes,
                 "foobar": "foobar"
             }
@@ -264,6 +264,7 @@ class SearchView(TemplateView):
         if request.GET.get("format", "html") == "json":
             del context["view"]
             del context["doctypes_mapping"]
+            del context["datasources"]
             return JsonResponse(serialize_for_api(context), safe=False)
         else:
             return self.render_to_response(context)
