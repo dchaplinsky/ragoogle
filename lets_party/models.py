@@ -90,16 +90,15 @@ class LetsPartyModel(AbstractDataset):
 
         if dt["donator_code"]:
             donor = company_entity(
-                dt["donator_name"],
-                dt["donator_code"],
-                id_prefix=self.ultimate_recepient,
+                name=dt["donator_name"],
+                code=dt["donator_code"],
                 address=dt["donator_location"],
             )
         else:
             donor = person_entity(
                 dt["donator_name"],
                 "Донор",
-                id_prefix=self.pk,
+                id_prefix="lets_party",
                 address=dt["donator_location"],
             )
 
@@ -120,23 +119,22 @@ class LetsPartyModel(AbstractDataset):
         if self.type in ["nacp", "parliament"]:
             if dt.get("branch_code"):
                 beneficiary = company_entity(
-                    "{}, {}".format(dt["party"], dt["branch_name"]),
-                    dt["branch_code"],
-                    id_prefix=self.ultimate_recepient,
+                    name="{}, {}".format(dt["party"], dt["branch_name"]),
+                    code=dt["branch_code"],
                     address=dt.get("geo"),
                 )
             else:
                 beneficiary = company_entity(
-                    dt["party"],
-                    dt["party"],
-                    id_prefix=self.ultimate_recepient,
+                    name=dt["party"],
+                    code=dt["party"],
+                    id_prefix="lets_party",
                     address=dt.get("geo"),
                 )
         else:
             beneficiary = person_entity(
                 dt["candidate_name"],
                 "Кандидат в президенти, {}".format(dt["party"]),
-                id_prefix=self.ultimate_recepient,
+                id_prefix="lets_party",
             )
 
 
@@ -154,9 +152,9 @@ class LetsPartyModel(AbstractDataset):
 
         if dt.get("party", "cамовисування").lower() != "cамовисування" and dt.get("branch_code"):
             party = company_entity(
-                dt["party"],
-                dt["party"],
-                id_prefix=self.ultimate_recepient,
+                name=dt["party"],
+                code=dt["party"],
+                id_prefix="lets_party",
             )
             yield party
 
@@ -188,6 +186,7 @@ class LetsPartyModel(AbstractDataset):
         donation.add("payer", donor.id)
         donation.add("beneficiary", beneficiary.id)
         donation.add("amount", dt["amount"])
+        donation.add("date", dt["donation_date"])
         donation.add("currency", "UAH")
 
         if account is not None:

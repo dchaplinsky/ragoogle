@@ -3,7 +3,7 @@ from names_translator.name_utils import parse_fullname, generate_all_names
 from abstract.tools.companies import generate_edrpou_options, format_edrpou
 
 
-def person_entity(name, positions, id_prefix, **kwargs):
+def person_entity(name, positions, id_prefix="", **kwargs):
     person = ftm_model.make_entity("RingPerson")
     l, f, p, _ = parse_fullname(name)
 
@@ -22,7 +22,7 @@ def person_entity(name, positions, id_prefix, **kwargs):
     return person
 
 
-def company_entity(name, code, id_prefix, jurisdiction="Ukraine", **kwargs):
+def company_entity(name, code, id_prefix="", jurisdiction="Ukraine", **kwargs):
     company = ftm_model.make_entity("RingCompany")
 
     if jurisdiction == "Ukraine":

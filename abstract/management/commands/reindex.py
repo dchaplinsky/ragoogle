@@ -1,3 +1,6 @@
+from datetime import date
+from dateutil.relativedelta import relativedelta
+
 from django.core.management.base import BaseCommand, CommandError
 from django.apps import apps as django_apps
 
@@ -33,6 +36,8 @@ class Command(BaseCommand):
             help="Which source should be reindexed",
         )
 
+        parser.add_argument("--only_last_n_days", type=int)
+
     def bulk_write(self, conn, docs_to_index):
         for response in parallel_bulk(conn, (d.to_dict(True) for d in docs_to_index)):
             pass
@@ -61,6 +66,12 @@ class Command(BaseCommand):
 
         Model.setup_indexing()
         qs = Model.objects.all()
+
+        if options["only_last_n_days"] is not None:
+            qs = qs.filter(
+                last_updated_from_dataset__gte=date.today()
+                - relativedelta(days=options["only_last_n_days"])
+            )
 
         docs_to_index = []
         with tqdm(total=qs.count()) as pbar:
