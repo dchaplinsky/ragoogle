@@ -105,7 +105,8 @@ class TaxDebtsModel(AbstractDataset):
         tax_office = company_entity(
             name=deal_with_mixed_lang(dt["DPI"]),
             code=dt["DPI"],
-            id_prefix="tax_debts"
+            id_prefix="tax_debts",
+            entity_type="RingPublicBody"
         )
 
         tax_office_head = person_entity(

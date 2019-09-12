@@ -1,0 +1,8 @@
+RingPublicBody:
+  label: Ring public body
+  plural: Ring public bodies
+  description: "A public body, such as a ministry, department or state company."
+  extends: Organization
+  matchable: true
+  caption:
+    - name

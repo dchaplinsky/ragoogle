@@ -22,8 +22,8 @@ def person_entity(name, positions, id_prefix="", **kwargs):
     return person
 
 
-def company_entity(name, code, id_prefix="", jurisdiction="Ukraine", **kwargs):
-    company = ftm_model.make_entity("RingCompany")
+def company_entity(name, code, id_prefix="", jurisdiction="Ukraine", entity_schema="RingCompany", **kwargs):
+    company = ftm_model.make_entity(entity_schema)
 
     if jurisdiction == "Ukraine":
         company.set("alias", generate_edrpou_options(code))

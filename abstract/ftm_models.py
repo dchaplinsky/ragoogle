@@ -46,8 +46,5 @@ def get_degradation_mapping():
         res[m.name] = schema
 
     return res
-        # if schema != ftm.schema:
-        #     ftm.schema = schema
-
 
 __all__ = [model, set_model_locale]

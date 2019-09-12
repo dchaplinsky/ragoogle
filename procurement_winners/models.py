@@ -14,12 +14,18 @@ logger = logging.getLogger("ProcurementWinners")
 
 
 class ProcurementWinnersModel(AbstractDataset):
+    winner_code = models.IntegerField("Procurement winner code", db_index=True)
+    winner_name = models.CharField(blank=True, max_length=512, db_index=True)
+
     def get_absolute_url(self):
         return reverse("ProcurementWinners>details", kwargs={"pk": self.id})
 
     def to_dict(self):
         dt = self.data
-        res = {"_id": self.pk, "details_url": "https://z.texty.org.ua/deal/{}".format(dt["id"])}
+        res = {
+            "_id": self.pk,
+            "details_url": "https://z.texty.org.ua/deal/{}".format(dt["id"]),
+        }
 
         companies = (
             set(
@@ -72,3 +78,49 @@ class ProcurementWinnersModel(AbstractDataset):
         )
 
         return res
+
+    def to_entities(self):
+        dt = self.data
+
+        buyer = company_entity(
+            name=dt["purchase"]["buyer"]["name"],
+            code=dt["purchase"]["buyer"]["code"],
+            address=dt["purchase"]["buyer"]["address"],
+            alias=dt["purchase"]["buyer"]["name_en"],
+            entity_type="RingPublicBody",
+        )
+
+        if dt["purchase"]["buyer"]["address_en"]:
+            buyer.set("address", dt["purchase"]["buyer"]["address_en"])
+
+        if dt["purchase"]["buyer"]["name_en"]:
+            buyer.set("name", dt["purchase"]["buyer"]["name_en"])
+
+        if dt["purchase"]["buyer"]["email"]:
+            buyer.set("email", dt["purchase"]["buyer"]["email"])
+
+        if dt["purchase"]["buyer"]["phone"]:
+            buyer.set("phone", dt["purchase"]["buyer"]["phone"])
+
+        if dt["purchase"]["buyer"]["fax"]:
+            buyer.set("fax", dt["purchase"]["buyer"]["fax"])
+
+        if (
+            dt["purchase"]["cost_dispatcher_code"]
+            and dt["purchase"]["cost_dispatcher_name"]
+            and dt["purchase"]["cost_dispatcher_code"]
+            != dt["purchase"]["buyer"]["code"]
+        ):
+            cost_dispatcher = company_entity(
+                name=dt["purchase"]["cost_dispatcher_name"],
+                code=dt["purchase"]["cost_dispatcher_code"],
+            )
+
+            tax_office_directorship = ftm_model.make_entity("Directorship")
+            tax_office_directorship.make_id(dt["purchase"]["buyer"]["code"], dt["purchase"]["cost_dispatcher_code"])
+
+            tax_office_directorship.add("director", buyer)
+            tax_office_directorship.add("organization", cost_dispatcher)
+            yield tax_office_directorship
+
+
