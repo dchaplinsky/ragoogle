@@ -20,24 +20,27 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         outfile = Workbook(options["outfile"], {"remove_timezone": True})
 
-        worksheet = outfile.add_worksheet()
-        curr_line = 0
-        worksheet.write(curr_line, 0, "Транзакція")
-        worksheet.write(curr_line, 1, "Дата")
-        worksheet.write(curr_line, 2, "Сума")
-        worksheet.write(curr_line, 3, "Донор")
-        worksheet.write(curr_line, 4, "Код донора")
-        worksheet.write(curr_line, 5, "Отримувач")
-        worksheet.write(curr_line, 6, "Тип прапорця")
-        worksheet.write(curr_line, 7, "Опис")
-        worksheet.write(curr_line, 8, "Приклад порушення")
-
-        qs = LetsPartyRedFlag.objects.select_related("transaction")
+        qs = LetsPartyRedFlag.objects.select_related("transaction").order_by("rule")
 
         if options["only_rule"]:
             qs = qs.filter(rule=options["only_rule"])
 
+        current_rule = None
         for flag in tqdm(qs.iterator(), total=qs.count()):
+            if current_rule != flag.rule:
+                worksheet = outfile.add_worksheet(flag.get_rule_display()[:30] + "…")
+                curr_line = 0
+                worksheet.write(curr_line, 0, "Транзакція")
+                worksheet.write(curr_line, 1, "Дата")
+                worksheet.write(curr_line, 2, "Сума")
+                worksheet.write(curr_line, 3, "Донор")
+                worksheet.write(curr_line, 4, "Код донора")
+                worksheet.write(curr_line, 5, "Отримувач")
+                worksheet.write(curr_line, 6, "Опис")
+                worksheet.write(curr_line, 7, "Приклад порушення")
+                worksheet.write(curr_line, 8, "Тип прапорця")
+                current_rule = flag.rule
+
             curr_line += 1
 
             worksheet.write_url(
@@ -63,14 +66,14 @@ class Command(BaseCommand):
                     pass
 
             worksheet.write(curr_line, 5, flag.transaction.ultimate_recepient)
-            worksheet.write(curr_line, 6, flag.get_rule_display())
-            worksheet.write(curr_line, 7, flag.description)
+            worksheet.write(curr_line, 6, flag.description)
             worksheet.write(
                 curr_line,
-                8,
+                7,
                 "https://ring.org.ua/{}/{}".format(
                     flag.related_entity_source, flag.related_entity
                 ),
             )
+            worksheet.write(curr_line, 8, flag.get_rule_display())
 
         outfile.close()
