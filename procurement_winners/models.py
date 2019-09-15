@@ -18,13 +18,15 @@ class ProcurementWinnersModel(AbstractDataset):
     winner_name = models.CharField(blank=True, max_length=512, db_index=True)
 
     def get_absolute_url(self):
-        return reverse("ProcurementWinners>details", kwargs={"pk": self.id})
+        return reverse("procurement_winners>details", kwargs={"pk": self.id})
 
     def to_dict(self):
         dt = self.data
         res = {
             "_id": self.pk,
             "details_url": "https://z.texty.org.ua/deal/{}".format(dt["id"]),
+            "last_updated_from_dataset": self.last_updated_from_dataset,
+            "first_updated_from_dataset": self.first_updated_from_dataset,
         }
 
         companies = (

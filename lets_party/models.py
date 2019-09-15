@@ -3,11 +3,15 @@ import logging
 
 from django.db import models
 from django.urls import reverse
+from django.contrib.postgres.fields import JSONField
+from django.core.serializers.json import DjangoJSONEncoder
 
 from abstract.models import AbstractDataset
 from abstract.tools.companies import generate_edrpou_options
 from abstract.ftm_models import model as ftm_model
 from abstract.tools.ftm import person_entity, company_entity
+from search.search_tools import get_all_enabled_datasources
+
 from names_translator.name_utils import (
     parse_and_generate,
     autocomplete_suggestions,
@@ -32,7 +36,7 @@ class LetsPartyModel(AbstractDataset):
     )
 
     def get_absolute_url(self):
-        return reverse("LetsParty>details", kwargs={"pk": self.id})
+        return reverse("lets_party>details", kwargs={"pk": self.id})
 
     def to_dict(self):
         dt = self.data
@@ -194,3 +198,27 @@ class LetsPartyModel(AbstractDataset):
 
         donation.make_id(self.pk, "donation")
         yield donation
+
+
+class LetsPartyRedFlag(models.Model):
+    FLAG_TYPES = {
+        "suspicious": "Suspicious",
+        "violation": "Violation"
+    }
+    RULES = {
+        "company_won_procurement": "Компанія виграла у держзакупівлях",
+        "company_had_tax_debts": "Компанія мала держборг"
+    }
+
+    flag_type = models.CharField(max_length=20, choices=FLAG_TYPES.items())
+    transaction = models.ForeignKey("LetsPartyModel", on_delete=models.CASCADE)
+    rule = models.CharField(max_length=100, choices=RULES.items())
+    related_entity = models.CharField("Запис", max_length=100, blank=True)
+    related_entity_source = models.CharField(
+        "Ідентифікатор датасету",
+        max_length=50,
+        choices=((k, v.verbose_name) for k, v in get_all_enabled_datasources().items()),
+    )
+    description = models.TextField("Текстовий опис червоного прапорця")
+    payload = JSONField(verbose_name="Додаткові відомості", null=True, encoder=DjangoJSONEncoder)
+    dt = models.DateTimeField(null=True, blank=True, auto_now_add=True)

@@ -18,7 +18,7 @@ logger = logging.getLogger("Mbu")
 
 class MbuModel(AbstractDataset):
     def get_absolute_url(self):
-        return reverse('Mbu>details', kwargs={'pk': self.id})
+        return reverse('mbu>details', kwargs={'pk': self.id})
 
     def to_dict(self):
         dt = self.data

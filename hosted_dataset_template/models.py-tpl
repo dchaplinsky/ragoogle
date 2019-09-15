@@ -18,7 +18,7 @@ logger = logging.getLogger("{{ camel_case_app_name }}")
 
 class {{ camel_case_app_name }}Model(AbstractDataset):
     def get_absolute_url(self):
-        return reverse('{{ camel_case_app_name }}>details', kwargs={'pk': self.id})
+        return reverse('{{ app_name }}>details', kwargs={'pk': self.id})
 
     def to_dict(self):
         dt = self.data

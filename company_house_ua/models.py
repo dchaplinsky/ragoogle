@@ -36,7 +36,7 @@ class CompanyHouseUaModel(AbstractDataset):
         logger.info("Loaded {} full names from dict".format(len(cls.chunks_dict)))
 
     def get_absolute_url(self):
-        return reverse("CompanyHouseUa>details", kwargs={"pk": self.id})
+        return reverse("company_house_ua>details", kwargs={"pk": self.id})
 
     def to_dict(self):
         dt = self.data

@@ -15,7 +15,7 @@ logger = logging.getLogger("Corrupt")
 
 class CorruptModel(AbstractDataset):
     def get_absolute_url(self):
-        return reverse("Corrupt>details", kwargs={"pk": self.id})
+        return reverse("corrupt>details", kwargs={"pk": self.id})
 
     def to_dict(self):
         dt = self.data

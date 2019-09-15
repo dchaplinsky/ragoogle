@@ -18,13 +18,14 @@ logger = logging.getLogger("TaxDebts")
 
 class TaxDebtsModel(AbstractDataset):
     def get_absolute_url(self):
-        return reverse("TaxDebts>details", kwargs={"pk": self.id})
+        return reverse("tax_debts>details", kwargs={"pk": self.id})
 
     def to_dict(self):
         dt = self.data
         res = {
             "_id": self.pk,
             "last_updated_from_dataset": self.last_updated_from_dataset,
+            "first_updated_from_dataset": self.first_updated_from_dataset,
         }
 
         companies = set()
