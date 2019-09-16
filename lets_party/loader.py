@@ -102,6 +102,7 @@ class LetsPartyLoader(FileLoader):
         params.update({
             "type": item["type"],
             "period": item["period"],
+            "amount": item["amount"].replace(",", "."),
             "ultimate_recepient": self.get_ultimate_recepient(item),
         })
 

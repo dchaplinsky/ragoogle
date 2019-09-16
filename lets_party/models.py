@@ -34,6 +34,9 @@ class LetsPartyModel(AbstractDataset):
     ultimate_recepient = models.CharField(
         "Кінцевий отримувач коштів", max_length=255, db_index=True
     )
+    amount = models.DecimalField(
+        "Сума пожертви", default=0, decimal_places=2, max_digits=15
+    )
 
     def get_absolute_url(self):
         return reverse("lets_party>details", kwargs={"pk": self.id})
@@ -141,7 +144,6 @@ class LetsPartyModel(AbstractDataset):
                 id_prefix="lets_party",
             )
 
-
         beneficiary.set(
             "description",
             "{} отримав пожертву у розмірі {} гривень від {} ({})".format(
@@ -154,11 +156,11 @@ class LetsPartyModel(AbstractDataset):
 
         yield beneficiary
 
-        if dt.get("party", "cамовисування").lower() != "cамовисування" and dt.get("branch_code"):
+        if dt.get("party", "cамовисування").lower() != "cамовисування" and dt.get(
+            "branch_code"
+        ):
             party = company_entity(
-                name=dt["party"],
-                code=dt["party"],
-                id_prefix="lets_party",
+                name=dt["party"], code=dt["party"], id_prefix="lets_party"
             )
             yield party
 
@@ -201,16 +203,17 @@ class LetsPartyModel(AbstractDataset):
 
 
 class LetsPartyRedFlag(models.Model):
-    FLAG_TYPES = {
-        "suspicious": "Suspicious",
-        "violation": "Violation"
-    }
+    FLAG_TYPES = {"suspicious": "Suspicious", "violation": "Violation"}
     RULES = {
         "company_won_procurement": "Компанія виграла у держзакупівлях",
         "company_had_tax_debts": "Компанія мала держборг",
         "company_is_high_risk": "Компанія має ознаки фіктивності",
         "company_has_foreign_bo": "Компанія має закордоних бенефіціарів",
         "company_has_pep_bo": "Компанія має PEP-бенефіціарів",
+        "company_is_not_active": "Компанія припинена, або порушено справу про банкрутство",
+        "company_has_pep_founder": "Компанія має засновників/співвласників PEP-ів",
+        "company_had_pep_founder": "Компанія мала засновників/співвласників PEP-ів",
+        "company_had_pep_bo": "Компанія мала PEP-бенефіціарів",
     }
 
     flag_type = models.CharField(max_length=20, choices=FLAG_TYPES.items())
@@ -223,5 +226,7 @@ class LetsPartyRedFlag(models.Model):
         choices=((k, v.verbose_name) for k, v in get_all_enabled_datasources().items()),
     )
     description = models.TextField("Текстовий опис червоного прапорця")
-    payload = JSONField(verbose_name="Додаткові відомості", null=True, encoder=DjangoJSONEncoder)
+    payload = JSONField(
+        verbose_name="Додаткові відомості", null=True, encoder=DjangoJSONEncoder
+    )
     dt = models.DateTimeField(null=True, blank=True, auto_now_add=True)

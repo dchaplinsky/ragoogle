@@ -94,7 +94,7 @@ class CompanyWonProcurementFlag(AbstractFlag):
                 .filter(
                     "terms",
                     seller__code=list(
-                        generate_edrpou_options(donation["donator_code"])
+                        generate_edrpou_options(donator_code)
                     ),
                 )
                 .sort("-date")[:200]
@@ -129,8 +129,8 @@ class AbstractEDRDRFlag(AbstractFlag):
                 ElasticEDRDRModel.search()
                 .filter(
                     "terms",
-                    seller__code=list(
-                        generate_edrpou_options(donation["donator_code"])
+                    full_edrpou=list(
+                        generate_edrpou_options(donator_code)
                     ),
                 )
                 .filter("term", **{self.edrdr_flag: True})[:200]
@@ -154,7 +154,7 @@ class CompanyIsHighRiskFlag(AbstractEDRDRFlag):
 
 class CompanyHasForeignBOFlag(AbstractEDRDRFlag):
     rule = "company_has_foreign_bo"
-    edrdr_flag = "internals__flags__company_has_foreign_bo"
+    edrdr_flag = "internals__flags__has_foreign_bo"
 
     def get_description(self, res):
         countries = set()
@@ -175,6 +175,64 @@ class CompanyHasPEPBOFlag(AbstractEDRDRFlag):
         return "Компанія має бенефіціарних власників що відносяться до публічних діячів"
 
 
+class CompanyHasPEPFoundersFlag(AbstractEDRDRFlag):
+    rule = "company_has_pep_founder"
+    edrdr_flag = "internals__flags__has_pep_founder"
+    flag_type = "suspicious"
+
+    def get_description(self, res):
+        return "Компанія має засновників/співвласників що відносяться до публічних діячів"
+
+
+class CompanyHadPEPFoundersFlag(AbstractEDRDRFlag):
+    rule = "company_had_pep_founder"
+    edrdr_flag = "internals__flags__had_pep_founder_in_the_past"
+    flag_type = "suspicious"
+
+    def get_description(self, res):
+        return "Компанія мала засновників/співвласників що відносяться до публічних діячів"
+
+
+class CompanyHadPEPBOFlag(AbstractEDRDRFlag):
+    rule = "company_had_pep_bo"
+    edrdr_flag = "internals__flags__had_pep_owner_in_the_past"
+    flag_type = "suspicious"
+
+    def get_description(self, res):
+        return "Компанія мала бенефіціарних власників що відносяться до публічних діячів"
+
+
+class CompanyIsNotActiveBOFlag(AbstractEDRDRFlag):
+    rule = "company_is_not_active"
+    flag_type = "suspicious"
+
+    def get_search(self, donation):
+        donator_code = self.parse_code(donation["donator_code"])
+        if donator_code is None:
+            return None
+
+        if donator_code not in self.cache:
+            search_res = (
+                ElasticEDRDRModel.search()
+                .filter(
+                    "terms",
+                    full_edrpou=list(
+                        generate_edrpou_options(donator_code)
+                    ),
+                )
+                .exclude("term", latest_record__status="зареєстровано")
+                .exclude("term", full_edrpou=20055032) # ДКСУ
+                .execute()
+            )
+            self.cache[donator_code] = search_res
+        else:
+            search_res = self.cache[donator_code]
+
+        return search_res
+
+    def get_description(self, res):
+        return "Компанія має стан"
+
 class CompanyHadTaxDebtsFlag(AbstractFlag):
     rule = "company_had_tax_debts"
     entity_source = "tax_debts"
@@ -191,7 +249,7 @@ class CompanyHadTaxDebtsFlag(AbstractFlag):
                 ElasticTaxDebtsModel.search()
                 .filter(
                     "terms",
-                    TIN_S=list(generate_edrpou_options(donation["donator_code"])),
+                    TIN_S=list(generate_edrpou_options(donator_code)),
                 )
                 .sort("-first_updated_from_dataset")[:200]
                 .execute()
@@ -214,9 +272,13 @@ class Command(BaseCommand):
     RULES = [
         CompanyWonProcurementFlag,
         CompanyHadTaxDebtsFlag,
-        CompanyHasPEPBOFlag,
         CompanyHasForeignBOFlag,
         CompanyIsHighRiskFlag,
+        CompanyIsNotActiveBOFlag,
+        CompanyHasPEPBOFlag,
+        CompanyHasPEPFoundersFlag,
+        CompanyHadPEPFoundersFlag,
+        CompanyHadPEPBOFlag
     ]
 
     def add_arguments(self, parser):

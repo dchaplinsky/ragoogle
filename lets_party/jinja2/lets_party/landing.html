@@ -1,0 +1,53 @@
+{% extends "search/base.html" %}
+
+{% block sidebars %}
+{% endblock %}
+
+{% block body_class %}front front-vkks{% endblock %}
+{% block container_class %}main-content-narrow{% endblock %}
+
+{% block content %}
+    <!-- Hero -->
+    <div class="bg-image bg-image-top-center" style="background-image: url({{ static('img/photos/vkks.jpg') }});">
+        <div class="hero bg-black-op">
+            <div class="hero-inner">
+                <div class="content content-full text-center border-white-op-b">
+                    <h1 class="display-3 font-w700 text-white mb-10 invisible" data-toggle="appear" data-class="animated fadeInDown">
+                        <span class="svg-image inline-logo media-object">
+                                <svg preserveAspectRatio="xMidYMid" focusable="false">
+                                    <use xlink:href="{{ static('img/sprite.svg') }}#logo"></use>
+                                </svg>
+                            </span>RING<span class="text-primary">/SUD</span>
+                    </h1>
+                    <h2 class="font-w400 text-white-op mb-50 invisible" data-toggle="appear" data-class="animated fadeInDown">База зв'язків суддів</h2>
+                    <form class="push col-sm-6 ml-auto mr-auto" action="{{ url('search>results') }}" method="get" _lpchecked="1" autocomplete="off">
+                        <div class="input-group input-group-lg">
+                            <input type="text" class="form-control search-form-q" name="q" data-provide="typeahead" id="search-form" placeholder="{{ _("Пошук") }}" data-endpoint="{{ url("search>suggest") }}" autocomplete="off">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-secondary">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                            <input type="hidden" name="datasources" checked="" value="vkks">
+                        </div>
+                        <p>Наприклад: Гольник</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Hero -->
+
+    <!-- Feature: Powerful Layout -->
+    <div class="bg-white">
+        <div class="content">
+            <div class="pt-100 pb-50">
+                <h3 class="h1 font-w700 text-center mb-10">
+                    База зв'язків суддів <span class="text-primary">Шо це?</span>
+                </h3>
+            </div>
+            <p class="col-md-6" style="margin: 0 auto 40px">Судді теж люди (навіть якщо інколи так не здається). І у них є родичі та друзі. Інколи ці родичі і друзі створюють конфлікт інтересів у справах, які суддя розглядає. А інколи просто стрімко і незрозуміло багатіють, хоча чесний суддя живе виключно на зарплатню і жодних хабарів не бере.
+Ми розкрили для вас офіційні анкети родинних та дружніх зв'язків, які судді заповнювали для Вищої кваліфкомісії. Тепер можна легко встановити найближче оточення судді. І одразу перевірити, що у цього оточення "на рахунках". Адже ми поєднали ці дані з іншими джерелами: інформацією про бізнес, деклараціями та власниками елітної нерухомості.</p>
+        </div>
+    </div>
+{% endblock %}
