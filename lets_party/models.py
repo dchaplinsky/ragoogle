@@ -207,7 +207,10 @@ class LetsPartyRedFlag(models.Model):
     }
     RULES = {
         "company_won_procurement": "Компанія виграла у держзакупівлях",
-        "company_had_tax_debts": "Компанія мала держборг"
+        "company_had_tax_debts": "Компанія мала держборг",
+        "company_is_high_risk": "Компанія має ознаки фіктивності",
+        "company_has_foreign_bo": "Компанія має закордоних бенефіціарів",
+        "company_has_pep_bo": "Компанія має PEP-бенефіціарів",
     }
 
     flag_type = models.CharField(max_length=20, choices=FLAG_TYPES.items())

@@ -14,9 +14,6 @@ logger = logging.getLogger("ProcurementWinners")
 
 
 class ProcurementWinnersModel(AbstractDataset):
-    winner_code = models.IntegerField("Procurement winner code", db_index=True)
-    winner_name = models.CharField(blank=True, max_length=512, db_index=True)
-
     def get_absolute_url(self):
         return reverse("procurement_winners>details", kwargs={"pk": self.id})
 

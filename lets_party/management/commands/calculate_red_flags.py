@@ -10,6 +10,7 @@ from abstract.tools.companies import generate_edrpou_options
 from lets_party.models import LetsPartyRedFlag, LetsPartyModel
 from procurement_winners.elastic_models import ElasticProcurementWinnersModel
 from tax_debts.elastic_models import ElasticTaxDebtsModel
+from edrdr.elastic_models import ElasticEDRDRModel
 from jinja2_env import curformat
 
 
@@ -111,6 +112,69 @@ class CompanyWonProcurementFlag(AbstractFlag):
         )
 
 
+class AbstractEDRDRFlag(AbstractFlag):
+    rule = "abstract_edrdr"
+    entity_source = "edrdr"
+    edrdr_flag = "abstract_edrdr_flag"
+    minus_delta = None
+    plus_delta = None
+
+    def get_search(self, donation):
+        donator_code = self.parse_code(donation["donator_code"])
+        if donator_code is None:
+            return None
+
+        if donator_code not in self.cache:
+            search_res = (
+                ElasticEDRDRModel.search()
+                .filter(
+                    "terms",
+                    seller__code=list(
+                        generate_edrpou_options(donation["donator_code"])
+                    ),
+                )
+                .filter("term", **{self.edrdr_flag: True})[:200]
+                .execute()
+            )
+            self.cache[donator_code] = search_res
+        else:
+            search_res = self.cache[donator_code]
+
+        return search_res
+
+
+class CompanyIsHighRiskFlag(AbstractEDRDRFlag):
+    rule = "company_is_high_risk"
+    edrdr_flag = "internals__flags__has_high_risk"
+    flag_type = "suspicious"
+
+    def get_description(self, res):
+        return "Компанія має ознаки фіктивності"
+
+
+class CompanyHasForeignBOFlag(AbstractEDRDRFlag):
+    rule = "company_has_foreign_bo"
+    edrdr_flag = "internals__flags__company_has_foreign_bo"
+
+    def get_description(self, res):
+        countries = set()
+        for r in res:
+            countries |= set(getattr(r.internals.flags, "all_bo_countries", []))
+
+        return "Компанія має закордоних бенефіціарних власників з таких країн: {}".format(
+            ", ".join(countries - set(["україна"]))
+        )
+
+
+class CompanyHasPEPBOFlag(AbstractEDRDRFlag):
+    rule = "company_has_pep_bo"
+    edrdr_flag = "internals__flags__has_pep_owner"
+    flag_type = "suspicious"
+
+    def get_description(self, res):
+        return "Компанія має бенефіціарних власників що відносяться до публічних діячів"
+
+
 class CompanyHadTaxDebtsFlag(AbstractFlag):
     rule = "company_had_tax_debts"
     entity_source = "tax_debts"
@@ -147,7 +211,13 @@ class CompanyHadTaxDebtsFlag(AbstractFlag):
 
 class Command(BaseCommand):
     help = "Calculate redflags for party finances"
-    RULES = [CompanyWonProcurementFlag, CompanyHadTaxDebtsFlag]
+    RULES = [
+        CompanyWonProcurementFlag,
+        CompanyHadTaxDebtsFlag,
+        CompanyHasPEPBOFlag,
+        CompanyHasForeignBOFlag,
+        CompanyIsHighRiskFlag,
+    ]
 
     def add_arguments(self, parser):
         parser.add_argument(
