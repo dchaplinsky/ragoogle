@@ -211,8 +211,8 @@ class LetsPartyRedFlag(models.Model):
         "company_has_foreign_bo": "Компанія має закордоних бенефіціарів",
         "company_has_pep_bo": "Компанія має PEP-бенефіціарів",
         "company_is_not_active": "Компанія припинена, або порушено справу про банкрутство",
-        "company_has_pep_founder": "Компанія має засновників/співвласників PEP-ів",
-        "company_had_pep_founder": "Компанія мала засновників/співвласників PEP-ів",
+        "company_has_pep_founder": "Компанія має засновників або співвласників PEP-ів",
+        "company_had_pep_founder": "Компанія мала засновників або співвласників PEP-ів",
         "company_had_pep_bo": "Компанія мала PEP-бенефіціарів",
     }
 
