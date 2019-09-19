@@ -206,14 +206,14 @@ class LetsPartyRedFlag(models.Model):
     FLAG_TYPES = {"suspicious": "Suspicious", "violation": "Violation"}
     RULES = {
         "company_won_procurement": "Компанія виграла у держзакупівлях",
-        "company_had_tax_debts": "Компанія мала держборг",
+        "company_had_tax_debts": "Компанія мала податковий борг",
         "company_is_high_risk": "Компанія має ознаки фіктивності",
-        "company_has_foreign_bo": "Компанія має закордоних бенефіціарів",
-        "company_has_pep_bo": "Компанія має PEP-бенефіціарів",
+        "company_has_foreign_bo": "Компанія має закордоних власників",
+        "company_has_russian_bo": "Компанія має російських власників",
+        "company_has_occupied_bo": "Компанія має власників на окупованих територіях",
+        "company_has_crimea_bo": "Компанія має власників у Криму",
+        "company_has_pep_bo": "Компанія має PEP власників",
         "company_is_not_active": "Компанія припинена, або порушено справу про банкрутство",
-        "company_has_pep_founder": "Компанія має засновників або співвласників PEP-ів",
-        "company_had_pep_founder": "Компанія мала засновників або співвласників PEP-ів",
-        "company_had_pep_bo": "Компанія мала PEP-бенефіціарів",
     }
 
     flag_type = models.CharField(max_length=20, choices=FLAG_TYPES.items())

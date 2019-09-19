@@ -11,6 +11,7 @@ from lets_party.models import LetsPartyRedFlag, LetsPartyModel
 from procurement_winners.elastic_models import ElasticProcurementWinnersModel
 from tax_debts.elastic_models import ElasticTaxDebtsModel
 from edrdr.elastic_models import ElasticEDRDRModel
+from elasticsearch_dsl import Q
 from jinja2_env import curformat
 
 
@@ -92,10 +93,7 @@ class CompanyWonProcurementFlag(AbstractFlag):
             search_res = (
                 ElasticProcurementWinnersModel.search()
                 .filter(
-                    "terms",
-                    seller__code=list(
-                        generate_edrpou_options(donator_code)
-                    ),
+                    "terms", seller__code=list(generate_edrpou_options(donator_code))
                 )
                 .sort("-date")[:200]
                 .execute()
@@ -119,23 +117,21 @@ class AbstractEDRDRFlag(AbstractFlag):
     minus_delta = None
     plus_delta = None
 
+    def search_clause(self, donator_code):
+        return (
+            ElasticEDRDRModel.search()
+            .filter("terms", full_edrpou=list(generate_edrpou_options(donator_code)))
+            .filter("term", **{self.edrdr_flag: True})[:200]
+            .execute()
+        )
+
     def get_search(self, donation):
         donator_code = self.parse_code(donation["donator_code"])
         if donator_code is None:
             return None
 
         if donator_code not in self.cache:
-            search_res = (
-                ElasticEDRDRModel.search()
-                .filter(
-                    "terms",
-                    full_edrpou=list(
-                        generate_edrpou_options(donator_code)
-                    ),
-                )
-                .filter("term", **{self.edrdr_flag: True})[:200]
-                .execute()
-            )
+            search_res = self.search_clause(donator_code)
             self.cache[donator_code] = search_res
         else:
             search_res = self.cache[donator_code]
@@ -154,52 +150,117 @@ class CompanyIsHighRiskFlag(AbstractEDRDRFlag):
 
 class CompanyHasForeignBOFlag(AbstractEDRDRFlag):
     rule = "company_has_foreign_bo"
-    edrdr_flag = "internals__flags__has_foreign_bo"
+
+    def search_clause(self, donator_code):
+        return (
+            ElasticEDRDRModel.search()
+            .filter("terms", full_edrpou=list(generate_edrpou_options(donator_code)))
+            .query(
+                "bool",
+                filter=[
+                    Q("term", internals__flags__has_foreign_bo=True)
+                    | Q("term", internals__flags__has_foreign_founders=True)
+                ],
+            )
+            .execute()
+        )
 
     def get_description(self, res):
         countries = set()
         for r in res:
             countries |= set(getattr(r.internals.flags, "all_bo_countries", []))
 
-        return "Компанія має закордоних бенефіціарних власників з таких країн: {}".format(
+        return "Компанія має закордоних бенефіціарних власників чи засновників з таких країн: {}".format(
             ", ".join(countries - set(["україна"]))
         )
 
 
+class CompanyHasRussianBOFlag(AbstractEDRDRFlag):
+    rule = "company_has_russian_bo"
+
+    def search_clause(self, donator_code):
+        return (
+            ElasticEDRDRModel.search()
+            .filter("terms", full_edrpou=list(generate_edrpou_options(donator_code)))
+            .query(
+                "bool",
+                filter=[
+                    Q("term", internals__flags__has_russian_bo=True)
+                    | Q("term", internals__flags__has_russian_founders=True)
+                ],
+            )
+            .execute()
+        )
+
+    def get_description(self, res):
+        return "Компанія має власників чи засновників з Росії"
+
+
+class CompanyHasOccupiedBOFlag(AbstractEDRDRFlag):
+    rule = "company_has_occupied_bo"
+
+    def search_clause(self, donator_code):
+        return (
+            ElasticEDRDRModel.search()
+            .filter("terms", full_edrpou=list(generate_edrpou_options(donator_code)))
+            .query(
+                "bool",
+                filter=[
+                    Q("term", internals__flags__has_bo_on_occupied_soil=True)
+                    | Q("term", internals__flags__has_founders_on_occupied_soil=True)
+                ],
+            )
+            .execute()
+        )
+
+    def get_description(self, res):
+        return "Компанія має власників чи засновників з ОРДЛО"
+
+
+class CompanyHasCrimeaBOFlag(AbstractEDRDRFlag):
+    rule = "company_has_crimea_bo"
+
+    def search_clause(self, donator_code):
+        return (
+            ElasticEDRDRModel.search()
+            .filter("terms", full_edrpou=list(generate_edrpou_options(donator_code)))
+            .query(
+                "bool",
+                filter=[
+                    Q("term", internals__flags__has_bo_in_crimea=True)
+                    | Q("term", internals__flags__has_founders_in_crimea=True)
+                ],
+            )
+            .execute()
+        )
+
+    def get_description(self, res):
+        return "Компанія має власників чи засновників з окупованого Криму"
+
+
 class CompanyHasPEPBOFlag(AbstractEDRDRFlag):
     rule = "company_has_pep_bo"
-    edrdr_flag = "internals__flags__has_pep_owner"
+    edrdr_flag = ""
     flag_type = "suspicious"
 
-    def get_description(self, res):
-        return "Компанія має бенефіціарних власників що відносяться до публічних діячів"
-
-
-class CompanyHasPEPFoundersFlag(AbstractEDRDRFlag):
-    rule = "company_has_pep_founder"
-    edrdr_flag = "internals__flags__has_pep_founder"
-    flag_type = "suspicious"
-
-    def get_description(self, res):
-        return "Компанія має засновників/співвласників що відносяться до публічних діячів"
-
-
-class CompanyHadPEPFoundersFlag(AbstractEDRDRFlag):
-    rule = "company_had_pep_founder"
-    edrdr_flag = "internals__flags__had_pep_founder_in_the_past"
-    flag_type = "suspicious"
+    def search_clause(self, donator_code):
+        return (
+            ElasticEDRDRModel.search()
+            .filter("terms", full_edrpou=list(generate_edrpou_options(donator_code)))
+            .query(
+                "bool",
+                filter=[
+                    Q("term", internals__flags__has_pep_owner=True)
+                    | Q("term", internals__flags__has_pep_founder=True)
+                    | Q("term", internals__flags__had_pep_founder_in_the_past=True)
+                    | Q("term", internals__flags__had_pep_owner_in_the_past=True)
+                ],
+            )
+            .execute()
+        )
 
     def get_description(self, res):
-        return "Компанія мала засновників/співвласників що відносяться до публічних діячів"
-
-
-class CompanyHadPEPBOFlag(AbstractEDRDRFlag):
-    rule = "company_had_pep_bo"
-    edrdr_flag = "internals__flags__had_pep_owner_in_the_past"
-    flag_type = "suspicious"
-
-    def get_description(self, res):
-        return "Компанія мала бенефіціарних власників що відносяться до публічних діячів"
+        return "Компанія має власників чи засновників що відносяться до публічних діячів"
 
 
 class CompanyIsNotActiveBOFlag(AbstractEDRDRFlag):
@@ -215,13 +276,10 @@ class CompanyIsNotActiveBOFlag(AbstractEDRDRFlag):
             search_res = (
                 ElasticEDRDRModel.search()
                 .filter(
-                    "terms",
-                    full_edrpou=list(
-                        generate_edrpou_options(donator_code)
-                    ),
+                    "terms", full_edrpou=list(generate_edrpou_options(donator_code))
                 )
                 .exclude("term", latest_record__status="зареєстровано")
-                .exclude("term", full_edrpou=20055032) # ДКСУ
+                .exclude("term", full_edrpou=20055032)  # ДКСУ
                 .execute()
             )
             self.cache[donator_code] = search_res
@@ -232,6 +290,7 @@ class CompanyIsNotActiveBOFlag(AbstractEDRDRFlag):
 
     def get_description(self, res):
         return "Компанія має стан"
+
 
 class CompanyHadTaxDebtsFlag(AbstractFlag):
     rule = "company_had_tax_debts"
@@ -247,10 +306,7 @@ class CompanyHadTaxDebtsFlag(AbstractFlag):
         if donator_code not in self.cache:
             search_res = (
                 ElasticTaxDebtsModel.search()
-                .filter(
-                    "terms",
-                    TIN_S=list(generate_edrpou_options(donator_code)),
-                )
+                .filter("terms", TIN_S=list(generate_edrpou_options(donator_code)))
                 .sort("-first_updated_from_dataset")[:200]
                 .execute()
             )
@@ -276,9 +332,9 @@ class Command(BaseCommand):
         CompanyIsHighRiskFlag,
         CompanyIsNotActiveBOFlag,
         CompanyHasPEPBOFlag,
-        CompanyHasPEPFoundersFlag,
-        CompanyHadPEPFoundersFlag,
-        CompanyHadPEPBOFlag
+        CompanyHasRussianBOFlag,
+        CompanyHasOccupiedBOFlag,
+        CompanyHasCrimeaBOFlag,
     ]
 
     def add_arguments(self, parser):
