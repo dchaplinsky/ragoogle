@@ -260,7 +260,9 @@ class CompanyHasPEPBOFlag(AbstractEDRDRFlag):
         )
 
     def get_description(self, res):
-        return "Компанія має власників чи засновників що відносяться до публічних діячів"
+        return (
+            "Компанія має власників чи засновників що відносяться до публічних діячів"
+        )
 
 
 class CompanyIsNotActiveBOFlag(AbstractEDRDRFlag):
@@ -357,7 +359,13 @@ class Command(BaseCommand):
 
             qs.delete()
 
-        all_donations = LetsPartyModel.objects.all()
+        all_donations = LetsPartyModel.objects.exclude(
+            data__donator_type__in=[
+                "гроші партії",
+                "гроші кандидата",
+                "державний бюджет",
+            ]
+        )
         company_donations = all_donations.exclude(data__donator_code="")
         person_donations = all_donations.filter(data__donator_code="")
         all_rules = {
