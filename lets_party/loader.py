@@ -1,3 +1,4 @@
+import re
 import argparse
 from csv import DictReader, Sniffer, excel
 
@@ -103,10 +104,16 @@ class LetsPartyLoader(FileLoader):
 
     def get_payload_for_create(self, item, doc_hash, **kwargs):
         params = super().get_payload_for_create(item, doc_hash, **kwargs)
+        year = 2019
+
+        m = re.search(r"(\d{4})", item["period"])
+        if m:
+            year = int(m.group(1))
 
         params.update({
             "type": item["type"],
             "period": item["period"],
+            "year": year,
             "amount": item["amount"].replace(",", "."),
             "ultimate_recepient": self.get_ultimate_recepient(item),
         })
@@ -114,17 +121,7 @@ class LetsPartyLoader(FileLoader):
         return params
 
     def get_payload_for_update(self, item, doc_hash, **kwargs):
-        params = super().get_payload_for_update(item, doc_hash, **kwargs)
-
-        params.update({
-            "type": item["type"],
-            "period": item["period"],
-            "amount": item["amount"].replace(",", "."),
-            "ultimate_recepient": self.get_ultimate_recepient(item),
-        })
-
-        return params
-
+        return self.get_payload_for_create(item, doc_hash, **kwargs)
 
     def iter_dataset(self, options):
         for fname in iglob(options["filemask"]):

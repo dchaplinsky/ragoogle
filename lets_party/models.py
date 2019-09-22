@@ -31,6 +31,7 @@ class LetsPartyModel(AbstractDataset):
     }
     type = models.CharField("Джерело даних", max_length=20, choices=TYPES.items())
     period = models.CharField("Період звіту", max_length=30)
+    year = models.IntegerField("Рік", default=2019)
     # Yeah-yeah, I know
     ultimate_recepient = models.CharField(
         "Кінцевий отримувач коштів", max_length=255, db_index=True

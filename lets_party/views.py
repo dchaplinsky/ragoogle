@@ -71,10 +71,10 @@ class LetsPartyHomeView(TemplateView):
                 ] += stats["amount"]
 
                 merged_breakdown[stats["ultimate_recepient"]][k]["by_date"][
-                    stats["period"]
+                    stats["year"]
                 ]["cnt"] += stats["cnt"]
                 merged_breakdown[stats["ultimate_recepient"]][k]["by_date"][
-                    stats["period"]
+                    stats["year"]
                 ]["amount"] += stats["amount"]
 
         return merged_breakdown
@@ -151,18 +151,18 @@ class LetsPartyHomeView(TemplateView):
         )
 
         violation_breakdown = (
-            violation_qs.values("ultimate_recepient", "period")
+            violation_qs.values("ultimate_recepient", "year")
             .annotate(amount=Sum("amount"), cnt=Count("pk"))
             .filter(cnt__gte=0)
         )
         suspicious_breakdown = (
-            suspicious_qs.values("ultimate_recepient", "period")
+            suspicious_qs.values("ultimate_recepient", "year")
             .annotate(amount=Sum("amount"), cnt=Count("pk"))
             .filter(cnt__gte=0)
         )
 
         total_breakdown = (
-            total_qs.values("ultimate_recepient", "period")
+            total_qs.values("ultimate_recepient", "year")
             .annotate(amount=Sum("amount"), cnt=Count("pk"))
             .filter(cnt__gte=0)
         )
@@ -177,7 +177,7 @@ class LetsPartyHomeView(TemplateView):
 class LetsPartyRedFlagsView(TemplateView):
     template_name = "lets_party/redflags.html"
 
-    def get_context_data(self, ultimate_recepient, period=None, **kwargs):
+    def get_context_data(self, ultimate_recepient, year=None, **kwargs):
         context = super().get_context_data(**kwargs)
 
         qs = LetsPartyModel.objects.filter(
@@ -190,8 +190,8 @@ class LetsPartyRedFlagsView(TemplateView):
             ]
         ).prefetch_related("flags")
 
-        if period is not None:
-            qs = qs.filter(period=period)
+        if year is not None:
+            qs = qs.filter(year=year)
 
         qs = (
             qs.annotate(flags_cnt=Count("flags__pk"))
@@ -206,7 +206,7 @@ class LetsPartyRedFlagsView(TemplateView):
         context.update({
             "transactions": qs,
             "ultimate_recepient": ultimate_recepient,
-            "period": period
+            "year": year
         })
 
         return context
