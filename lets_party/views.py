@@ -172,3 +172,41 @@ class LetsPartyHomeView(TemplateView):
         )
 
         return context
+
+
+class LetsPartyRedFlagsView(TemplateView):
+    template_name = "lets_party/redflags.html"
+
+    def get_context_data(self, ultimate_recepient, period=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        qs = LetsPartyModel.objects.filter(
+            ultimate_recepient=ultimate_recepient
+        ).exclude(
+            data__donator_type__in=[
+                "гроші партії",
+                "гроші кандидата",
+                "державний бюджет",
+            ]
+        ).prefetch_related("flags")
+
+        if period is not None:
+            qs = qs.filter(period=period)
+
+        qs = (
+            qs.annotate(flags_cnt=Count("flags__pk"))
+            .order_by("-flags_cnt")
+            .exclude(flags_cnt=0)
+        )
+
+
+        if qs.count() == 0:
+            raise Http404("Записа не існує")
+
+        context.update({
+            "transactions": qs,
+            "ultimate_recepient": ultimate_recepient,
+            "period": period
+        })
+
+        return context

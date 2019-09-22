@@ -91,7 +91,7 @@
                         {% for rcpt, stats in breakdown.items()|sort(reverse=True, attribute="1.total.total_amount") %}
                             <tr>
                                 <th>
-                                    {{ rcpt }}
+                                    <a href="{{ url('lets_party>redflags', kwargs={"ultimate_recepient": rcpt}) }}">{{ rcpt }}</a>
                                 </th>
                                 <td>
                                     {{ stats.total.total_amount|curformat }} грн.<br/>
@@ -109,7 +109,7 @@
                             {% for by_date in stats.total.by_date|sort %}
                             <tr>
                                 <th style="text-align: right">
-                                    {{ by_date }}
+                                    <a href="{{ url('lets_party>redflags', kwargs={"ultimate_recepient": rcpt, "period": by_date}) }}">{{ by_date }}</a>
                                 </th>
                                 <td>
                                     {{ stats.total.by_date[by_date].amount|curformat }} грн.<br/>

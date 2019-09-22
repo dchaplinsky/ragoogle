@@ -14,7 +14,7 @@
 <div class="content" itemscope="" itemtype="http://schema.org/Organization">
     <!-- Frequently Asked Questions -->
     <h1 class="content-heading">
-        Податковий борг <span itemprop="name">{{ rec.NAME }}</span>(<a href="{{ url('search>results') }}?q={{ rec.TIN_S }}" target="_blank" >{{ rec.TIN_S|format_edrpou }}<meta itemprop="taxID" content="{{ rec.TIN_S|format_edrpou }}" /></a>)
+        Податковий борг <span itemprop="name">{{ rec.NAME }}</span> (<a href="{{ url('search>results') }}?q={{ rec.TIN_S }}" target="_blank" >{{ rec.TIN_S|format_edrpou }}<meta itemprop="taxID" content="{{ rec.TIN_S|format_edrpou }}" /></a>)
     </h1>
 {% else %}
 <div class="content" itemscope="" itemtype="http://schema.org/Person">

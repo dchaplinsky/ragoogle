@@ -31,6 +31,7 @@ class LetsPartyModel(AbstractDataset):
     }
     type = models.CharField("Джерело даних", max_length=20, choices=TYPES.items())
     period = models.CharField("Період звіту", max_length=30)
+    # Yeah-yeah, I know
     ultimate_recepient = models.CharField(
         "Кінцевий отримувач коштів", max_length=255, db_index=True
     )
@@ -217,7 +218,7 @@ class LetsPartyRedFlag(models.Model):
     }
 
     flag_type = models.CharField(max_length=20, choices=FLAG_TYPES.items())
-    transaction = models.ForeignKey("LetsPartyModel", on_delete=models.CASCADE)
+    transaction = models.ForeignKey("LetsPartyModel", on_delete=models.CASCADE, related_name="flags")
     rule = models.CharField(max_length=100, choices=RULES.items())
     related_entity = models.CharField("Запис", max_length=100, blank=True)
     related_entity_source = models.CharField(
@@ -230,3 +231,9 @@ class LetsPartyRedFlag(models.Model):
         verbose_name="Додаткові відомості", null=True, encoder=DjangoJSONEncoder
     )
     dt = models.DateTimeField(null=True, blank=True, auto_now_add=True)
+
+    def get_absolute_url(self):
+        if self.related_entity_source == "edrdr":
+            return "/edr/uk/company/{}".format(self.transaction.data["donator_code"])
+        else:
+            return reverse("{}>details".format(self.related_entity_source), kwargs={"pk": self.related_entity})

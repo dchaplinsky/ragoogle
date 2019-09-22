@@ -291,7 +291,7 @@ class CompanyIsNotActiveBOFlag(AbstractEDRDRFlag):
         return search_res
 
     def get_description(self, res):
-        return "Компанія має стан"
+        return 'Компанія має стан "{}"'.format(res[0].latest_record.status)
 
 
 class CompanyHadTaxDebtsFlag(AbstractFlag):
