@@ -10,6 +10,9 @@ class LetsPartyLoader(FileLoader):
     csv_dialect = excel
     last_updated_path = "donation_date"
 
+    RCPT_MAPPING = {
+    }
+
     @property
     def model(self):
         from .models import LetsPartyModel
@@ -90,11 +93,13 @@ class LetsPartyLoader(FileLoader):
 
     def get_ultimate_recepient(self, item):
         if item["type"] == "nacp":
-            return item["party"]
+            rcpt = item["party"]
         if item["type"] == "parliament":
-            return item["party"]
+            rcpt = item["party"]
         if item["type"] == "president":
-            return item["candidate_name"]
+            rcpt = item["candidate_name"]
+
+        return self.RCPT_MAPPING.get(rcpt, rcpt)
 
     def get_payload_for_create(self, item, doc_hash, **kwargs):
         params = super().get_payload_for_create(item, doc_hash, **kwargs)
@@ -113,6 +118,8 @@ class LetsPartyLoader(FileLoader):
 
         params.update({
             "type": item["type"],
+            "period": item["period"],
+            "amount": item["amount"].replace(",", "."),
             "ultimate_recepient": self.get_ultimate_recepient(item),
         })
 

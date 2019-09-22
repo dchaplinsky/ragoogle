@@ -17,9 +17,9 @@
                                 <svg preserveAspectRatio="xMidYMid" focusable="false">
                                     <use xlink:href="{{ static('img/sprite.svg') }}#logo"></use>
                                 </svg>
-                            </span>RING<span class="text-primary">/SUD</span>
+                            </span>RING<span class="text-primary">/LetsParty</span>
                     </h1>
-                    <h2 class="font-w400 text-white-op mb-50 invisible" data-toggle="appear" data-class="animated fadeInDown">База зв'язків суддів</h2>
+                    <h2 class="font-w400 text-white-op mb-50 invisible" data-toggle="appear" data-class="animated fadeInDown">Фінансові звіти партій та кандидатів</h2>
                     <form class="push col-sm-6 ml-auto mr-auto" action="{{ url('search>results') }}" method="get" _lpchecked="1" autocomplete="off">
                         <div class="input-group input-group-lg">
                             <input type="text" class="form-control search-form-q" name="q" data-provide="typeahead" id="search-form" placeholder="{{ _("Пошук") }}" data-endpoint="{{ url("search>suggest") }}" autocomplete="off">
@@ -28,9 +28,9 @@
                                     <i class="fa fa-search"></i>
                                 </button>
                             </div>
-                            <input type="hidden" name="datasources" checked="" value="vkks">
+                            <input type="hidden" name="datasources" checked="" value="lets_party">
                         </div>
-                        <p>Наприклад: Гольник</p>
+                        <p>Наприклад: Слуга народу</p>
                     </form>
                 </div>
             </div>
@@ -43,11 +43,93 @@
         <div class="content">
             <div class="pt-100 pb-50">
                 <h3 class="h1 font-w700 text-center mb-10">
-                    База зв'язків суддів <span class="text-primary">Шо це?</span>
+                    Аналізуємо пожертви на <span class="text-primary">Політични партії та кандидатів:</span>
                 </h3>
+                <h4 class="h3 font-w400 text-muted text-center mb-30">Дані НАЗК та ЦВК, зібрані та оброблені рухом Чесно</h4>
+                <hr>
+                <div class="row nice-copy my-10">
+                    <div class="col-md-4 py-20">
+                        <h4 class="font-size-xl font-w700 text-uppercase mb-10">
+                            <i class="fa fa-lightbulb-o text-earth mr-5"></i> {{ transactions_cnt }}
+                        </h4>
+                        <p class="mb-0">пожертв від фізичних та юридичних осіб</p>
+                    </div>
+                    <div class="col-md-4 py-20">
+                        <h4 class="font-size-xl font-w700 text-uppercase mb-10">
+                            <i class="fa fa-refresh text-earth mr-5"></i> {{ transactions_sum|curformat }} грн.
+                        </h4>
+                        <p class="mb-0">Загальна сума пожертв за останні три роки</p>
+                    </div>
+                    <div class="col-md-4 py-20">
+                        <h4 class="font-size-xl font-w700 text-uppercase mb-10">
+                            <i class="fa fa-bolt text-danger mr-5"></i> {{ transactions_max|curformat }} грн.
+                        </h4>
+                        <p class="mb-0">Найбільша пожертва</p>
+                    </div>
+                </div>
+                <p class="col-md-6" style="margin: 0 auto 40px">
+                    Знайдено {{ total_transactions_cnt }} порушень/підозрілих фактів у {{ total_cnt }} {{ total_cnt|uk_plural("транзакції", "транзакціях", "транзакціях") }} {{ total_rcpt_cnt }} {{ total_rcpt_cnt|uk_plural("партії/кандидата", "партій/кандидатів", "партій/кандидатів") }} на загальну суму {{ total_sum|curformat }} грн.
+                </p>
+                <p class="col-md-6" style="margin: 0 auto 40px">
+                    Знайдено {{ violation_transactions_cnt }} порушень законодавства у {{ violation_cnt }} {{ violation_cnt|uk_plural("транзакції", "транзакціях", "транзакціях") }} {{ violation_rcpt_cnt }} {{ violation_rcpt_cnt|uk_plural("партії/кандидата", "партій/кандидатів", "партій/кандидатів") }} на загальну суму {{ violation_sum|curformat }} грн.
+                </p>
+                <p class="col-md-6" style="margin: 0 auto 40px">
+                    Знайдено {{ suspicious_transactions_cnt }} підозрілих фактів у {{ suspicious_cnt }} {{ suspicious_cnt|uk_plural("транзакції", "транзакціях", "транзакціях") }} {{ suspicious_rcpt_cnt }} {{ suspicious_rcpt_cnt|uk_plural("партії/кандидата", "партій/кандидатів", "партій/кандидатів") }} на загальну суму {{ suspicious_sum|curformat }} грн.
+                </p>
+
+                <div class="table-responsive push">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Партія/Кандидат</th>
+                                <th>Всі проблемні транзакції</th>
+                                <th>Порушення законодавства</th>
+                                <th>Підозрілі транзакції</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for rcpt, stats in breakdown.items()|sort(reverse=True, attribute="1.total.total_amount") %}
+                            <tr>
+                                <th>
+                                    {{ rcpt }}
+                                </th>
+                                <td>
+                                    {{ stats.total.total_amount|curformat }} грн.<br/>
+                                    ({{ stats.total.total_cnt }} {{ stats.total.total_cnt|uk_plural("транзакція", "транзакції", "транзакцій") }})
+                                </td>
+                                <td>
+                                    {{ stats.violation.total_amount|curformat }} грн.<br/>
+                                    ({{ stats.violation.total_cnt}} {{ stats.violation.total_cnt|uk_plural("транзакція", "транзакції", "транзакцій") }})
+                                </td>
+                                <td>
+                                    {{ stats.suspicious.total_amount|curformat }} грн.<br/>
+                                    ({{ stats.suspicious.total_cnt}} {{ stats.suspicious.total_cnt|uk_plural("транзакція", "транзакції", "транзакцій") }})
+                                </td>
+                            </tr>
+                            {% for by_date in stats.total.by_date|sort %}
+                            <tr>
+                                <th style="text-align: right">
+                                    {{ by_date }}
+                                </th>
+                                <td>
+                                    {{ stats.total.by_date[by_date].amount|curformat }} грн.<br/>
+                                    ({{ stats.total.by_date[by_date].cnt}} {{ stats.total.by_date[by_date].cnt|uk_plural("транзакція", "транзакції", "транзакцій") }})
+                                </td>
+                                <td>
+                                    {{ stats.violation.by_date[by_date].amount|curformat }} грн.<br/>
+                                    ({{ stats.violation.by_date[by_date].cnt}} {{ stats.violation.by_date[by_date].cnt|uk_plural("транзакція", "транзакції", "транзакцій") }})
+                                </td>
+                                <td>
+                                    {{ stats.suspicious.by_date[by_date].amount|curformat }} грн.<br/>
+                                    ({{ stats.suspicious.by_date[by_date].cnt}} {{ stats.suspicious.by_date[by_date].cnt|uk_plural("транзакція", "транзакції", "транзакцій") }})
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <p class="col-md-6" style="margin: 0 auto 40px">Судді теж люди (навіть якщо інколи так не здається). І у них є родичі та друзі. Інколи ці родичі і друзі створюють конфлікт інтересів у справах, які суддя розглядає. А інколи просто стрімко і незрозуміло багатіють, хоча чесний суддя живе виключно на зарплатню і жодних хабарів не бере.
-Ми розкрили для вас офіційні анкети родинних та дружніх зв'язків, які судді заповнювали для Вищої кваліфкомісії. Тепер можна легко встановити найближче оточення судді. І одразу перевірити, що у цього оточення "на рахунках". Адже ми поєднали ці дані з іншими джерелами: інформацією про бізнес, деклараціями та власниками елітної нерухомості.</p>
         </div>
     </div>
 {% endblock %}
