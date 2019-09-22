@@ -1,9 +1,11 @@
+import os
 from datetime import date
-from dateutil.relativedelta import relativedelta
+from csv import DictReader
 
 from django.core.management.base import BaseCommand, CommandError
 
 from tqdm import tqdm
+from dateutil.relativedelta import relativedelta
 from dateutil.parser import parse as parse_dt
 
 from abstract.tools.companies import generate_edrpou_options
@@ -15,10 +17,23 @@ from elasticsearch_dsl import Q
 from jinja2_env import curformat
 
 
+def load_banks():
+    fname = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../../data/true_banks.csv")
+
+    res = set()
+    with open(fname, "r") as fp:
+        r = DictReader(fp)
+        for l in r:
+            res.add(int(l["edrpou"]))
+
+    return res
+
+
 class AbstractFlag:
     rule = "abstract_flag"
     entity_source = "abstract_entity"
     flag_type = "violation"
+    banks = load_banks()
 
     def __init__(self):
         self.cache = {}
@@ -31,7 +46,12 @@ class AbstractFlag:
 
     def parse_code(self, code):
         try:
-            return int(code.strip().strip("\u200e"))
+            code = int(code.strip().strip("\u200e"))
+            if code in self.banks:
+                return None
+            else:
+                return code
+
         except ValueError as e:
             print(code, e)
             return None
