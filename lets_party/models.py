@@ -216,6 +216,7 @@ class LetsPartyRedFlag(models.Model):
         "company_has_crimea_bo": "Компанія має власників у Криму",
         "company_has_pep_bo": "Компанія має PEP власників",
         "company_is_not_active": "Компанія припинена, або порушено справу про банкрутство",
+        "company_has_bo_changes": "Структура власності змінилася перед пожертвою або відразу після",
     }
 
     flag_type = models.CharField(max_length=20, choices=FLAG_TYPES.items())

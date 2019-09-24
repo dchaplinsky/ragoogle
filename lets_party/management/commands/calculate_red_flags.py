@@ -14,11 +14,13 @@ from procurement_winners.elastic_models import ElasticProcurementWinnersModel
 from tax_debts.elastic_models import ElasticTaxDebtsModel
 from edrdr.elastic_models import ElasticEDRDRModel
 from elasticsearch_dsl import Q
-from jinja2_env import curformat
+from jinja2_env import curformat, date_filter
 
 
 def load_banks():
-    fname = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../../data/true_banks.csv")
+    fname = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), "../../data/true_banks.csv"
+    )
 
     res = set()
     with open(fname, "r") as fp:
@@ -41,7 +43,7 @@ class AbstractFlag:
     def get_search(self, donation):
         raise NotImplementedError()
 
-    def get_description(self, res):
+    def get_description(self, res, donation):
         raise NotImplementedError()
 
     def parse_code(self, code):
@@ -70,7 +72,7 @@ class AbstractFlag:
             if self.plus_delta is not None:
                 to_dt += self.plus_delta
 
-            return from_dt.date() > donation_date.date() < to_dt.date()
+            return from_dt.date() <= donation_date.date() <= to_dt.date()
 
         return True
 
@@ -93,7 +95,7 @@ class AbstractFlag:
                         rule=self.rule,
                         related_entity=filtered_res[0]._id,
                         related_entity_source=self.entity_source,
-                        description=self.get_description(filtered_res),
+                        description=self.get_description(filtered_res, donation),
                         payload=[debt.to_dict() for debt in filtered_res],
                     )
 
@@ -124,7 +126,7 @@ class CompanyWonProcurementFlag(AbstractFlag):
 
         return search_res
 
-    def get_description(self, res):
+    def get_description(self, res, donation):
         return "Компанія перемогла на {} тендерах на загальну суму в {} грн".format(
             len(res), curformat(sum(r.volume_uah for r in res))
         )
@@ -164,8 +166,55 @@ class CompanyIsHighRiskFlag(AbstractEDRDRFlag):
     edrdr_flag = "internals__flags__has_high_risk"
     flag_type = "suspicious"
 
-    def get_description(self, res):
+    def get_description(self, res, donation):
         return "Компанія має ознаки фіктивності"
+
+
+class CompanyHasBOChangesFlag(AbstractEDRDRFlag):
+    rule = "company_has_bo_changes"
+    edrdr_flag = "internals__flags__bo_changes_dates"
+    flag_type = "suspicious"
+    change_minus_delta = relativedelta(weeks=2)
+    change_plus_delta = relativedelta(weeks=1)
+
+    def get_search(self, donation):
+        donator_code = self.parse_code(donation["donator_code"])
+        if donator_code is None:
+            return None
+
+        donation_date = parse_dt(donation["donation_date"]).date()
+
+        search_res = (
+            ElasticEDRDRModel.search()
+            .filter("terms", full_edrpou=list(generate_edrpou_options(donator_code)))
+            .query(
+                "range",
+                **{
+                    self.edrdr_flag: {
+                        "gte": donation_date - self.change_minus_delta,
+                        "lte": donation_date + self.change_plus_delta,
+                    }
+                },
+            )
+            .execute()
+        )
+
+        return search_res
+
+    def get_description(self, res, donation):
+        donation_date = parse_dt(donation.data["donation_date"]).date()
+
+        dates = set()
+        for r in res:
+            dates |= set(map(lambda x: parse_dt(x), getattr(r.internals.flags, "bo_changes_dates", [])))
+
+        from_dt = donation_date - self.change_minus_delta
+        to_dt = donation_date + self.change_plus_delta
+
+
+        dates = list(filter(lambda x: from_dt <= x.date() <= to_dt, dates))
+
+        return "Структура власності змінилася {}".format(", ".join(map(date_filter, sorted(dates))))
 
 
 class CompanyHasForeignBOFlag(AbstractEDRDRFlag):
@@ -185,7 +234,7 @@ class CompanyHasForeignBOFlag(AbstractEDRDRFlag):
             .execute()
         )
 
-    def get_description(self, res):
+    def get_description(self, res, donation):
         countries = set()
         for r in res:
             countries |= set(getattr(r.internals.flags, "all_bo_countries", []))
@@ -212,7 +261,7 @@ class CompanyHasRussianBOFlag(AbstractEDRDRFlag):
             .execute()
         )
 
-    def get_description(self, res):
+    def get_description(self, res, donation):
         return "Компанія має власників чи засновників з Росії"
 
 
@@ -233,7 +282,7 @@ class CompanyHasOccupiedBOFlag(AbstractEDRDRFlag):
             .execute()
         )
 
-    def get_description(self, res):
+    def get_description(self, res, donation):
         return "Компанія має власників чи засновників з ОРДЛО"
 
 
@@ -254,7 +303,7 @@ class CompanyHasCrimeaBOFlag(AbstractEDRDRFlag):
             .execute()
         )
 
-    def get_description(self, res):
+    def get_description(self, res, donation):
         return "Компанія має власників чи засновників з окупованого Криму"
 
 
@@ -279,7 +328,7 @@ class CompanyHasPEPBOFlag(AbstractEDRDRFlag):
             .execute()
         )
 
-    def get_description(self, res):
+    def get_description(self, res, donation):
         return (
             "Компанія має власників чи засновників що відносяться до публічних діячів"
         )
@@ -310,7 +359,7 @@ class CompanyIsNotActiveBOFlag(AbstractEDRDRFlag):
 
         return search_res
 
-    def get_description(self, res):
+    def get_description(self, res, donation):
         return 'Компанія має стан "{}"'.format(res[0].latest_record.status)
 
 
@@ -339,7 +388,7 @@ class CompanyHadTaxDebtsFlag(AbstractFlag):
 
         return search_res
 
-    def get_description(self, res):
+    def get_description(self, res, donation):
         return "Компанія мала податковий борг на загальну суму в {} грн".format(
             curformat(max(debt["SUM_D"] + debt["SUM_M"] for debt in res) * 1000)
         )
@@ -357,6 +406,7 @@ class Command(BaseCommand):
         CompanyHasRussianBOFlag,
         CompanyHasOccupiedBOFlag,
         CompanyHasCrimeaBOFlag,
+        CompanyHasBOChangesFlag,
     ]
 
     def add_arguments(self, parser):
