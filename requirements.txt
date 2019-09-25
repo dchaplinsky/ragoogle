@@ -20,3 +20,4 @@ django-prometheus==1.0.15
 glob2==0.7
 followthemoney==1.18.2
 xlsxwriter==1.2.1
+js2py==0.66

@@ -1,9 +1,11 @@
+import os.path
 import re
 import argparse
 from csv import DictReader, Sniffer, excel
 
 from glob2 import iglob
 from abstract.loaders import FileLoader
+from abstract.tools.address_parser import PyJsHoisted_getAddress_ as get_address
 
 
 class LetsPartyLoader(FileLoader):
@@ -11,12 +13,73 @@ class LetsPartyLoader(FileLoader):
     csv_dialect = excel
     last_updated_path = "donation_date"
 
-    RCPT_MAPPING = {
-    }
+    RCPT_MAPPING = {}
+
+    remove_locality = [
+        re.compile(r"^{}\s(.*)$".format(re.escape(r)), re.I)
+        for r in ("селище міського типу", "село", "селище", "місто")
+    ]
+
+    @staticmethod
+    def replace_aposthrophes(s):
+        return s.replace("ʼ", "'").replace("`", "'").replace("’", "'")
+
+    @classmethod
+    def find_city_in_amice_parser(cls, amice_parser_data):
+        amice_parser_data = {k.to_py(): amice_parser_data[k].to_py() for k in amice_parser_data}
+        city = amice_parser_data.get("locality")
+        if city is None:
+            return None
+
+        for r in cls.remove_locality:
+            m = r.search(city)
+            if m:
+                return m.group(1).lower()
+
+        return city.lower()
+
+
+    def parse_city(self, address):
+        address = self.replace_aposthrophes(address).lower()
+
+        if address in self.parsed_cities_cache:
+            return self.parsed_cities_cache[address]
+
+        city = self.find_city_in_amice_parser(get_address(address))
+        if not city:
+            for loc in self.localities:
+                m = re.search(loc, address)
+                if m:
+                    self.parsed_cities_cache[address] = m.group(1).lower()
+                    return m.group(1).lower()
+
+            self.parsed_cities_cache[address] = None
+        else:
+            self.parsed_cities_cache[address] = city
+            return city
+
+
+    def __init__(self, *args, **kwargs):
+        self.localities = []
+        self.parsed_cities_cache = {}
+
+        fname = os.path.join(
+            os.path.dirname(os.path.abspath(__file__)),
+            "data/localities_fixed.txt",
+        )
+
+        with open(fname, "r") as fp:
+            for l in fp:
+                self.localities.append(
+                    re.compile(r"\b({})\b".format(re.escape(l.strip())))
+                )
+
+        return super().__init__(*args, **kwargs)
 
     @property
     def model(self):
         from .models import LetsPartyModel
+
         return LetsPartyModel
 
     def inject_params(self, parser):
@@ -26,15 +89,9 @@ class LetsPartyLoader(FileLoader):
             help="Type of dataset being imported",
         )
 
-        parser.add_argument(
-            "filemask",
-            help="Glob2 filemask to find files",
-        )
+        parser.add_argument("filemask", help="Glob2 filemask to find files")
 
-        parser.add_argument(
-            "--period",
-            help="Period for report"
-        )
+        parser.add_argument("--period", help="Period for report")
         parser.add_argument(
             "--last_updated_from_dataset",
             help="The date of the export of the dataset",
@@ -74,7 +131,7 @@ class LetsPartyLoader(FileLoader):
             "Рік": "year",
             "Примітки": "notes",
             "type": "type",
-            "Column": ""
+            "Column": "",
         }
 
         record["type"] = options["type"]
@@ -86,7 +143,9 @@ class LetsPartyLoader(FileLoader):
             if record["quarter"] == "5":
                 record["period"] = "Річний звіт за {}".format(record["year"])
             else:
-                record["period"] = "Звіт за {} квартал {}".format(record["quarter"], record["year"])
+                record["period"] = "Звіт за {} квартал {}".format(
+                    record["quarter"], record["year"]
+                )
         else:
             record["period"] = options["period"]
 
@@ -110,13 +169,16 @@ class LetsPartyLoader(FileLoader):
         if m:
             year = int(m.group(1))
 
-        params.update({
-            "type": item["type"],
-            "period": item["period"],
-            "year": year,
-            "amount": item["amount"].replace(",", "."),
-            "ultimate_recepient": self.get_ultimate_recepient(item),
-        })
+        params.update(
+            {
+                "type": item["type"],
+                "period": item["period"],
+                "year": year,
+                "city": self.parse_city(item["donator_location"]),
+                "amount": item["amount"].replace(",", "."),
+                "ultimate_recepient": self.get_ultimate_recepient(item),
+            }
+        )
 
         return params
 
@@ -136,7 +198,6 @@ class LetsPartyLoader(FileLoader):
                 for l in r:
                     l["type"] = options["type"]
                     yield l
-
 
     def get_dedup_fields(self):
         return [
