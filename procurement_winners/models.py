@@ -159,12 +159,12 @@ class ProcurementWinnersModel(AbstractDataset):
 
 
         contract = ftm_model.make_entity("Contract")
-        contract.make_id(dt["purchase"]["id"])
+        contract.make_id("Contract", dt["purchase"]["id"])
         contract.add("authority", buyer)
         yield contract
 
         contract_award = ftm_model.make_entity("ContractAward")
-        contract_award.make_id(dt["id"])
+        contract_award.make_id("ContractAward", dt["id"])
         contract_award.add("amount", dt["volume_uah"])
         contract_award.add("currency", "UAH")
         contract_award.add("supplier", seller)
