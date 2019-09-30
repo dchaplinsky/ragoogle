@@ -110,7 +110,7 @@ class ProcurementWinnersModel(AbstractDataset):
         yield buyer
 
         if (
-            dt["purchase"]["cost_dispatcher_code"]
+            (dt["purchase"]["cost_dispatcher_code"] or "").strip()
             and dt["purchase"]["cost_dispatcher_name"]
             and dt["purchase"]["cost_dispatcher_code"]
             != dt["purchase"]["buyer"]["code"]
@@ -141,7 +141,7 @@ class ProcurementWinnersModel(AbstractDataset):
 
         yield seller
 
-        if dt["purchase"]["buyer"]["person"]:
+        if (dt["purchase"]["buyer"]["person"] or "").strip():
             representative = person_entity(
                 dt["purchase"]["buyer"]["person"],
                 "Представник замовника",
