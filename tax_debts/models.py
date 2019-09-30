@@ -64,6 +64,8 @@ class TaxDebtsModel(AbstractDataset):
     def to_entities(self):
         dt = self.data
 
+        id_prefix = "tax_debts"
+
         if dt["TIN_S"]:
             debtor = company_entity(
                 name=deal_with_mixed_lang(dt["NAME"]),
@@ -74,7 +76,7 @@ class TaxDebtsModel(AbstractDataset):
                 debtor_repr = person_entity(
                     dt["PIB"],
                     "Боржник",
-                    id_prefix="tax_debts"
+                    id_prefix=id_prefix
                 )
 
                 directorship = ftm_model.make_entity("Directorship")
@@ -89,7 +91,7 @@ class TaxDebtsModel(AbstractDataset):
             debtor = person_entity(
                 dt["NAME"],
                 "Боржник",
-                id_prefix="tax_debts",
+                id_prefix=id_prefix,
             )
 
         debtor.set(
@@ -106,14 +108,14 @@ class TaxDebtsModel(AbstractDataset):
         tax_office = company_entity(
             name=deal_with_mixed_lang(dt["DPI"]),
             code=dt["DPI"],
-            id_prefix="tax_debts",
-            entity_type="RingPublicBody"
+            id_prefix=id_prefix,
+            entity_schema="RingPublicBody"
         )
 
         tax_office_head = person_entity(
             name=dt["DPI_BOSS"],
             positions="Керівник податкової інспекції",
-            id_prefix="tax_debts",
+            id_prefix=id_prefix,
             description="Станом на {} був керівником {}".format(
                 self.last_updated_from_dataset.date(),
                 dt["DPI"],

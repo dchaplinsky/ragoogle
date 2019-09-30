@@ -97,6 +97,7 @@ class LetsPartyModel(AbstractDataset):
 
     def to_entities(self):
         dt = self.data
+        id_prefix = "lets_party"
 
         if dt["donator_code"]:
             donor = company_entity(
@@ -108,7 +109,7 @@ class LetsPartyModel(AbstractDataset):
             donor = person_entity(
                 dt["donator_name"],
                 "Донор",
-                id_prefix="lets_party",
+                id_prefix=id_prefix,
                 address=dt["donator_location"],
             )
 
@@ -137,14 +138,16 @@ class LetsPartyModel(AbstractDataset):
                 beneficiary = company_entity(
                     name=dt["party"],
                     code=dt["party"],
-                    id_prefix="lets_party",
+                    id_prefix=id_prefix,
                     address=dt.get("geo"),
+                    entity_schema="RingOrganization",
+                    legalForm="Політична партія"
                 )
         else:
             beneficiary = person_entity(
                 dt["candidate_name"],
                 "Кандидат в президенти, {}".format(dt["party"]),
-                id_prefix="lets_party",
+                id_prefix=id_prefix,
             )
 
         beneficiary.set(
@@ -163,14 +166,16 @@ class LetsPartyModel(AbstractDataset):
             "branch_code"
         ):
             party = company_entity(
-                name=dt["party"], code=dt["party"], id_prefix="lets_party"
+                name=dt["party"], code=dt["party"], id_prefix=id_prefix,
+                entity_schema="RingOrganization",
+                legalForm="Осередок політичної партії"
             )
             yield party
 
-            directorship = ftm_model.make_entity("Directorship")
+            directorship = ftm_model.make_entity("Membership")
             directorship.make_id(dt["party"], dt["branch_code"], "party")
 
-            directorship.add("director", party.id)
+            directorship.add("member", party.id)
             directorship.add("organization", beneficiary)
             directorship.add("role", "Головний офіс")
             yield directorship

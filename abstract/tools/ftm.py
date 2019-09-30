@@ -7,6 +7,7 @@ def person_entity(name, positions, id_prefix="", **kwargs):
     person = ftm_model.make_entity("RingPerson")
     l, f, p, _ = parse_fullname(name)
 
+    person.set("name", name)
     person.set("firstName", f)
     person.set("fatherName", p)
     person.set("lastName", l)

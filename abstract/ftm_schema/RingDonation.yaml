@@ -4,3 +4,7 @@ RingDonation:
   description: "A monetary donation between two parties."
   extends: 
     - Payment
+  # TODO: verify why it's not picked edge from Payment
+  edge:
+    source: payer
+    target: beneficiary

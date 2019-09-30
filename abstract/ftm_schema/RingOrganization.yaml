@@ -1,0 +1,5 @@
+RingOrganization:
+  extends: Organization
+  label: Ring Organization
+  plural: Ring Organizations
+  matchable: true
