@@ -5,7 +5,7 @@ import sys
 import argparse
 import tqdm
 from functools import partial
-from itertools import zip_longest, chain
+from itertools import chain
 from multiprocessing import Pool
 from elasticsearch.exceptions import SerializationError
 from django.apps import apps as django_apps
@@ -16,15 +16,9 @@ from django.utils import timezone
 from abstract.ftm_models import get_degradation_mapping
 from followthemoney import model as base_ftm_model
 
+from abstract.tools.misc import grouper
 from search.search_tools import get_apps_with_data_model
 from search.models import get_datasource_pages
-
-
-def grouper(iterable, n, fillvalue=None):
-    """Collect data into fixed-length chunks or blocks"""
-    # grouper('ABCDEFG', 3, 'x') --> ABC DEF Gxx"
-    args = [iter(iterable)] * n
-    return zip_longest(*args, fillvalue=fillvalue)
 
 
 class Command(BaseCommand):

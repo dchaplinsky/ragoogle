@@ -7,10 +7,10 @@ def format_edrpou(code):
 
 
 def unify_cyprus_codes(company_code):
-    company_code = re.sub("^HE\s?", "HE", company_code)
-    company_code = re.sub("^ΗΕ\s?", "HE", company_code)
-    company_code = re.sub("^H\.E\.\s?", "HE", company_code)
-    company_code = re.sub("^Η\.E\.\s?", "HE", company_code)
+    company_code = re.sub(r"^HE\s?", "HE", company_code)
+    company_code = re.sub(r"^ΗΕ\s?", "HE", company_code)
+    company_code = re.sub(r"^H\.E\.\s?", "HE", company_code)
+    company_code = re.sub(r"^Η\.E\.\s?", "HE", company_code)
 
     return set(
         (
