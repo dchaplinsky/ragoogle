@@ -256,8 +256,7 @@ class SearchView(TemplateView):
                 "base_count": base_count,
                 "enabled_datasources": request.GET.getlist("datasources"),
                 "datasources": list(get_all_enabled_datasources().values()),
-                "doctypes_mapping": doctypes,
-                "foobar": "foobar"
+                "doctypes_mapping": doctypes
             }
         )
 
