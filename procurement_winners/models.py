@@ -122,7 +122,7 @@ class ProcurementWinnersModel(AbstractDataset):
             yield cost_dispatcher
 
             cost_distpatcher_link = ftm_model.make_entity("UnknownLink")
-            cost_distpatcher_link.make_id(dt["purchase"]["buyer"]["code"], dt["purchase"]["cost_dispatcher_code"])
+            cost_distpatcher_link.make_id(dt["purchase"]["buyer"]["code"], "cost_dispatcher", dt["purchase"]["cost_dispatcher_code"])
 
 
             cost_distpatcher_link.add("subject", buyer)
