@@ -264,8 +264,11 @@ class SearchView(TemplateView):
             del context["view"]
             del context["doctypes_mapping"]
             del context["datasources"]
-            if "internals" in context:
-                del context["internals"]
+            if "search_results" in context:
+                for x in context["search_results"]:
+                    if "internals" in x:
+                        del x["internals"]
+
             return JsonResponse(serialize_for_api(context), safe=False)
         else:
             return self.render_to_response(context)
