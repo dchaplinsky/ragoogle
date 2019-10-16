@@ -28,7 +28,7 @@ class MbuModel(AbstractDataset):
 
         companies = set()
         persons = set()
-        addresses = set([dt["address"]])
+        addresses = set([dt.get("address")])
 
         if re.search(r"\w\.\s?\w\.", dt["customer"]):
             for c in dt["customer"].replace(";", ",").split(","):
