@@ -6,10 +6,7 @@ from django.urls import reverse
 
 from abstract.models import AbstractDataset
 from abstract.tools.companies import generate_edrpou_options
-from names_translator.name_utils import (
-    parse_and_generate,
-    autocomplete_suggestions
-)
+from names_translator.name_utils import parse_and_generate, autocomplete_suggestions
 
 
 logging.basicConfig(level=logging.WARNING)
@@ -18,17 +15,16 @@ logger = logging.getLogger("Mbu")
 
 class MbuModel(AbstractDataset):
     def get_absolute_url(self):
-        return reverse('mbu>details', kwargs={'pk': self.id})
+        return reverse("mbu>details", kwargs={"pk": self.id})
 
     def to_dict(self):
         dt = self.data
-        res = {
-            "_id": self.pk,
-        }
+        res = {"_id": self.pk}
 
         companies = set()
         persons = set()
         addresses = set([dt.get("address")])
+        raw_records = set([dt.get("location_name")])
 
         if re.search(r"\w\.\s?\w\.", dt["customer"]):
             for c in dt["customer"].replace(";", ",").split(","):
@@ -48,6 +44,7 @@ class MbuModel(AbstractDataset):
                 "addresses": list(filter(None, addresses)),
                 "persons": list(filter(None, persons)),
                 "names_autocomplete": list(filter(None, names_autocomplete)),
+                "raw_records": list(filter(None, raw_records)),
             }
         )
 
