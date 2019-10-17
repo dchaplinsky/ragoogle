@@ -1,5 +1,5 @@
 from django.template.loader import render_to_string
-from elasticsearch_dsl import Keyword
+from elasticsearch_dsl import Keyword, Date
 from django.urls import reverse
 
 from abstract.elastic_models import (
@@ -25,6 +25,7 @@ mbu_idx.analyzer(ukrainianAddressesStopwordsAnalyzer)
 class ElasticMbuModel(AbstractDatasetMapping):
     start_date = Keyword()
     end_date = Keyword()
+    order_date = Keyword()
 
     def render_infocard(self):
         from .apps import MbuConfig as AppConfig
