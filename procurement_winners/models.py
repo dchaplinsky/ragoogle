@@ -122,14 +122,16 @@ class ProcurementWinnersModel(AbstractDataset):
             yield cost_dispatcher
 
             cost_distpatcher_link = ftm_model.make_entity("UnknownLink")
-            cost_distpatcher_link.make_id(dt["purchase"]["buyer"]["code"], "cost_dispatcher", dt["purchase"]["cost_dispatcher_code"])
-
+            cost_distpatcher_link.make_id(
+                dt["purchase"]["buyer"]["code"],
+                "cost_dispatcher",
+                dt["purchase"]["cost_dispatcher_code"],
+            )
 
             cost_distpatcher_link.add("subject", buyer)
             cost_distpatcher_link.add("object", cost_dispatcher)
             cost_distpatcher_link.add("role", "Розпорядник коштів")
             yield cost_distpatcher_link
-
 
         seller = company_entity(
             name=dt["seller"]["name"],
@@ -146,22 +148,30 @@ class ProcurementWinnersModel(AbstractDataset):
             representative = person_entity(
                 dt["purchase"]["buyer"]["person"],
                 "Представник замовника",
-                id_prefix=id_prefix + dt["purchase"]["buyer"]["code"]
+                id_prefix=id_prefix + dt["purchase"]["buyer"]["code"],
             )
             yield representative
 
-            
             representation_link = ftm_model.make_entity("Representation")
-            representation_link.make_id(dt["purchase"]["buyer"]["code"], dt["purchase"]["buyer"]["person"])
+            representation_link.make_id(
+                dt["purchase"]["buyer"]["code"], dt["purchase"]["buyer"]["person"]
+            )
             representation_link.add("agent", representative)
             representation_link.add("client", buyer)
             representation_link.add("role", "Представник замовника")
             yield representation_link
 
-
         contract = ftm_model.make_entity("Contract")
         contract.make_id("Contract", dt["purchase"]["id"])
         contract.add("authority", buyer)
+        contract.add(
+            "name",
+            "Закупівля {}".format(
+                dt["purchase"].get("goods_name_short", "")
+                or dt["purchase"].get("goods_name", "")
+            ).strip(),
+        )
+        contract.add("contractDate", dt["date"])
         yield contract
 
         contract_award = ftm_model.make_entity("ContractAward")
