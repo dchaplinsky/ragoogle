@@ -10,19 +10,24 @@
 
 {% block content %}
 <!-- Page Content -->
+
 {% if rec.TIN_S %}
 <div class="content" itemscope="" itemtype="http://schema.org/Organization">
     <!-- Frequently Asked Questions -->
     <h1 class="content-heading">
-        Податковий борг <span itemprop="name">{{ rec.NAME }}</span> (<a href="{{ url('search>results') }}?q={{ rec.TIN_S }}" target="_blank" >{{ rec.TIN_S|format_edrpou }}<meta itemprop="taxID" content="{{ rec.TIN_S|format_edrpou }}" /></a>)
+        Податковий борг <span itemprop="name">{{ rec.NAME }}</span> (<a href="{{ url('search>results') }}?q={{ rec.TIN_S }}" target="_blank" >{{ rec.TIN_S|format_edrpou }}<meta itemprop="taxID" content="{{ rec.TIN_S|format_edrpou }}" /></a>) станом на {{ rec.last_updated_from_dataset|date }}
     </h1>
 {% else %}
 <div class="content" itemscope="" itemtype="http://schema.org/Person">
     <!-- Frequently Asked Questions -->
     <h1 class="content-heading">
-        Податковий борг <span itemprop="name">{{ rec.NAME }}</span>
+        Податковий борг <span itemprop="name">{{ rec.NAME }} станом на {{ rec.last_updated_from_dataset|date }}</span>
     </h1>
 {% endif %}
+    <div class="alert alert-danger" role="alert">
+    ВАЖЛИВО: Податковий борг зафіксований станом на дату {{ rec.last_updated_from_dataset|date }}. Це не означає що він є станом на зараз. Перевірити поточний стан податкового боргу можна <a href="http://sfs.gov.ua/businesspartner">тут</a>                            
+    </div>
+
     <div class="block document-details">
         <div class="block-header block-header-default">
             <h2 class="block-title">Детальна інформація: </h2>
