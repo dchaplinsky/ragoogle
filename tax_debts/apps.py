@@ -7,7 +7,7 @@ class TaxDebtsConfig(AbstractConfig):
     name = "tax_debts"
 
     verbose_name = "Податковий борг"
-    short_name = "Борг"
+    short_name = "ДФС"
     loader_class = TaxDebtsLoader
 
     @property

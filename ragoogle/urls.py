@@ -42,6 +42,7 @@ urlpatterns = [
     path("procurement_winners/", include("procurement_winners.urls")),
     path("lets_party/", include("lets_party.urls")),
     path("corrupt/", include("corrupt.urls")),
+    path("tax_reg/", include("tax_reg.urls")),
     path("source/<slug:slug>", DataSourceView.as_view(), name="about_datasource"),
     path("admin/", admin.site.urls),
     path(

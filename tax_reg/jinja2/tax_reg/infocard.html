@@ -1,0 +1,12 @@
+{% extends "abstract/base_infocard.html" %}
+
+company_edrpou,company_name,company_address,company_reg_date,company_reg_no,tax_office_code,tax_office_name
+
+{% block header %}
+    <div class="edrpou">{{ res.company_edrpou }}</div>
+    <h3 class="name">{{ res.company_name }}</h3>
+{% endblock %}
+
+{% block description %}
+    Зареєстрована {{ res.reg_date|date }}<br/> за адресою {{ res.company_address }}
+{% endblock %}
