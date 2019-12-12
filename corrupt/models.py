@@ -19,7 +19,11 @@ class CorruptModel(AbstractDataset):
 
     def to_dict(self):
         dt = self.data
-        res = {"_id": self.pk}
+        res = {
+            "_id": self.pk,
+            "last_updated_from_dataset": self.last_updated_from_dataset,
+            "first_updated_from_dataset": self.first_updated_from_dataset,
+        }
 
         companies = set(dt["CORR_WORK_PLACE"])
         addresses = set()
