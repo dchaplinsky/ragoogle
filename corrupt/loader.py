@@ -4,7 +4,7 @@ from csv import excel
 class CorruptLoader(FileLoader):
     filetype = "csv"
     csv_dialect = excel
-    last_updated_path = "SENTENCE_DATE"
+    # last_updated_path = "SENTENCE_DATE"
 
     @property
     def model(self):
