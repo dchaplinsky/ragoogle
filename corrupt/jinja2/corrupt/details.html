@@ -11,6 +11,10 @@
 {% block content %}
 <!-- Page Content -->
 <div class="content" itemscope="" itemtype="http://schema.org/Person">
+    <div class="alert alert-danger" role="alert">
+    ВАЖЛИВО: Це копія запису в державному реєстрі станом на {{ rec.last_updated_from_dataset|date }}. Для перевірки даних станом на сьогоднішню дату пройдіть <a href="https://corruptinfo.nazk.gov.ua" target="_blank">за посиланням</a>.
+    </div>
+
     <!-- Frequently Asked Questions -->
     <h1 class="content-heading">
         <span itemprop="familyName">{{ rec.CORRUPTIONER_LAST_NAME }}</span> <span itemprop="givenName">{{ rec.CORRUPTIONER_FIRST_NAME }}</span> <span itemprop="additionalName">{{ rec.CORRUPTIONER_SURNAME }}</span>
