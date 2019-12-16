@@ -83,7 +83,7 @@ class TaxRegModel(AbstractDataset):
         yield tax_office
 
         registration = ftm_model.make_entity("Representation")
-        registration.make_id(id_prefix, self.pk)
+        registration.make_id(id_prefix, "registration", self.pk)
 
         registration.add("agent", tax_office)
         registration.add("client", company)
