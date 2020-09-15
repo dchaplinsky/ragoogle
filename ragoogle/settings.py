@@ -63,26 +63,7 @@ INSTALLED_APPS = [
     "abstract",
 
     # Here goes data sources
-    "smida.apps.SmidaConfig",
-    "posipaky_info.apps.PosipakyInfoConfig",
-    "posipaky_2_info.apps.Posipaky2InfoConfig",
-    "edrdr.apps.EDRDRConfig",
-    "garnahata_in_ua.apps.GarnahataInUaConfig",
-    "vkks.apps.VKKSConfig",
-    "nacp_declarations.apps.NACPDeclarationsConfig",
-    "paper_declarations.apps.PaperDeclarationsConfig",
-    "cvk_2015.apps.CVK2015Config",
-    "smida_reports.apps.SmidaReportConfig",
-    "dabi_licenses.apps.DabiLicensesConfig",
-    "dabi_registry.apps.DabiRegistryConfig",
-    "geoinf_licenses.apps.GeoinfLicensesConfig",
-    "mbu.apps.MbuConfig",
-    "company_house_ua.apps.CompanyHouseUaConfig",
-    "tax_debts.apps.TaxDebtsConfig",
-    "procurement_winners.apps.ProcurementWinnersConfig",
-    "lets_party.apps.LetsPartyConfig",
-    "corrupt.apps.CorruptConfig",
-    "tax_reg.apps.TaxRegConfig",
+    # "tax_reg.apps.TaxRegConfig",
 
     # Generalized search
     "search",
@@ -195,8 +176,8 @@ DATABASES = {
     "default": {
         # Strictly PostgreSQL
         "ENGINE": db_backend,
-        "NAME": get_env_str('DB_NAME', "ragoogle"),
-        "USER": get_env_str('DB_USER', "ragoogle"),
+        "NAME": get_env_str('DB_NAME', "tarob"),
+        "USER": get_env_str('DB_USER', "tarob"),
         "PASSWORD": get_env_str('DB_PASS', ""),
         "HOST": get_env_str('DB_HOST', "127.0.0.1"),
         "PORT": "5432",
