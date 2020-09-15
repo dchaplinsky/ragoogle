@@ -4,6 +4,7 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.utils import formats, timezone
 from django.urls import reverse
 from django.utils.translation import gettext, ngettext
+from django.db.utils import ProgrammingError
 
 from dateutil.parser import parse as parse_dt
 from jinja2 import Environment, evalcontextfilter, Markup, escape
@@ -28,8 +29,7 @@ def updated_querystring(request, params):
 @evalcontextfilter
 def nl2br(eval_ctx, value):
     result = u"\n\n".join(
-        u"<p>%s</p>" % p.strip().replace("\n", Markup("<br>\n"))
-        for p in _paragraph_re.split(escape(value))
+        u"<p>%s</p>" % p.strip().replace("\n", Markup("<br>\n")) for p in _paragraph_re.split(escape(value))
     )
     if eval_ctx.autoescape:
         result = Markup(result)
@@ -77,11 +77,7 @@ def curformat(value):
             currency = "EUR "
 
         try:
-            return (
-                "{}{:,.2f}".format(currency, float(value.replace(",", ".")))
-                .replace(",", " ")
-                .replace(".", ",")
-            )
+            return "{}{:,.2f}".format(currency, float(value.replace(",", "."))).replace(",", " ").replace(".", ",")
         except ValueError:
             return value
     else:
@@ -98,11 +94,7 @@ def ensure_aware(dt):
 def datetime_filter(dt, dayfirst=False):
     return (
         formats.date_format(
-            timezone.localtime(
-                ensure_aware(
-                    parse_dt(dt, dayfirst=dayfirst) if isinstance(dt, str) else dt
-                )
-            ),
+            timezone.localtime(ensure_aware(parse_dt(dt, dayfirst=dayfirst) if isinstance(dt, str) else dt)),
             "SHORT_DATETIME_FORMAT",
         )
         if dt
@@ -113,16 +105,13 @@ def datetime_filter(dt, dayfirst=False):
 def date_filter(dt, dayfirst=False):
     return (
         formats.date_format(
-            timezone.localtime(
-                ensure_aware(
-                    parse_dt(dt, dayfirst=dayfirst) if isinstance(dt, str) else dt
-                )
-            ),
+            timezone.localtime(ensure_aware(parse_dt(dt, dayfirst=dayfirst) if isinstance(dt, str) else dt)),
             "SHORT_DATE_FORMAT",
         )
         if dt
         else ""
     )
+
 
 def ukr_plural(value, *args):
     value = int(value) % 100
@@ -151,15 +140,21 @@ def environment(**options):
             "curformat": curformat,
             "format_number": lambda x: "{:,d}".format(x).replace(",", " "),
             "format_edrpou": format_edrpou,
-            'uk_plural': ukr_plural,
+            "uk_plural": ukr_plural,
         }
     )
+
+    try:
+        datasource_pages = get_datasource_pages()
+    except ProgrammingError:
+        datasource_pages = {}
+
     env.globals.update(
         {
             "updated_querystring": updated_querystring,
             "parse_and_generate": parse_and_generate,
             "generate_all_names": generate_all_names,
-            "datasource_pages": get_datasource_pages(),
+            "datasource_pages": datasource_pages,
         }
     )
 

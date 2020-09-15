@@ -21,7 +21,6 @@ from search.search_tools import (
 from search.paginator import paginated
 from search.api import serialize_for_api
 from search.models import DataSource
-from edrdr.elastic_models import ElasticEDRDRModel
 
 
 class HomeView(TemplateView):
@@ -103,21 +102,21 @@ class SuggestView(View):
             for k in suggestions:
                 sugg = k.replace("<strong>", "").replace("</strong>", "")
 
-                if len(sugg) > 5 and sugg.isdigit():
-                    aux_requests_index.append({"key": k, "type": "company"})
+        #         if len(sugg) > 5 and sugg.isdigit():
+        #             aux_requests_index.append({"key": k, "type": "company"})
 
-                    aux_requests = aux_requests.add(
-                        ElasticEDRDRModel.search()
-                        .query("match_phrase", all={"query": sugg})
-                        .source(["latest_record"])[:1]
-                    )
+        #             aux_requests = aux_requests.add(
+        #                 ElasticEDRDRModel.search()
+        #                 .query("match_phrase", all={"query": sugg})
+        #                 .source(["latest_record"])[:1]
+        #             )
 
-        if aux_requests_index:
-            aux_results = aux_requests.execute()
+        # if aux_requests_index:
+        #     aux_results = aux_requests.execute()
 
-            # Stitching it all together
-            for i, r in zip(aux_requests_index, aux_results):
-                aux_results_index[i["key"]][i["type"]] = r
+        #     # Stitching it all together
+        #     for i, r in zip(aux_requests_index, aux_results):
+        #         aux_results_index[i["key"]][i["type"]] = r
 
         rendered_result = [
             render_to_string(

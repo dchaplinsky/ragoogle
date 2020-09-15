@@ -137,7 +137,7 @@ TEMPLATES = [
     },
 ]
 
-STATICFILES_STORAGE = "pipeline.storage.PipelineCachedStorage"
+STATICFILES_STORAGE = "pipeline.storage.PipelineStorage"
 STATICFILES_FINDERS = (
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",

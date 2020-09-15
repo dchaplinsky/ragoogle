@@ -1,5 +1,4 @@
 from django.core.paginator import Paginator, Page, EmptyPage
-from django.utils import six
 from django.conf import settings
 
 from elasticsearch_dsl.response import Response
@@ -56,7 +55,7 @@ class ElasticPage(AbstractPage):
         return self.paginator.count
 
     def __getitem__(self, index):
-        if not isinstance(index, (slice,) + six.integer_types):
+        if not isinstance(index, (slice, int)):
             raise TypeError
         # The object_list is converted to a Response so that its result can be
         # used as a normal iterable. Doesn't trigger more than one hit too.
