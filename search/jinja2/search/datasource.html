@@ -1,6 +1,6 @@
 {% extends "search/base.html" %}
 
-{% block title %}Відкритий API - реєстр реєстрів RING{% endblock %}
+{% block title %}{{ _("Відкритий API - реєстр реєстрів RING") }}{% endblock %}
 
 {% block body_class %}page-company{% endblock %}
 {% block container_class %}sidebar-o sidebar-inverse side-scroll main-content-narrow page-header-fixed page-header-inverse{% endblock %}
@@ -26,42 +26,42 @@
                     <div class="table-responsive push">
                         <table class="table table-bordered table-hover">
                             <tr>
-                                <th>Скорочена назва</th>
+                                <th>{{ _("Скорочена назва") }}</th>
                                 <td>{{ datasource.verbose_name }}</td>
                             </tr>
                             <tr>
-                                <th>Категорія</th>
+                                <th>{{ _("Категорія") }}</th>
                                 <td><span class="datasource-tag">{{ datasource.short_name }}</span></td>
                             </tr>
                             {% if first_updated %}
                             <tr>
-                                <th>Дата першого запису</th>
+                                <th>{{ _("Дата першого запису") }}</th>
                                 <td>{{ first_updated|date }}</td>
                             </tr>
                             {% endif %}
                             {% if last_updated %}
                             <tr>
-                                <th>Дата найсвіжішого запису</th>
+                                <th>{{ _("Дата найсвіжішого запису") }}</th>
                                 <td>{{ last_updated|date }}</td>
                             </tr>
                             {% endif %}
                             <tr>
-                                <th>Ідентифікатор</th>
+                                <th>{{ _("Ідентифікатор") }}</th>
                                 <td>{{ datasource.name }}</td>
                             </tr>
                             <tr>
-                                <th>Кількість записів</th>
+                                <th>{{ _("Кількість записів") }}</th>
                                 <td>{{ rec_count|format_number }}</td>
                             </tr>
                             {% if object.url %}
                             <tr>
-                                <th>Посилання на оригінал</th>
+                                <th>{{ _("Посилання на оригінал") }}</th>
                                 <td><a href="{{ object.url }}" target="_blank">{{ object.url }}</a></td>
                             </tr>
                             {% endif %}
                             {% if object.credits %}
                             <tr>
-                                <th>Походження набору даних</th>
+                                <th>{{ _("Походження набору даних") }}</th>
                                 <td>{{ object.credits|safe }}</td>
                             </tr>
                             {% endif %}

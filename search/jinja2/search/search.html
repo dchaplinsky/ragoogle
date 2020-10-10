@@ -2,9 +2,9 @@
 
 {% block container_class %}sidebar-o sidebar-inverse side-scroll main-content-narrow page-header-fixed page-header-inverse{% endblock %}
 
-{% block title %}{{ query }} — Ring, зручний пошук по відкритим даним України{% endblock %}
+{% block title %}{{ query }} — {{ _("Ring, зручний пошук по відкритим даним України") }}{% endblock %}
 
-{% block description %}Результати пошуку по джерелах {% for ds in datasources if ds.name in enabled_datasources %}{{ ds.verbose_name }}{% if not loop.last %}, {% endif %}{% endfor %}
+{% block description %}{{ _("Результати пошуку по джерелах") }} {% for ds in datasources if ds.name in enabled_datasources %}{{ ds.verbose_name }}{% if not loop.last %}, {% endif %}{% endfor %}
 {% endblock %}
 
 
@@ -30,7 +30,7 @@
 
             <div class="block block-mode-hidden block-ds-toggle">
                 <div class="block-header block-header-default">
-                    <h3 class="block-title">Джерел пошуку: {{ vars.db_src}}</h3>
+                    <h3 class="block-title">{{ _("Джерел пошуку:") }} {{ vars.db_src}}</h3>
                     <div class="block-options">
                         <button type="button" class="btn-block-option" data-toggle="block-option" data-action="content_toggle"><i class="si si-arrow-up"></i></button>
                     </div>
@@ -40,7 +40,7 @@
                         <div class="col-12 data-sources-checkboxes">
                             <div class="custom-control custom-checkbox mb-5">
                                 <input class="custom-control-input" type="checkbox" name="clearall" checked="checked" id="clearall">
-                                <label class="custom-control-label" for="clearall">Всі</label>
+                                <label class="custom-control-label" for="clearall">{{ _("Всі") }}</label>
                             </div>
                             {% for ds in datasources %}
                             <div class="custom-control custom-checkbox mb-5">

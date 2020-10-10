@@ -1,4 +1,4 @@
-Django>=2.2.13
+Django>=3.1.1
 Jinja2==2.10.1
 requests==2.21.0
 tokenize-uk==0.2.0

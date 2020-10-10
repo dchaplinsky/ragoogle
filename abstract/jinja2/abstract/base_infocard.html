@@ -14,7 +14,7 @@
                     <hr/>
                     {% block highlighting %}
                     {% if res.hl %}
-                    Знайдені фрагменти: <br/>
+                    {{ _("Знайдені фрагменти") }}: <br/>
                     {% for h_field in res.hl[:1] %}
                     {{ h_field|safe }}<br/>
                     {% endfor %}
@@ -37,7 +37,7 @@
                 <hr/>
                 {% block highlighting2 %}
                 {% if res.hl %}
-                Знайдені фрагменти: <br/>
+                {{ _("Знайдені фрагменти") }}: <br/>
                 {% for h_field in res.hl[:1] %}
                 {{ h_field|safe }}<br/>
                 {% endfor %}

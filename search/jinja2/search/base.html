@@ -18,9 +18,9 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0"/>
 
-    <title>{% block title %}Ring, зручний пошук відкритими даними України{% endblock %}</title>
+    <title>{% block title %}{{ _("Ring, зручний пошук відкритими даними України") }}{% endblock %}</title>
 
-    <meta name="description" content="{% block description %}Ring, проект Канцелярської сотні, пошуковик та API до найцікавіших відкритих даних України. Включає в себе Декларації, помічників народних та місцевих депутатів, реєстр компаній, реєстр власників значних пакетів акцій, реєстр кандидатів на місцевих виборах 2015, декларації доброчесності суддів та багато іншого{% endblock %}"/>
+    <meta name="description" content="{% block description %}{{ _("Ring, проект Канцелярської сотні, пошуковик та API до найцікавіших відкритих даних України. Включає в себе Декларації, помічників народних та місцевих депутатів, реєстр компаній, реєстр власників значних пакетів акцій, реєстр кандидатів на місцевих виборах 2015, декларації доброчесності суддів та багато іншого") }}{% endblock %}"/>
     <meta name="author" content="white collar hundred"/>
 
 <!--     <meta property="og:title" content="Ring registry demo"/>
@@ -78,7 +78,7 @@
                                                                 <use xlink:href="{{ static('img/sprite.svg') }}#logo-color"></use>
                                                             </svg>
                                                         </span>
-                            {% block side_sitename %}<span class="font-size-xl text-dual-primary-dark">RING</span>{%
+                            {% block side_sitename %}<span class="font-size-xl text-dual-primary-dark">{{ _("RING") }}</span>{%
                             endblock %}
                             </a>
                         </div>
@@ -94,30 +94,30 @@
                     {% endblock %}
                     <ul class="nav-main">
                         <li class="nav-main-heading">
-                            <span class="sidebar-mini-hidden">Навігація</span>
+                            <span class="sidebar-mini-hidden">{{ _("Навігація") }}</span>
                         </li>
                         <li>
                             <a href="/">
                                 <i class="si si-info"></i>
-                                <span class="sidebar-mini-hide">Про проект</span>
+                                <span class="sidebar-mini-hide">{{ _("Про проект") }}</span>
                             </a>
                         </li>
                         <li>
                             <a href="{{ url("about_search") }}">
                                 <i class="si si-docs"></i>
-                                <span class="sidebar-mini-hide">Інструкція з пошуку</span>
+                                <span class="sidebar-mini-hide">{{ _("Інструкція з пошуку") }}</span>
                             </a>
                         </li>
                         <li>
                             <a href="{{ url("about_api") }}">
                                 <i class="si si-magic-wand"></i>
-                                <span class="sidebar-mini-hide">Відкритий API</span>
+                                <span class="sidebar-mini-hide">{{ _("Відкритий API") }}</span>
                             </a>
                         </li>
                         <li>
                             <a href="mailto:bihus.info+ring@gmail.com">
                                 <i class="si si-envelope-letter"></i>
-                                <span class="sidebar-mini-hide">Зворотній зв'язок</span>
+                                <span class="sidebar-mini-hide">{{ _("Зворотній зв'язок") }}</span>
                             </a>
                         </li>
                         <li style="padding: 9px 18px">
@@ -125,7 +125,7 @@
                                href="https://ring.org.ua"
                                class="sidebar-mini-hide btn btn-primary min-width-125"
                                type="button"><i style="position: static;" class="si si-home"></i>
-                                RING.org.ua</a>
+                                {{ _("RING.org.ua") }}</a>
                         </li>
                     </ul>
                 </div>
@@ -147,7 +147,7 @@
         <div class="content">
             <div class="block document-details">
                 <div class="block-header block-header-default" style="display: block">
-                    Джерело: <a href="{{ datasource_pages[datasource.name].get_absolute_url() }}">{{ datasource.verbose_name }}</a>
+                    {{ _("Джерело:") }} <a href="{{ datasource_pages[datasource.name].get_absolute_url() }}">{{ datasource.verbose_name }}</a>
                 </div>
             </div>
         </div>

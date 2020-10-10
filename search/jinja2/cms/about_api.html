@@ -1,6 +1,6 @@
 {% extends "search/base.html" %}
 
-{% block title %}Відкритий API - реєстр реєстрів RING{% endblock %}
+{% block title %}{{ _("Відкритий API - реєстр реєстрів RING") }}{% endblock %}
 
 {% block body_class %}page-company{% endblock %}
 {% block container_class %}sidebar-o sidebar-inverse side-scroll main-content-narrow page-header-fixed page-header-inverse{% endblock %}
@@ -16,57 +16,57 @@
                 <div class="row nice-copy my-10">
                     <div class="col-md-12 py-20">
                         <div class="alert alert-info" role="alert">
-                            Знаходиться у стадії бета-тестування. Надсилайте ваші відгуки на адресу <a href="mailto:bihus.info+ring@gmail.com">bihus.info+ring@gmail.com</a>
+                            {{ _("Знаходиться у стадії бета-тестування. Надсилайте ваші відгуки на адресу") }} <a href="mailto:{{ _("bihus.info+ring@gmail.com") }}">{{ _("bihus.info+ring@gmail.com") }}</a>
                         </div>
-                        <p>Щоб скористатися API до нашого реєстру реєстрів, просто додайте параметр <code>format=json</code> до адреси сторінки з результатами пошуку, наприклад, так:
+                        <p>{{ _("Щоб скористатися API до нашого реєстру реєстрів, просто додайте параметр") }} <code>format=json</code> {{ _("до адреси сторінки з результатами пошуку, наприклад, так:") }}
                         </p>
                         <code>
                             https://ring.org.ua/search?q=кононенко&datasources=smida&datasources=posipaky_info&datasources=posipaky_2_info&datasources=edrdr&datasources=garnahata_in_ua&datasources=vkks&datasources=nacp_declarations&datasources=paper_declarations&datasources=cvk_2015&datasources=smida_reports&datasources=dabi_licenses&datasources=dabi_registry<strong>&format=json</strong>
                         </code>
                         <p>
                             <br/>
-                            Таким чином, ви отримаєте ті самі результати, але в форматі машиночитних даних. Документ з результатами складається з наступних розділів:
+                            {{ _("Таким чином, ви отримаєте ті самі результати, але в форматі машиночитних даних. Документ з результатами складається з наступних розділів:") }}
                             <ul>
-                                <li><strong>search_results</strong> — знайдені документи та інформація щодо поточної сторінки</li>
-                                <li><strong>query</strong> — ваш запит до системи</li>
-                                <li><strong>search_type</strong> — режим пошуку (<code>strict</code> — повний збіг, <code>loose</code> — неповний збіг)</li>
-                                <li><strong>strict_count</strong> — кількість результатів в режимі повного збіг</li>
-                                <li><strong>loose_count</strong> — кількість результатів в режимі неповного збіг</li>
-                                <li><strong>base_count</strong> — кількість результатів в поточному режимі пошуку</li>
-                                <li><strong>enabled_datasources</strong> — джерела по котрим проводиться пошук</li>
-                                <li><strong>datasources</strong> — додаткова інформація по джерелам пошуку, включно з назвою українською</li>
+                                <li><strong>search_results</strong> — {{ _("знайдені документи та інформація щодо поточної сторінки") }}</li>
+                                <li><strong>query</strong> — {{ _("ваш запит до системи") }}</li>
+                                <li><strong>search_type</strong> — {{ _("режим пошуку") }} (<code>strict</code> — {{ _("повний збіг") }}, <code>loose</code> — {{ _("неповний збіг") }})</li>
+                                <li><strong>strict_count</strong> — {{ _("кількість результатів в режимі повного збіг") }}</li>
+                                <li><strong>loose_count</strong> — {{ _("кількість результатів в режимі неповного збіг") }}</li>
+                                <li><strong>base_count</strong> — {{ _("кількість результатів в поточному режимі пошуку") }}</li>
+                                <li><strong>enabled_datasources</strong> — {( _("джерела по котрим проводиться пошук") )}</li>
+                                <li><strong>datasources</strong> — {{ _("додаткова інформація по джерелам пошуку, включно з назвою українською") }}</li>
                             </ul>
                         </p>
                         <p>
-                            Вміст <code>search_results</code> складається з наступних полів:
+                            {{ _("Вміст") }} <code>search_results</code> {{ _("складається з наступних полів:") }}
                             <ul>
-                                <li><strong>paginator</strong> — інформація про поточну сторінку та розбивку на сторінки, де <code>count</code> — загальна кількість результатів, <code>num_pages</code> — кількість сторінок, <code>per_page</code> — кількість результатів на сторінку</li>
-                                <li><strong>number</strong> — номер поточної сторінки</li>
-                                <li><strong>object_list</strong> — власне, результати пошуку</li>
+                                <li><strong>paginator</strong> — {{ _("інформація про поточну сторінку та розбивку на сторінки, де") }} <code>count</code> — {{ _("загальна кількість результатів") }}, <code>num_pages</code> — {{ _("кількість сторінок") }}, <code>per_page</code> — {{ _("кількість результатів на сторінку") }}</li>
+                                <li><strong>number</strong> — {{ _("номер поточної сторінки") }}</li>
+                                <li><strong>object_list</strong> — {{ _("власне, результати пошуку") }}</li>
                             </ul>
                         </p>
                         <p>
-                            Звісно, що документи з різних джерел пошуку (наприклад, декларацій та реєстру компаній) будуть мати різну структуру, але деякі з полів будуть єдині для всіх джерел:
+                            {{ _("Звісно, що документи з різних джерел пошуку (наприклад, декларацій та реєстру компаній) будуть мати різну структуру, але деякі з полів будуть єдині для всіх джерел:") }}
                             <ul>
-                                <li><strong>id</strong> — унікальний ідентифікатор документа</li>
-                                <li><strong>source</strong> — датасет-джерело (використовуйте поле <code>datasources</code> щоб отримати більше інформації про датасет)</li>
-                                <li><strong>last_updated_from_dataset</strong> — остання дата, коли ми знайшли цей запис в оригінальному датасеті (може бути відсутня)</li>
-                                <li><strong>first_updated_from_dataset</strong> — перша дата, коли ми знайшли цей запис в оригінальному датасеті (може бути відсутня)</li>
+                                <li><strong>id</strong> — {{ _("унікальний ідентифікатор документа") }}</li>
+                                <li><strong>source</strong> — {{ _("датасет-джерело (використовуйте поле") }} <code>datasources</code> {{ _("щоб отримати більше інформації про датасет)") }}</li>
+                                <li><strong>last_updated_from_dataset</strong> {{ _("— остання дата, коли ми знайшли цей запис в оригінальному датасеті (може бути відсутня)") }}</li>
+                                <li><strong>first_updated_from_dataset</strong> — {{ _("перша дата, коли ми знайшли цей запис в оригінальному датасеті (може бути відсутня)") }}</li>
                             </ul>
 
-                            Окрім того ми витягаємо, чистимо та доповнюємо (наприклад, перекладаємо російською) наступні сутності:
+                            {{ _("Окрім того ми витягаємо, чистимо та доповнюємо (наприклад, перекладаємо російською) наступні сутності:") }}
                             <ul>
-                                <li><strong>persons</strong> — перелік осіб, що були зазначені в документі (може бути відсутній)</li>
-                                <li><strong>companies</strong> — перелік компаній, що були зазначені в документі (може бути відсутній)</li>
-                                <li><strong>addresses</strong> — перелік адрес, що були зазначені в документі (може бути відсутній)</li>
-                                <li><strong>countries</strong> — перелік країн, що були зазначені в документі (може бути відсутній)</li>
+                                <li><strong>persons</strong> {{ _("— перелік осіб, що були зазначені в документі (може бути відсутній)") }}</li>
+                                <li><strong>companies</strong> {{ _("— перелік компаній, що були зазначені в документі (може бути відсутній)") }}</li>
+                                <li><strong>addresses</strong> {{ _("— перелік адрес, що були зазначені в документі (може бути відсутній)") }}</li>
+                                <li><strong>countries</strong> {{ _("— перелік країн, що були зазначені в документі (може бути відсутній)") }}</li>
                             </ul>
                         </p>
                         <p>
-                            Ви також можете використовувати параметр <code>entities</code> в параметрах запиту щоб обмежити пошук тільки по компаніях (<code>companies</code>), персонах (<code>persons</code>), країнах (<code>countries</code>) або адресах (<code>addresses</code>).
+                            {{ _("Ви також можете використовувати параметр") }} <code>entities</code> {{ _("в параметрах запиту щоб обмежити пошук тільки по компаніях") }} (<code>companies</code>){{ _(", персонах") }} (<code>persons</code>), {{ _("країнах") }} (<code>countries</code>) {{ _("або адресах") }} (<code>addresses</code>).
                         </p>
                         <div class="alert alert-warning" role="alert">
-                            Майте на увазі, що API повертає тільки першу тисячу сторінок результатів, якщо вам потрібен увесь набір даних (наприклад, всі звіти СМІДА) — напишіть нам за адресою <a href="mailto:bihus.info+ring@gmail.com">bihus.info+ring@gmail.com</a> щоб отримати повний файл
+                            {{ _("Майте на увазі, що API повертає тільки першу тисячу сторінок результатів, якщо вам потрібен увесь набір даних (наприклад, всі звіти СМІДА) — напишіть нам за адресою") }} <a href="mailto:{{ _("bihus.info+ring@gmail.com") }}">{{ _("bihus.info+ring@gmail.com") }}</a> {{ _("щоб отримати повний файл") }}
                         </div>
                     </div>
                 </div>

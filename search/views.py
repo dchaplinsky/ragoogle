@@ -8,6 +8,7 @@ from django.views.generic import TemplateView, DetailView
 from django.template.loader import render_to_string
 from django.core.paginator import EmptyPage
 from django.shortcuts import render
+from django.utils.translation import gettext as _
 
 from elasticsearch_dsl import Search, Q, MultiSearch
 
@@ -290,7 +291,7 @@ class DataSourceView(DetailView):
         datasource = get_all_enabled_datasources().get(context["object"].slug)
 
         if not datasource:
-            raise Http404("Записа не існує")
+            raise Http404(_("Записа не існує"))
 
         context["datasource"] = datasource
 
