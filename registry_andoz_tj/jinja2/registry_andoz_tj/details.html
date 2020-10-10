@@ -1,0 +1,45 @@
+{% extends "search/base.html" %}
+
+{% block container_class %}sidebar-o sidebar-inverse side-scroll main-content-narrow  page-header-fixed page-header-inverse{% endblock %}
+
+{% block title %}REDEFINE ME{% endblock %}
+
+{% block description %}
+REDEFINE ME
+{% endblock %}
+
+{% block content %}
+<!-- Page Content -->
+<div class="content" itemscope="" itemtype="http://schema.org/Organization">
+    <!-- Frequently Asked Questions -->
+    <h1 class="content-heading">
+        REDEFINE ME
+    </h1>
+
+    <div class="block document-details">
+        <div class="block-header block-header-default">
+            <h2 class="block-title">{{ _("Детальна інформація:") }} </h2>
+            <div class="block-options">
+                <button type="button" class="btn-block-option" onclick="Edrdr.helpers('print-page');">
+                    <i class="si si-printer"></i> {{ _("Друкувати") }}
+                </button>
+                <button type="button" class="btn-block-option" data-toggle="block-option"
+                        data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
+            </div>
+        </div>
+        <div class="block-content">
+            <div class="table-responsive push">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th>REDEFINE ME</th>
+                        <td>REDEFINE ME</td>
+                    </tr>
+                </table>
+                {% if rec.details_url %}
+                <a href="{{ rec.details_url }}" target="_blank">{{ _("Посилання на оригінал" )}}</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

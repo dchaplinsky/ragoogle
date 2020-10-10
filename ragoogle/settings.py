@@ -63,7 +63,7 @@ INSTALLED_APPS = [
     "abstract",
 
     # Here goes data sources
-    # "tax_reg.apps.TaxRegConfig",
+    "registry_andoz_tj.apps.RegistryAndozTjConfig",
 
     # Generalized search
     "search",
@@ -270,7 +270,7 @@ MONGODB_PORT = get_env_int("MONGODB_PORT", 27017)
 MONGODB_USERNAME = get_env_str("MONGODB_USERNAME", "")
 MONGODB_PASSWORD = get_env_str("MONGODB_PASSWORD", "")
 MONGODB_AUTH_DB = get_env_str("MONGODB_AUTH_DB", "admin")
-MONGODB_DB = get_env_str("MONGODB_DB", "ragoogle_spiders")
+MONGODB_DB = get_env_str("MONGODB_DB", "tarob_spiders")
 MONGODB_CONNECTION_POOL_KWARGS = {}
 
 try:

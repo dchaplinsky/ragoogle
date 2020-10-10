@@ -45,14 +45,10 @@ class FileLoader(object):
                 settings.MONGODB_PORT,
             )
         else:
-            uri = "mongodb://{}:{}".format(
-                quote_plus(settings.MONGODB_HOST), settings.MONGODB_PORT
-            )
+            uri = "mongodb://{}:{}".format(quote_plus(settings.MONGODB_HOST), settings.MONGODB_PORT)
 
         connection = pymongo.MongoClient(
-            uri,
-            authSource=settings.MONGODB_AUTH_DB,
-            **settings.MONGODB_CONNECTION_POOL_KWARGS
+            uri, authSource=settings.MONGODB_AUTH_DB, **settings.MONGODB_CONNECTION_POOL_KWARGS
         )
 
         return connection[settings.MONGODB_DB]
@@ -174,15 +170,15 @@ class FileLoader(object):
     def get_last_updated(self, obj):
         assert self.last_updated_path
 
-        return timezone.make_aware(
-            dt_parse(jmespath.search(self.last_updated_path, obj))
-        )
+        dt = jmespath.search(self.last_updated_path, obj)
+        if isinstance(dt, str):
+            dt = dt_parse(dt)
+
+        return timezone.make_aware(dt)
 
     def handle_details(self, *args, **options):
         if options.get("last_updated_from_dataset"):
-            last_updated = timezone.make_aware(
-                dt_parse(options["last_updated_from_dataset"], dayfirst=True)
-            )
+            last_updated = timezone.make_aware(dt_parse(options["last_updated_from_dataset"], dayfirst=True))
         else:
             last_updated = timezone.now()
 
@@ -203,21 +199,19 @@ class FileLoader(object):
                                 last_updated = self.get_last_updated(item)
                             except ValueError as e:
                                 logger.error(
-                                    "Cannot parse last_updated date in rec {}, error message was: {}".format(
-                                        i, e
-                                    )
+                                    "Cannot parse last_updated date in rec {}, error message was: {}".format(i, e)
                                 )
 
                                 last_updated = timezone.now()
 
                         successful += 1
                     except Exception as e:
-                        logger.error(
-                            "Cannot parse record {}, error message was: {}".format(i, e)
-                        )
+                        logger.error("Cannot parse record {}, error message was: {}".format(i, e))
                         broken += 1
                         if options["store_broken_to"]:
-                            options["store_broken_to"].write(json.dumps(item, sort_keys=True, ensure_ascii=False) + "\n")
+                            options["store_broken_to"].write(
+                                json.dumps(item, sort_keys=True, ensure_ascii=False) + "\n"
+                            )
                         continue
 
                     pbar.update(1)
@@ -236,9 +230,7 @@ class FileLoader(object):
                         existing_hashes.add(doc_hash)
                     else:
                         model.objects.filter(pk=doc_hash).update(
-                            **self.get_payload_for_update(
-                                item, doc_hash, last_updated_from_dataset=last_updated
-                            )
+                            **self.get_payload_for_update(item, doc_hash, last_updated_from_dataset=last_updated)
                         )
 
                     if len(bulk_add) >= self.chunk_size:
@@ -247,11 +239,7 @@ class FileLoader(object):
 
                 # So sweet leftovers
                 model.objects.bulk_create(bulk_add)
-        logger.info(
-            "Import of {} records done, {} successful, {} broken".format(
-                i + 1, successful, broken
-            )
-        )
+        logger.info("Import of {} records done, {} successful, {} broken".format(i + 1, successful, broken))
 
         logger.info("Total amount of records in this datasouce is now {}".format(model.objects.count()))
 
