@@ -33,7 +33,7 @@ class RegistryAndozTjModel(AbstractDataset):
         )
 
         persons = set()
-        if isinstance(dt.get("date_of_reg", ""), str):
+        if not dt.get("date_of_reg", "").strip("\xa0"):
             del dt["date_of_reg"]
 
 

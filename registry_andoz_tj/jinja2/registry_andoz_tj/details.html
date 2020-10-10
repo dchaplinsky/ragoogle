@@ -2,18 +2,25 @@
 
 {% block container_class %}sidebar-o sidebar-inverse side-scroll main-content-narrow  page-header-fixed page-header-inverse{% endblock %}
 
-{% block title %}REDEFINE ME{% endblock %}
+{% block title %}{{ rec.name }} {{ _("— інформація з реєстру компаній Таджикістану ") }}{% endblock %}
 
 {% block description %}
-REDEFINE ME
+{% if rec.section == "individual" %} {{ _("Індивідуальний підприємець") }}
+{% elif rec.section == "foreign" %}  {{ _("Іноземна компанія") }}
+{% else %}
+{{ _("Компанія") }} 
+{% endif %} {{ rec.name }}{% if rec.ein %}, {{ _("EIN") }} {{ rec.ein }}{% endif %}{% if rec.inn %}, {{ _("INN") }} {{ rec.inn }}{% endif %}, {{ _("Таджикістан") }}
 {% endblock %}
 
 {% block content %}
 <!-- Page Content -->
 <div class="content" itemscope="" itemtype="http://schema.org/Organization">
-    <!-- Frequently Asked Questions -->
     <h1 class="content-heading">
-        REDEFINE ME
+    {% if rec.section == "individual" %} {{ _("Індивідуальний підприємець") }}
+    {% elif rec.section == "foreign" %}  {{ _("Іноземна компанія") }}
+    {% else %}
+    {{ _("Компанія") }} 
+    {% endif %} <span itemprop="name">{{ rec.name }}</span>{% if rec.ein %}, {{ _("EIN") }}<span itemprop="taxID">{{ rec.ein }}</span>{% endif %}{% if rec.inn %}, {{ _("INN") }} <span itemprop="taxID">{{ rec.inn }}</span> {% endif %}
     </h1>
 
     <div class="block document-details">
@@ -31,8 +38,32 @@ REDEFINE ME
             <div class="table-responsive push">
                 <table class="table table-bordered table-hover">
                     <tr>
-                        <th>REDEFINE ME</th>
-                        <td>REDEFINE ME</td>
+                        <th>{{ _("Стан") }}</th>
+                        <td>{{ rec.status }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ _("EIN") }}</th>
+                        <td>{{ rec.ein }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ _("INN") }}</th>
+                        <td>{{ rec.inn }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ _("Дата реєстрації") }}</th>
+                        <td itemprop="foundingDate">{{ rec.date_of_reg|date }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ _("Дата першого появлення запису") }}</th>
+                        <td>
+                            {{ rec.first_updated_from_dataset|date }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{ _("Дата останнього оновлення") }}</th>
+                        <td>
+                            {{ rec.last_updated_from_dataset|date }}
+                        </td>
                     </tr>
                 </table>
                 {% if rec.details_url %}

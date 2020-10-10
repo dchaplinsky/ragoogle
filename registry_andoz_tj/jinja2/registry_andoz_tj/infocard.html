@@ -1,10 +1,13 @@
 {% extends "abstract/base_infocard.html" %}
 
 {% block header %}
-    <div class="edrpou">REDEFINE ME</div>
-    <h3 class="name">REDEFINE ME</h3>
+	<div class="edrpou">{{ res.ein }}</div>
+    <h3 class="name">
+        {{ res.name }}{% if res.inn %}, {{ _("INN") }} {{ res.inn }} {% endif %}
+    </h3>
 {% endblock %}
 
 {% block description %}
-    REDEFINE ME
+    {{ _("Зареєстрована") }} {{ res.date_of_reg|date }}<br/>
+    {{ _("Стан:") }} {{ res.status }}
 {% endblock %}
