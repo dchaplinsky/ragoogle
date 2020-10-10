@@ -3,7 +3,7 @@ import logging
 
 from django.db import models
 from django.urls import reverse
-from django.contrib.postgres.fields import JSONField
+from django.db.models import JSONField
 from django.core.serializers.json import DjangoJSONEncoder
 
 from abstract.models import AbstractDataset

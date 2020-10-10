@@ -53,38 +53,38 @@
                 {% endblock %}
                 <ul class="nav-main">
                     <li class="nav-main-heading">
-                        <span class="sidebar-mini-hidden">Навігація</span>
+                        <span class="sidebar-mini-hidden">{{ _("Навігація") }}</span>
                     </li>
                     <li>
                         <a href="/">
                             <i class="si si-info"></i>
-                            <span class="sidebar-mini-hide">Про проект</span>
+                            <span class="sidebar-mini-hide">{{ _("Про проект") }}</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ url("about_search") }}">
                         <i class="si si-docs"></i>
-                        <span class="sidebar-mini-hide">Інструкція з пошуку</span>
+                        <span class="sidebar-mini-hide">{{ _("Інструкція з пошуку") }}</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ url("about_api") }}">
                         <i class="si si-magic-wand"></i>
-                        <span class="sidebar-mini-hide">Відкритий API</span>
+                        <span class="sidebar-mini-hide">{{ _("Відкритий API") }}</span>
                         </a>
                     </li>
                     <li>
                         <a href="mailto:bihus.info+ring@gmail.com">
                             <i class="si si-envelope-letter"></i>
-                            <span class="sidebar-mini-hide">Зворотній зв'язок</span>
+                            <span class="sidebar-mini-hide">{{ _("Зворотній зв'язок") }}</span>
                         </a>
                     </li>
                     <li style="padding: 9px 18px">
-                        <a style="padding: 8px 14px; color: white;" title="На головну"
+                        <a style="padding: 8px 14px; color: white;" title="{{ _("На головну") }}"
                            href="https://ring.org.ua"
                            class="sidebar-mini-hide btn btn-primary min-width-125"
                            type="button"><i style="position: static;" class="si si-home"></i>
-                            RING.org.ua</a>
+                            {{ _("RING.org.ua") }}</a>
                     </li>
                 </ul>
             </div>
@@ -115,7 +115,7 @@
                                 </svg>
                             </span>RING</span>
                     </h1>
-                    <h2 class="font-w400 mb-50 invisible" data-toggle="appear" data-class="animated fadeInDown">Пошук в державних реєстрах та проектах Канцелярської сотні</h2>
+                    <h2 class="font-w400 mb-50 invisible" data-toggle="appear" data-class="animated fadeInDown">{{ _("Пошук в державних реєстрах та проектах Канцелярської сотні") }}</h2>
                     <form class="br-10 bg-white push col-sm-8 ml-auto mr-auto" action="{{ url('search>results') }}" method="get" _lpchecked="1" autocomplete="off">
                         <div class="input-group input-group-lg">
                             <input type="text" class="form-control search-form-q" name="q" data-provide="typeahead" id="search-form" placeholder="{{ _("Пошук") }}" data-endpoint="{{ url("search>suggest") }}" autocomplete="off">
@@ -125,7 +125,7 @@
                                 </button>
                             </div>
                         </div>
-                        <p><i>Наприклад: Рошен, Ромашко Роман Петрович, ПП "РОМДІРОМ", 37504544</i></p>
+                        <p><i>{{ _("Наприклад: Рошен, Ромашко Роман Петрович, ПП \"РОМДІРОМ\", 37504544") }}</i></p>
 
                         {% set vars = {'db_src': 0} %}
                         {% for ds in datasources %}
@@ -144,7 +144,7 @@
                                     <div class="col-12 data-sources-checkboxes">
                                         <div class="custom-control custom-checkbox mb-5">
                                             <input class="custom-control-input" type="checkbox" name="clearall" checked="checked" id="clearall">
-                                            <label class="custom-control-label" for="clearall">Всі</label>
+                                            <label class="custom-control-label" for="clearall">{{ _("Всі") }}</label>
                                         </div>
                                         {% for ds in datasources %}
                                         <div class="custom-control custom-checkbox mb-5">
@@ -168,29 +168,29 @@
         <div class="content">
             <div class="pb-50">
                 <h3 class="h1 font-w700 text-center mb-10">
-                    Чому ми? <span class="text-primary">Канцелярська сотня рекомендує:</span>
+                    {{ _("Чому ми?") }} <span class="text-primary">{{ _("Канцелярська сотня рекомендує:") }}</span>
                 </h3>
-                <h4 class="h3 font-w400 text-muted text-center mb-30">Лише офіційні дані, поглиблений пошук, зручний дизайн</h4>
+                <h4 class="h3 font-w400 text-muted text-center mb-30">{{ _("Лише офіційні дані, поглиблений пошук, зручний дизайн") }}</h4>
                 <hr>
                 <div class="row nice-copy my-10">
                     <div class="col-md-4 py-20">
                         <h4 class="font-size-xl font-w700 text-uppercase mb-10">
                             <i class="fa fa-lightbulb-o text-earth mr-5"></i> Що це?
                         </h4>
-                        <p class="mb-0">Ми зібрали для вас офіційні відкриті дані і зробили їх насправді відкритими. Регулярно їх оновлюємо. Шукайте та знаходьте все.</p>
+                        <p class="mb-0">{{ _("Ми зібрали для вас офіційні відкриті дані і зробили їх насправді відкритими. Регулярно їх оновлюємо. Шукайте та знаходьте все.") }}</p>
                     </div>
                     <div class="col-md-4 py-20">
                         <h4 class="font-size-xl font-w700 text-uppercase mb-10">
-                            <i class="fa fa-refresh text-earth mr-5"></i> Відкритість і доступність
+                            <i class="fa fa-refresh text-earth mr-5"></i> {{ _("Відкритість і доступність") }}
                         </h4>
-                        <p class="mb-0">Усе безкоштовно. Жодних реєстрацій. Жодної капчі (вони бісять). Зручні таймлайни змін в компаніях - для всіх.
-                            Відкритий і безкоштовний АРІ для тих, хто знає, що з ним робити.</p>
+                        <p class="mb-0">{{ _("Усе безкоштовно. Жодних реєстрацій. Жодної капчі (вони бісять). Зручні таймлайни змін в компаніях - для всіх.") }}
+                            {{ _("Відкритий і безкоштовний АРІ для тих, хто знає, що з ним робити.") }}</p>
                     </div>
                     <div class="col-md-4 py-20">
                         <h4 class="font-size-xl font-w700 text-uppercase mb-10">
-                            <i class="fa fa-bolt text-danger mr-5"></i> Інтелект та гнучкість
+                            <i class="fa fa-bolt text-danger mr-5"></i>{{ _("Інтелект та гнучкість") }}
                         </h4>
-                        <p class="mb-0">Поглиблений пошук. Враховані перейменування вулиць - шукайте так, як знаєте. Автодоповнення, врахування помилок в прізвищах. Магія.</p>
+                        <p class="mb-0">{{ _("Поглиблений пошук. Враховані перейменування вулиць - шукайте так, як знаєте. Автодоповнення, врахування помилок в прізвищах. Магія") }}.</p>
                     </div>
                 </div>
             </div>

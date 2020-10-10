@@ -19,7 +19,7 @@ from followthemoney import model as base_ftm_model
 from abstract.tools.misc import grouper
 from search.search_tools import get_apps_with_data_model
 from search.models import get_datasource_pages
-
+from django.utils.translation import gettext as _
 
 class Command(BaseCommand):
     json = JSONSerializer()
@@ -115,7 +115,7 @@ class Command(BaseCommand):
                 "records": total,
                 "last_updated": timezone.now(),
                 "information_url": "https://ring.org.ua",
-                "publisher": "Проект ring.org.ua",
+                "publisher": _("Проект ring.org.ua"),
                 "publisher_url": "https://ring.org.ua",
             }
 
