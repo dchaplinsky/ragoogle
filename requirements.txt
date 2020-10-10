@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 Django>=3.1.1
-=======
-Django==2.2.13
->>>>>>> d51676c34f5ef630796ea09a0bd860b220d2f22f
 Jinja2==2.10.1
 requests==2.21.0
 tokenize-uk==0.2.0

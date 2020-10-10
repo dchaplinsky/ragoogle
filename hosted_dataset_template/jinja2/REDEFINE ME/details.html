@@ -18,10 +18,10 @@ REDEFINE ME
 
     <div class="block document-details">
         <div class="block-header block-header-default">
-            <h2 class="block-title">Детальна інформація: </h2>
+            <h2 class="block-title">{% templatetag openvariable %} _("Детальна інформація:") {% templatetag closevariable %} </h2>
             <div class="block-options">
                 <button type="button" class="btn-block-option" onclick="Edrdr.helpers('print-page');">
-                    <i class="si si-printer"></i> Друкувати
+                    <i class="si si-printer"></i> {% templatetag openvariable %} _("Друкувати") {% templatetag closevariable %}
                 </button>
                 <button type="button" class="btn-block-option" data-toggle="block-option"
                         data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
@@ -36,7 +36,7 @@ REDEFINE ME
                     </tr>
                 </table>
                 {% templatetag openblock %} if rec.details_url {% templatetag closeblock %}
-                <a href="{% templatetag openvariable %} rec.details_url {% templatetag closevariable %}" target="_blank">Посилання на оригінал</a>
+                <a href="{% templatetag openvariable %} rec.details_url {% templatetag closevariable %}" target="_blank">{% templatetag openvariable %} _("Посилання на оригінал") {% templatetag closevariable %}</a>
                 {% templatetag openblock %} endif {% templatetag closeblock %}
             </div>
         </div>

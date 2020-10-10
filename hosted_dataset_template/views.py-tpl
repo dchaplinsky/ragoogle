@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import Http404
 from django.views.generic import TemplateView
+from django.utils.translation import gettext as _
 
 from elasticsearch.exceptions import NotFoundError
 
@@ -17,7 +18,7 @@ class {{ camel_case_app_name }}DetailsView(TemplateView):
         try:
             rec = Elastic{{ camel_case_app_name }}Model.get(id=kwargs["pk"])
         except NotFoundError:
-            raise Http404("Записа не існує")
+            raise Http404(_("Записа не існує"))
 
         context["rec"] = rec
         context["datasource"] = DataSourceConfig
