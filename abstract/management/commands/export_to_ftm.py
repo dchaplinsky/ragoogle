@@ -3,23 +3,25 @@ import os.path
 import re
 import sys
 import argparse
-import tqdm
 from functools import partial
 from itertools import chain
 from multiprocessing import Pool
-from elasticsearch.exceptions import SerializationError
+
 from django.apps import apps as django_apps
 from django.conf import settings
 from django.core.management.base import BaseCommand
-from elasticsearch.serializer import JSONSerializer
 from django.utils import timezone
+from django.utils.translation import gettext as _
+from django.db import connection
+
+from elasticsearch.serializer import JSONSerializer
 from abstract.ftm_models import get_degradation_mapping
 from followthemoney import model as base_ftm_model
+from elasticsearch.exceptions import SerializationError
+import tqdm
 
 from abstract.tools.misc import grouper
 from search.search_tools import get_apps_with_data_model
-from search.models import get_datasource_pages
-from django.utils.translation import gettext as _
 
 class Command(BaseCommand):
     json = JSONSerializer()
@@ -122,6 +124,7 @@ class Command(BaseCommand):
             if os.path.exists(options["outfile"]):
                 index_data[options["datasource"]]["dump_url"] = options["outfile"]
 
+            from search.models import get_datasource_pages
             pages = get_datasource_pages()
             if options["datasource"] in pages:
                 page = pages[options["datasource"]]

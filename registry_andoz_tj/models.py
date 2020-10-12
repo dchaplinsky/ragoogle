@@ -3,10 +3,13 @@ import logging
 
 from django.db import models
 from django.urls import reverse
+from django.utils.translation import gettext as _
 
 from abstract.models import AbstractDataset
 from abstract.tools.companies import generate_edrpou_options
-from names_translator.name_utils import parse_and_generate, autocomplete_suggestions
+from abstract.tools.ftm import person_entity, company_entity
+from abstract.ftm_models import model as ftm_model
+
 
 
 logging.basicConfig(level=logging.WARNING)
@@ -55,3 +58,28 @@ class RegistryAndozTjModel(AbstractDataset):
         )
 
         return res
+
+    def to_entities(self):
+        dt = self.data
+
+        id_prefix = "registry_andoz_tj"
+
+        if dt.get("section") == "individual":
+            entity = person_entity(
+                name=dt["name"],
+                taxNumber=dt["inn"],
+                idNumber=dt["ein"],
+                jurisdiction="Tadjikistan",
+                positions=_("Індивідуальний підприємець"),
+                incorporationDate=dt["date_of_reg"],
+            )
+        else:
+            entity = company_entity(
+                name=dt["name"],
+                code=dt["inn"],
+                idNumber=dt["ein"],
+                jurisdiction="Tadjikistan",
+                incorporationDate=dt["date_of_reg"],
+            )
+
+        yield entity
