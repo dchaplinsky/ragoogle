@@ -41,7 +41,13 @@ SECRET_KEY = get_env_str('SECRET_KEY', "tg=jh69mhw%*rd)o93^e5d8gu6+2v!)y5dy+$o$o
 DEBUG = False
 
 ALLOWED_HOSTS = get_env_str_list('ALLOWED_HOSTS', [])
-LANGUAGE_CODE = "uk"
+LANGUAGE_CODE = 'ru'
+gettext = lambda s: s
+LANGUAGES = (
+    ('uk', gettext('Ukrainian')),
+    ('ru', gettext('Russian')),
+)
+
 SITE_ID = 1
 STATIC_ROOT = get_env_str('STATIC_ROOT', os.path.join(BASE_DIR, "static"))
 
@@ -202,16 +208,15 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = "uk"
 
-gettext = lambda s: s
-LANGUAGES = (("uk", gettext("Ukrainian")),)
-
-
-TIME_ZONE = "Europe/Kiev"
-USE_I18N = False
+TIME_ZONE = "Asia/Almaty"
+USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, "locale"),
+)
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_IMAGE_BACKEND = "pillow"

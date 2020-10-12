@@ -20,7 +20,7 @@
     {% elif rec.section == "foreign" %}  {{ _("Іноземна компанія") }}
     {% else %}
     {{ _("Компанія") }} 
-    {% endif %} <span itemprop="name">{{ rec.name }}</span>{% if rec.ein %}, {{ _("EIN") }}<span itemprop="taxID">{{ rec.ein }}</span>{% endif %}{% if rec.inn %}, {{ _("INN") }} <span itemprop="taxID">{{ rec.inn }}</span> {% endif %}
+    {% endif %} <span itemprop="name">{{ rec.name }}</span>{% if rec.ein %}, {{ _("EIN") }} <span itemprop="taxID">{{ rec.ein }}</span>{% endif %}{% if rec.inn %}, {{ _("INN") }} <span itemprop="taxID">{{ rec.inn }}</span> {% endif %}
     </h1>
 
     <div class="block document-details">

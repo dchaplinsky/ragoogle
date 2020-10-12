@@ -33,6 +33,7 @@ class ElasticRegistryAndozTjModel(AbstractDatasetMapping):
     countries = Text(copy_to="all")
     companies = Text(copy_to="all")
     raw_records = Text(copy_to="all")
+    all = Text()
 
     def render_infocard(self):
         from .apps import RegistryAndozTjConfig as AppConfig

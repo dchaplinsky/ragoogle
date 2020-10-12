@@ -9,7 +9,7 @@ from elasticsearch_dsl import (
 )
 
 from django.conf import settings
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from django.template.loader import render_to_string
 
 namesAutocompleteAnalyzer = analyzer(

@@ -1,13 +1,13 @@
 from abstract.apps import AbstractConfig
 from .loader import RegistryAndozTjLoader
 from .elastic_models import ElasticRegistryAndozTjModel, registry_andoz_tj_idx
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 
 
 class RegistryAndozTjConfig(AbstractConfig):
     name = "registry_andoz_tj"
 
-    verbose_name = _("Реєстр компаній")
+    verbose_name = _("Реєстр компаній Таджикістану")
     short_name = _("Бизнес-реєстри")
 
     loader_class = RegistryAndozTjLoader
