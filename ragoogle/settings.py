@@ -87,6 +87,7 @@ INSTALLED_APPS = [
     # Generalized search
     "search",
     "raven.contrib.django.raven_compat",
+    "django_pickling",
 ]
 
 MIDDLEWARE = [
