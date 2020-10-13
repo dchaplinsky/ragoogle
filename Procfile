@@ -1,0 +1,1 @@
+makemessages:./manage.py makemessages -l ru --ignore "venv/**/*.py" --ignore "venv/**/*.html"
