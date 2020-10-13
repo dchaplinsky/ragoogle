@@ -1,0 +1,567 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-10-13 17:51+0600\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != "
+"11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
+"100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
+"(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
+
+#: abstract/jinja2/abstract/base_infocard.html:17
+#: abstract/jinja2/abstract/base_infocard.html:40
+msgid "Знайдені фрагменти"
+msgstr ""
+
+#: abstract/management/commands/export_to_ftm.py:120
+msgid "Проект ring.org.ua"
+msgstr ""
+
+#: abstract/models.py:10 search/models.py:11
+msgid "Хеш"
+msgstr ""
+
+#: abstract/models.py:11
+msgid "Дані"
+msgstr ""
+
+#: abstract/models.py:14
+msgid "Останній раз завантажено"
+msgstr ""
+
+#: abstract/models.py:17
+msgid "Перший раз завантажено"
+msgstr ""
+
+#: ragoogle/settings.py:47
+msgid "Ukrainian"
+msgstr ""
+
+#: ragoogle/settings.py:48
+msgid "Russian"
+msgstr ""
+
+#: registry_andoz_tj/apps.py:10
+msgid "Реєстр компаній Таджикістану"
+msgstr ""
+
+#: registry_andoz_tj/apps.py:11
+msgid "Бизнес-реєстри"
+msgstr ""
+
+#: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:5
+msgid "— інформація з реєстру компаній Таджикістану "
+msgstr ""
+
+#: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:8
+#: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:19
+#: registry_andoz_tj/models.py:73
+msgid "Індивідуальний підприємець"
+msgstr ""
+
+#: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:9
+#: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:20
+msgid "Іноземна компанія"
+msgstr ""
+
+#: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:11
+#: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:22
+msgid "Компанія"
+msgstr ""
+
+#: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:12
+#: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:23
+#: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:45
+msgid "EIN"
+msgstr ""
+
+#: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:12
+#: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:23
+#: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:49
+#: registry_andoz_tj/jinja2/registry_andoz_tj/infocard.html:6
+msgid "INN"
+msgstr ""
+
+#: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:12
+msgid "Таджикістан"
+msgstr ""
+
+#: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:28
+msgid "Детальна інформація:"
+msgstr ""
+
+#: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:31
+msgid "Друкувати"
+msgstr ""
+
+#: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:41
+msgid "Стан"
+msgstr ""
+
+#: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:53
+msgid "Дата реєстрації"
+msgstr ""
+
+#: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:57
+msgid "Дата першого появлення запису"
+msgstr ""
+
+#: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:63
+msgid "Дата останнього оновлення"
+msgstr ""
+
+#: registry_andoz_tj/jinja2/registry_andoz_tj/infocard.html:11
+msgid "Зареєстрована"
+msgstr ""
+
+#: registry_andoz_tj/jinja2/registry_andoz_tj/infocard.html:12
+msgid "Стан:"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:3 search/jinja2/search/datasource.html:3
+msgid "Відкритий API - реєстр реєстрів RING"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:19
+msgid "Знаходиться у стадії бета-тестування. Надсилайте ваші відгуки на адресу"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:19 search/jinja2/cms/about_api.html:69
+msgid "bihus.info+ring@gmail.com"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:21
+msgid ""
+"Щоб скористатися API до нашого реєстру реєстрів, просто додайте параметр"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:21
+msgid "до адреси сторінки з результатами пошуку, наприклад, так:"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:28
+msgid ""
+"Таким чином, ви отримаєте ті самі результати, але в форматі машиночитних "
+"даних. Документ з результатами складається з наступних розділів:"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:30
+msgid "знайдені документи та інформація щодо поточної сторінки"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:31
+msgid "ваш запит до системи"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:32
+msgid "режим пошуку"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:32
+msgid "повний збіг"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:32
+msgid "неповний збіг"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:33
+msgid "кількість результатів в режимі повного збіг"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:34
+msgid "кількість результатів в режимі неповного збіг"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:35
+msgid "кількість результатів в поточному режимі пошуку"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:37
+msgid "додаткова інформація по джерелам пошуку, включно з назвою українською"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:41
+msgid "Вміст"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:41
+msgid "складається з наступних полів:"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:43
+msgid "інформація про поточну сторінку та розбивку на сторінки, де"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:43
+msgid "загальна кількість результатів"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:43
+msgid "кількість сторінок"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:43
+msgid "кількість результатів на сторінку"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:44
+msgid "номер поточної сторінки"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:45
+msgid "власне, результати пошуку"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:49
+msgid ""
+"Звісно, що документи з різних джерел пошуку (наприклад, декларацій та "
+"реєстру компаній) будуть мати різну структуру, але деякі з полів будуть "
+"єдині для всіх джерел:"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:51
+msgid "унікальний ідентифікатор документа"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:52
+msgid "датасет-джерело (використовуйте поле"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:52
+msgid "щоб отримати більше інформації про датасет)"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:53
+msgid ""
+"— остання дата, коли ми знайшли цей запис в оригінальному датасеті (може "
+"бути відсутня)"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:54
+msgid ""
+"перша дата, коли ми знайшли цей запис в оригінальному датасеті (може бути "
+"відсутня)"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:57
+msgid ""
+"Окрім того ми витягаємо, чистимо та доповнюємо (наприклад, перекладаємо "
+"російською) наступні сутності:"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:59
+msgid "— перелік осіб, що були зазначені в документі (може бути відсутній)"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:60
+msgid "— перелік компаній, що були зазначені в документі (може бути відсутній)"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:61
+msgid "— перелік адрес, що були зазначені в документі (може бути відсутній)"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:62
+msgid "— перелік країн, що були зазначені в документі (може бути відсутній)"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:66
+msgid "Ви також можете використовувати параметр"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:66
+msgid "в параметрах запиту щоб обмежити пошук тільки по компаніях"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:66
+msgid ", персонах"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:66
+msgid "країнах"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:66
+msgid "або адресах"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:69
+msgid ""
+"Майте на увазі, що API повертає тільки першу тисячу сторінок результатів, "
+"якщо вам потрібен увесь набір даних (наприклад, всі звіти СМІДА) — напишіть "
+"нам за адресою"
+msgstr ""
+
+#: search/jinja2/cms/about_api.html:69
+msgid "щоб отримати повний файл"
+msgstr ""
+
+#: search/jinja2/cms/about_search.html:6
+msgid "Як користуватися пошуком по реєстру реєстрів RING"
+msgstr ""
+
+#: search/jinja2/cms/about_search.html:14
+msgid "Як користуватися пошуком"
+msgstr ""
+
+#: search/jinja2/cms/about_search.html:18
+msgid ""
+"Відкрити головну сторінку, вбити пошуковий запит (ПІБ, назва компанії або "
+"організації, адреса), а за потреби – обрати джерела даних, де плануєте "
+"шукати (або просто шукати в усіх). Потім – переглянути результати. Якщо "
+"нічого не знайшли, варто подивитися результати  пошуку за неповним "
+"співпадінням."
+msgstr ""
+
+#: search/jinja2/cms/about_search.html:19
+msgid ""
+"Результати пошуку будуть у вигляді карток. Якщо навести на них курсор, то "
+"можна побачити фрагмент, який має співпадіння з вашим пошуковим запитом. "
+"Клікнувши на картку, ви отримаєте повний запис вашої знахідки (наприклад, "
+"уже готової до друку)."
+msgstr ""
+
+#: search/jinja2/search/_page_header.html:26
+msgid "У соцмережах"
+msgstr ""
+
+#: search/jinja2/search/_page_header.html:29
+msgid "Bihus.info"
+msgstr ""
+
+#: search/jinja2/search/_page_header.html:44
+msgid "Новини Bihus.info"
+msgstr ""
+
+#: search/jinja2/search/_page_header.html:64
+msgid "Пошук або ESC"
+msgstr ""
+
+#: search/jinja2/search/base.html:21
+msgid "Ring, зручний пошук відкритими даними України"
+msgstr ""
+
+#: search/jinja2/search/base.html:23
+msgid ""
+"Ring, проект Канцелярської сотні, пошуковик та API до найцікавіших відкритих "
+"даних України. Включає в себе Декларації, помічників народних та місцевих "
+"депутатів, реєстр компаній, реєстр власників значних пакетів акцій, реєстр "
+"кандидатів на місцевих виборах 2015, декларації доброчесності суддів та "
+"багато іншого"
+msgstr ""
+
+#: search/jinja2/search/base.html:81
+msgid "RING"
+msgstr ""
+
+#: search/jinja2/search/base.html:97 search/jinja2/search/home.html:56
+msgid "Навігація"
+msgstr ""
+
+#: search/jinja2/search/base.html:102 search/jinja2/search/home.html:61
+msgid "Про проект"
+msgstr ""
+
+#: search/jinja2/search/base.html:108 search/jinja2/search/home.html:67
+msgid "Інструкція з пошуку"
+msgstr ""
+
+#: search/jinja2/search/base.html:114 search/jinja2/search/home.html:73
+msgid "Відкритий API"
+msgstr ""
+
+#: search/jinja2/search/base.html:120 search/jinja2/search/home.html:79
+msgid "Зворотній зв'язок"
+msgstr ""
+
+#: search/jinja2/search/base.html:128 search/jinja2/search/home.html:87
+msgid "RING.org.ua"
+msgstr ""
+
+#: search/jinja2/search/base.html:150
+msgid "Джерело:"
+msgstr ""
+
+#: search/jinja2/search/datasource.html:29
+msgid "Скорочена назва"
+msgstr ""
+
+#: search/jinja2/search/datasource.html:33
+msgid "Категорія"
+msgstr ""
+
+#: search/jinja2/search/datasource.html:38
+msgid "Дата першого запису"
+msgstr ""
+
+#: search/jinja2/search/datasource.html:44
+msgid "Дата найсвіжішого запису"
+msgstr ""
+
+#: search/jinja2/search/datasource.html:49
+msgid "Ідентифікатор"
+msgstr ""
+
+#: search/jinja2/search/datasource.html:53
+msgid "Кількість записів"
+msgstr ""
+
+#: search/jinja2/search/datasource.html:58
+msgid "Посилання на оригінал"
+msgstr ""
+
+#: search/jinja2/search/datasource.html:64
+msgid "Походження набору даних"
+msgstr ""
+
+#: search/jinja2/search/home.html:83
+msgid "На головну"
+msgstr ""
+
+#: search/jinja2/search/home.html:118
+msgid "Пошук в державних реєстрах та проектах Канцелярської сотні"
+msgstr ""
+
+#: search/jinja2/search/home.html:121 search/jinja2/search/search.html:16
+msgid "Пошук"
+msgstr ""
+
+#: search/jinja2/search/home.html:128
+msgid "Наприклад: Рошен, Ромашко Роман Петрович, ПП \"РОМДІРОМ\", 37504544"
+msgstr ""
+
+#: search/jinja2/search/home.html:137 search/jinja2/search/search.html:33
+msgid "Джерел пошуку:"
+msgstr ""
+
+#: search/jinja2/search/home.html:147 search/jinja2/search/search.html:43
+msgid "Всі"
+msgstr ""
+
+#: search/jinja2/search/home.html:171
+msgid "Чому ми?"
+msgstr ""
+
+#: search/jinja2/search/home.html:171
+msgid "Канцелярська сотня рекомендує:"
+msgstr ""
+
+#: search/jinja2/search/home.html:173
+msgid "Лише офіційні дані, поглиблений пошук, зручний дизайн"
+msgstr ""
+
+#: search/jinja2/search/home.html:180
+msgid ""
+"Ми зібрали для вас офіційні відкриті дані і зробили їх насправді відкритими. "
+"Регулярно їх оновлюємо. Шукайте та знаходьте все."
+msgstr ""
+
+#: search/jinja2/search/home.html:184
+msgid "Відкритість і доступність"
+msgstr ""
+
+#: search/jinja2/search/home.html:186
+msgid ""
+"Усе безкоштовно. Жодних реєстрацій. Жодної капчі (вони бісять). Зручні "
+"таймлайни змін в компаніях - для всіх."
+msgstr ""
+
+#: search/jinja2/search/home.html:187
+msgid "Відкритий і безкоштовний АРІ для тих, хто знає, що з ним робити."
+msgstr ""
+
+#: search/jinja2/search/home.html:191
+msgid "Інтелект та гнучкість"
+msgstr ""
+
+#: search/jinja2/search/home.html:193
+msgid ""
+"Поглиблений пошук. Враховані перейменування вулиць - шукайте так, як знаєте. "
+"Автодоповнення, врахування помилок в прізвищах. Магія"
+msgstr ""
+
+#: search/jinja2/search/search.html:5
+msgid "Ring, зручний пошук по відкритим даним України"
+msgstr ""
+
+#: search/jinja2/search/search.html:7
+msgid "Результати пошуку по джерелах"
+msgstr ""
+
+#: search/jinja2/search/search.html:62
+msgid "Повний збіг"
+msgstr ""
+
+#: search/jinja2/search/search.html:65
+msgid "Неповний збіг"
+msgstr ""
+
+#: search/jinja2/search/search.html:95
+msgid "Попередня"
+msgstr ""
+
+#: search/jinja2/search/search.html:110
+msgid "Наступна"
+msgstr ""
+
+#: search/models.py:12
+msgid "Термін"
+msgstr ""
+
+#: search/models.py:13
+msgid "Переклад"
+msgstr ""
+
+#: search/models.py:15
+msgid "Слово"
+msgstr ""
+
+#: search/models.py:15
+msgid "Фраза"
+msgstr ""
+
+#: search/models.py:17 search/models.py:49
+msgid "Опис набору даних"
+msgstr ""
+
+#: search/models.py:42
+msgid "Ідентифікатор датасету"
+msgstr ""
+
+#: search/models.py:47
+msgid "Назва датасету"
+msgstr ""
+
+#: search/models.py:48
+msgid "Джерело походження"
+msgstr ""
+
+#: search/models.py:50
+msgid "Опис набору даних (in English)"
+msgstr ""
+
+#: search/models.py:51
+msgid "Хто надав набір даних"
+msgstr ""
+
+#: search/models.py:52
+msgid "Тип датасету в класифікації OCCRP"
+msgstr ""
+
+#: search/views.py:294
+msgid "Записа не існує"
+msgstr ""

@@ -44,7 +44,6 @@ ALLOWED_HOSTS = get_env_str_list('ALLOWED_HOSTS', [])
 LANGUAGE_CODE = 'ru'
 gettext = lambda s: s
 LANGUAGES = (
-    ('uk', gettext('Ukrainian')),
     ('ru', gettext('Russian')),
 )
 
