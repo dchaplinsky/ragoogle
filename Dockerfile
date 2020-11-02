@@ -21,8 +21,8 @@ RUN /usr/sbin/adduser -D -h ${root} app
 COPY ./requirements.txt ${root}/requirements.txt
 
 RUN apk add --no-cache su-exec postgresql-libs libjpeg \
-    && apk add --no-cache --virtual .build-deps jpeg-dev zlib-dev postgresql-dev build-base \
-    && PREFIX=/usr/local pip install -r  ${root}/requirements.txt \
+    && apk add --no-cache --virtual .build-deps jpeg-dev zlib-dev postgresql-dev build-base icu-dev \
+    && PREFIX=/usr/local pip install -r ${root}/requirements.txt \
     && runDeps="$( \
       scanelf --needed --nobanner --format '%n#p' --recursive /usr/local \
         | tr ',' '\n' \

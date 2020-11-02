@@ -69,6 +69,7 @@ INSTALLED_APPS = [
 
     # Here goes data sources
     "registry_andoz_tj.apps.RegistryAndozTjConfig",
+    "gr5_gosreestr_kz.apps.Gr5GosreestrKzConfig",
 
     # Generalized search
     "search",

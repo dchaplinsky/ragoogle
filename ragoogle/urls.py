@@ -23,6 +23,7 @@ sitemaps = {
     if hasattr(config, "sitemap")
 }
 
+
 urlpatterns = [
     path("", HomeView.as_view(), name="home"),
     path('about_search', AboutSearchView.as_view(), name="about_search"),
@@ -30,6 +31,7 @@ urlpatterns = [
     path("search", SearchView.as_view(), name="search>results"),
     path("search/suggest", SuggestView.as_view(), name="search>suggest"),
     path("registry_andoz_tj/", include("registry_andoz_tj.urls")),
+    path("gr5_gosreestr_kz/", include("gr5_gosreestr_kz.urls")),
     path("source/<slug:slug>", DataSourceView.as_view(), name="about_datasource"),
     path("admin/", admin.site.urls),
     path(
