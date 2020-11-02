@@ -1,0 +1,36 @@
+name: Deploy site
+
+on:
+  push:
+    branches:
+      - tarob
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+      name: Checkout source
+    - name: Upload to server
+      uses: easingthemes/ssh-deploy@v2.1.5
+      env:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          ARGS: "-rltgoDzvO"
+          SOURCE: "."
+          REMOTE_HOST: ${{ secrets.HOST }}
+          REMOTE_USER: ${{ secrets.USER }}
+          TARGET: ${{ secrets.TARGET }}
+    - name: Run migrations and other
+      uses: garygrossgarten/github-action-ssh@release
+      with:
+        command: cd ${{ secrets.TARGET }} && \
+          source venv/bin/activate && \
+          set -o allexport && \
+          source ../env && \
+          set +o allexport && \
+          pip3 install -r requirements.txt && \
+          ./manage.py migrate && \
+          sudo /usr/bin/systemctl restart open-base-site.service
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USER }}
+        privateKey: ${{ secrets.SERVER_SSH_KEY }}
