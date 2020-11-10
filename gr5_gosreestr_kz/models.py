@@ -28,12 +28,19 @@ class Gr5GosreestrKzModel(AbstractDataset):
             "first_updated_from_dataset": self.first_updated_from_dataset,
         }
 
-        companies = set(
+        companies = list(set(
             filter(None, map(
                 lambda field: dt[field].strip() if dt[field] else None,
                 ["bin", "rnn", "name_kz", "name_ru"],
             ))
-        )
+        ))
+
+        addresses = list(set(
+            filter(None, map(
+                lambda field: dt[field].strip() if dt[field] else None,
+                ["bin", "rnn", "address"],
+            ))
+        ))
 
         for field in ["date_of_reg", "date_of_reg_init"]:
             if dt[field] and not dt.get(field, "").strip("\xa0"):
@@ -42,8 +49,9 @@ class Gr5GosreestrKzModel(AbstractDataset):
         res.update(dt)
         res.update(
             {
-                "companies": list(filter(None, companies)),
-                "names_autocomplete": list(filter(None, companies)),
+                "addresses": addresses,
+                "companies": companies,
+                "names_autocomplete": companies,
             }
         )
 
