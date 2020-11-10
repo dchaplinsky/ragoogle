@@ -1,0 +1,106 @@
+{% extends "search/base.html" %}
+
+{% block container_class %}sidebar-o sidebar-inverse side-scroll main-content-narrow  page-header-fixed page-header-inverse{% endblock %}
+
+{% block title %}{{ rec.name_ru }} {{ _("— Информация из депозитария финансовой отчётности (Казахстан)") }}{% endblock %}
+
+{% block description %}
+{{ _("Компанія") }}
+{{ rec.name_ru }}
+{% if rec.bin %}, {{ _("БИН") }} {{ rec.bin }}{% endif %}
+{% if rec.rnn %}, {{ _("РНН") }} {{ rec.rnn }}{% endif %}
+, {{ _("Казахстан") }}
+{% endblock %}
+
+
+{% block content %}
+<!-- Page Content -->
+<div class="content" itemscope="" itemtype="http://schema.org/Organization">
+    <!-- Frequently Asked Questions -->
+    <h1 class="content-heading">
+        {{ _("Компанія") }}
+        {{ rec.name_ru -}}
+        {%- if rec.bin %}, {{ _("БИН") }} {{ rec.bin }}{% endif -%}
+        {%- if rec.rnn %}, {{ _("РНН") }} {{ rec.rnn }}{% endif -%}
+        , {{ _("Казахстан") }}
+    </h1>
+
+    <div class="block document-details">
+        <div class="block-header block-header-default">
+            <h2 class="block-title">{{ _("Детальна інформація:") }} </h2>
+            <div class="block-options">
+                <button type="button" class="btn-block-option" onclick="Edrdr.helpers('print-page');">
+                    <i class="si si-printer"></i> {{ _("Друкувати") }}
+                </button>
+                <button type="button" class="btn-block-option" data-toggle="block-option"
+                        data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
+            </div>
+        </div>
+        <div class="block-content">
+            <div class="table-responsive push">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th>{{ _('БИН') }}</th>
+                        <td>{{ rec.bin }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ _('РНН') }}</th>
+                        <td>{{ rec.rnn }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ _('Название (рус. яз.)') }}</th>
+                        <td>{{ rec.name_ru }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ _('Название (каз. яз.)') }}</th>
+                        <td>{{ rec.name_kz }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ _('Полный адрес') }}</th>
+                        <td>{{ rec.address }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ _('№ госрегистрации') }}</th>
+                        <td>{{ rec.reg_id }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ _('Дата госрегистрации') }}</th>
+                        <td>{{ rec.date_of_reg|date }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ _('ОПФ') }}</th>
+                        <td>{{ rec.opf }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ _('Отрасль') }}</th>
+                        <td>{{ rec.branch }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ _('Субъект предпринимательства') }}</th>
+                        <td>{{ rec.busines_entity }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ _('Среднегодовая числ. работников') }}</th>
+                        <td>{{ rec.mean_workers }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ _('Статус') }}</th>
+                        <td>{{ rec.status }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ _('Блокировка') }}</th>
+                        <td>{{ rec.lock }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ _('Примечание') }}</th>
+                        <td>{{ rec.comment }}</td>
+                    </tr>
+                </table>
+                {% if rec.details_url %}
+                <a href="{{ rec.details_url }}" target="_blank">{{ _("Посилання на оригінал") }}</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -32,6 +32,7 @@ urlpatterns = [
     path("search/suggest", SuggestView.as_view(), name="search>suggest"),
     path("registry_andoz_tj/", include("registry_andoz_tj.urls")),
     path("gr5_gosreestr_kz/", include("gr5_gosreestr_kz.urls")),
+    path("opi_dfo_kz/", include("opi_dfo_kz.urls")),
     path("source/<slug:slug>", DataSourceView.as_view(), name="about_datasource"),
     path("admin/", admin.site.urls),
     path(

@@ -1,0 +1,11 @@
+{% extends "abstract/base_infocard.html" %}
+
+{% block header %}
+    <div class="edrpou">{{ res.bin }}</div>
+    <h3 class="name">{{ res.name_ru }}</h3>
+{% endblock %}
+
+{% block description %}
+    {{ _("Зареєстрована") }} {{ res.date_of_reg|date }}<br/>
+    {{ _("Стан:") }} {{ res.status }}
+{% endblock %}
