@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: open base\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-13 17:46+0600\n"
+"POT-Creation-Date: 2020-11-13 03:48+0600\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,11 +34,204 @@ msgstr "Последний раз загружено"
 msgid "Перший раз завантажено"
 msgstr "Первый раз загружено"
 
-#: ragoogle/settings.py:47
-msgid "Ukrainian"
-msgstr "Украинский"
+#: gr5_gosreestr_kz/apps.py:10
+msgid ""
+"РЕЕСТР ГОСУДАРСТВЕННЫХ ПРЕДПРИЯТИЙ И УЧРЕЖДЕНИЙ, ЮРИДИЧЕСКИХ ЛИЦ С УЧАСТИЕМ "
+"ГОСУДАРСТВА В УСТАВНОМ КАПИТАЛЕ"
+msgstr ""
 
-#: ragoogle/settings.py:48
+#: gr5_gosreestr_kz/apps.py:11
+msgid "Госреестры"
+msgstr ""
+
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:9
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:23
+#: opi_dfo_kz/jinja2/opi_dfo_kz/details.html:8
+#: opi_dfo_kz/jinja2/opi_dfo_kz/details.html:21
+#: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:11
+#: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:22
+msgid "Компанія"
+msgstr "Компания"
+
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:11
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:25
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:46
+#, fuzzy
+#| msgid "Ідентифікатор"
+msgid "Идентификатор"
+msgstr "Идентификатор"
+
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:12
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:26
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:50
+#: opi_dfo_kz/jinja2/opi_dfo_kz/details.html:10
+#: opi_dfo_kz/jinja2/opi_dfo_kz/details.html:23
+#: opi_dfo_kz/jinja2/opi_dfo_kz/details.html:43
+msgid "БИН"
+msgstr ""
+
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:13
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:27
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:54
+#: opi_dfo_kz/jinja2/opi_dfo_kz/details.html:11
+#: opi_dfo_kz/jinja2/opi_dfo_kz/details.html:24
+#: opi_dfo_kz/jinja2/opi_dfo_kz/details.html:47
+msgid "РНН"
+msgstr ""
+
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:14
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:28
+#: opi_dfo_kz/jinja2/opi_dfo_kz/details.html:12
+#: opi_dfo_kz/jinja2/opi_dfo_kz/details.html:25
+#, fuzzy
+#| msgid "Таджикістан"
+msgid "Казахстан"
+msgstr "Таджикистан"
+
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:33
+#: opi_dfo_kz/jinja2/opi_dfo_kz/details.html:30
+#: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:28
+msgid "Детальна інформація:"
+msgstr "Детальная информация:"
+
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:36
+#: opi_dfo_kz/jinja2/opi_dfo_kz/details.html:33
+#: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:31
+msgid "Друкувати"
+msgstr "Печатать"
+
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:58
+msgid "ОКПО"
+msgstr ""
+
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:62
+#: opi_dfo_kz/jinja2/opi_dfo_kz/details.html:51
+msgid "Название (рус. яз.)"
+msgstr ""
+
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:66
+#: opi_dfo_kz/jinja2/opi_dfo_kz/details.html:55
+msgid "Название (каз. яз.)"
+msgstr ""
+
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:70
+msgid "Адрес"
+msgstr ""
+
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:74
+#: opi_dfo_kz/jinja2/opi_dfo_kz/details.html:71
+msgid "ОПФ"
+msgstr ""
+
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:78
+msgid "КФС (уровень 4)"
+msgstr ""
+
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:82
+msgid "КФС"
+msgstr ""
+
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:86
+#: opi_dfo_kz/jinja2/opi_dfo_kz/details.html:63
+msgid "№ госрегистрации"
+msgstr ""
+
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:90
+#: opi_dfo_kz/jinja2/opi_dfo_kz/details.html:67
+#, fuzzy
+#| msgid "Дата реєстрації"
+msgid "Дата госрегистрации"
+msgstr "Дата регистрации"
+
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:94
+#, fuzzy
+#| msgid "Дата першого запису"
+msgid "Дата первичной госрегистрации"
+msgstr "Дата первой записи"
+
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:98
+#: opi_dfo_kz/jinja2/opi_dfo_kz/details.html:87
+msgid "Статус"
+msgstr ""
+
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:102
+#: opi_dfo_kz/jinja2/opi_dfo_kz/details.html:91
+msgid "Блокировка"
+msgstr ""
+
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:106
+msgid "Орган госуправления"
+msgstr ""
+
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:110
+msgid "Собственник"
+msgstr ""
+
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:114
+msgid "Отрасль (уровень 1)"
+msgstr ""
+
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:118
+msgid "Отрасль (уровень 4)"
+msgstr ""
+
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/details.html:123
+#: opi_dfo_kz/jinja2/opi_dfo_kz/details.html:100
+#: search/jinja2/search/datasource.html:58
+msgid "Посилання на оригінал"
+msgstr "Ссылка на оригинал"
+
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/infocard.html:9
+#: opi_dfo_kz/jinja2/opi_dfo_kz/infocard.html:9
+#: registry_andoz_tj/jinja2/registry_andoz_tj/infocard.html:11
+msgid "Зареєстрована"
+msgstr "Зарегистрирована"
+
+#: gr5_gosreestr_kz/jinja2/gr5_gosreestr_kz/infocard.html:10
+#: opi_dfo_kz/jinja2/opi_dfo_kz/infocard.html:10
+#: registry_andoz_tj/jinja2/registry_andoz_tj/infocard.html:12
+msgid "Стан:"
+msgstr "Статус:"
+
+#: gr5_gosreestr_kz/views.py:21 opi_dfo_kz/views.py:21 search/views.py:294
+msgid "Записа не існує"
+msgstr "Записи не существует"
+
+#: opi_dfo_kz/apps.py:10
+msgid "Депозитарий финансовой отчётности (Казахстан)"
+msgstr ""
+
+#: opi_dfo_kz/apps.py:11
+msgid "Финотчётность (kz)"
+msgstr ""
+
+#: opi_dfo_kz/jinja2/opi_dfo_kz/details.html:5
+msgid "— Информация из депозитария финансовой отчётности (Казахстан)"
+msgstr ""
+
+#: opi_dfo_kz/jinja2/opi_dfo_kz/details.html:59
+#, fuzzy
+#| msgid "або адресах"
+msgid "Полный адрес"
+msgstr "или адресам"
+
+#: opi_dfo_kz/jinja2/opi_dfo_kz/details.html:75
+msgid "Отрасль"
+msgstr ""
+
+#: opi_dfo_kz/jinja2/opi_dfo_kz/details.html:79
+msgid "Субъект предпринимательства"
+msgstr ""
+
+#: opi_dfo_kz/jinja2/opi_dfo_kz/details.html:83
+msgid "Среднегодовая числ. работников"
+msgstr ""
+
+#: opi_dfo_kz/jinja2/opi_dfo_kz/details.html:95
+msgid "Примечание"
+msgstr ""
+
+#: ragoogle/settings.py:47
 msgid "Russian"
 msgstr "Русский"
 
@@ -65,11 +258,6 @@ msgstr "Индивидуальный предприниматель"
 msgid "Іноземна компанія"
 msgstr "Иностранная компания"
 
-#: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:11
-#: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:22
-msgid "Компанія"
-msgstr "Компания"
-
 #: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:12
 #: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:23
 #: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:45
@@ -87,14 +275,6 @@ msgstr "INN"
 msgid "Таджикістан"
 msgstr "Таджикистан"
 
-#: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:28
-msgid "Детальна інформація:"
-msgstr "Детальная информация:"
-
-#: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:31
-msgid "Друкувати"
-msgstr "Печатать"
-
 #: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:41
 msgid "Стан"
 msgstr "Статус"
@@ -110,14 +290,6 @@ msgstr "Дата первого обновления записи"
 #: registry_andoz_tj/jinja2/registry_andoz_tj/details.html:63
 msgid "Дата останнього оновлення"
 msgstr "Дата последнего обновления записи"
-
-#: registry_andoz_tj/jinja2/registry_andoz_tj/infocard.html:11
-msgid "Зареєстрована"
-msgstr "Зарегистрирована"
-
-#: registry_andoz_tj/jinja2/registry_andoz_tj/infocard.html:12
-msgid "Стан:"
-msgstr "Статус:"
 
 #: search/jinja2/cms/about_api.html:3 search/jinja2/search/datasource.html:3
 msgid "Відкритий API - реєстр реєстрів RING"
@@ -438,10 +610,6 @@ msgstr "Идентификатор"
 msgid "Кількість записів"
 msgstr "Количество записей"
 
-#: search/jinja2/search/datasource.html:58
-msgid "Посилання на оригінал"
-msgstr "Ссылка на оригинал"
-
 #: search/jinja2/search/datasource.html:64
 msgid "Походження набору даних"
 msgstr "Источник набора данных"
@@ -472,23 +640,28 @@ msgstr "Все"
 
 #: search/jinja2/search/home.html:171
 msgid "Чому ми?"
-msgstr "Почему мы?"
+msgstr "Кто мы?"
 
 #: search/jinja2/search/home.html:171
 msgid "Канцелярська сотня рекомендує:"
-msgstr "Internews рекомендует"
+msgstr " "
 
 #: search/jinja2/search/home.html:173
 msgid "Лише офіційні дані, поглиблений пошук, зручний дизайн"
-msgstr "Только официальные данных, расширенный поиск, удобный дизайн"
+msgstr ""
+"Максимально открытый и простой для пользователя ресурс с доступом ко всем "
+"официальным публичным базам данных Республики Казахстан."
+
+#: search/jinja2/search/home.html:178
+msgid "Що це?"
+msgstr "Что вы можете получить?"
 
 #: search/jinja2/search/home.html:180
 msgid ""
 "Ми зібрали для вас офіційні відкриті дані і зробили їх насправді відкритими. "
 "Регулярно їх оновлюємо. Шукайте та знаходьте все."
 msgstr ""
-"Мы собрали для вас официальные открытые данные и сделали их по настоящему "
-"открытыми. Регулярно их обновляем. Ищите и находите всё."
+"Полный доступ к 22 реестрам открытых данных Казахстана.  Просто заходи и ищи нужную информацию."
 
 #: search/jinja2/search/home.html:184
 msgid "Відкритість і доступність"
@@ -498,22 +671,22 @@ msgstr "Открытость и доступность"
 msgid ""
 "Усе безкоштовно. Жодних реєстрацій. Жодної капчі (вони бісять). Зручні "
 "таймлайни змін в компаніях - для всіх."
-msgstr "Все бесплатно. Никаких регистраций. Никаких Captcha (они бесят)"
+msgstr "Данные регулярно обновляются, удобны для программной аналитики, в том числе в машиночитаемом формате."
 
 #: search/jinja2/search/home.html:187
 msgid "Відкритий і безкоштовний АРІ для тих, хто знає, що з ним робити."
-msgstr "Открытый и бесплатный API для тех, кто знает, что с ним делать"
+msgstr "Все можно получить без аутентификации. Не нужно платить и доказывать, что ты не робот."
 
 #: search/jinja2/search/home.html:191
 msgid "Інтелект та гнучкість"
-msgstr "Интеллект и гибкость"
+msgstr "Стань профессиональным расследователем"
 
 #: search/jinja2/search/home.html:193
 msgid ""
 "Поглиблений пошук. Враховані перейменування вулиць - шукайте так, як знаєте. "
 "Автодоповнення, врахування помилок в прізвищах. Магія"
 msgstr ""
-"Расширенный поиск. Автодополнение, учет ошибок в названиях и фамилиях. Магия"
+"Государственные закупки, штрафы и налоги, поиск алиментщиков и база судебных актов. Пусть магия цифр послужит на благо твоей страны."
 
 #: search/jinja2/search/search.html:5
 msgid "Ring, зручний пошук по відкритим даним України"
@@ -583,9 +756,8 @@ msgstr "Кто предоставил набор данных"
 msgid "Тип датасету в класифікації OCCRP"
 msgstr "Тип датасета в классификации OCCRP"
 
-#: search/views.py:294
-msgid "Записа не існує"
-msgstr "Записи не существует"
+#~ msgid "Ukrainian"
+#~ msgstr "Украинский"
 
 #~ msgid "будинок"
 #~ msgstr "дом"
