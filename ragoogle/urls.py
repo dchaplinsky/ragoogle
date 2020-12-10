@@ -33,6 +33,7 @@ urlpatterns = [
     path("registry_andoz_tj/", include("registry_andoz_tj.urls")),
     path("gr5_gosreestr_kz/", include("gr5_gosreestr_kz.urls")),
     path("opi_dfo_kz/", include("opi_dfo_kz.urls")),
+    path("data_egov_kz_gbd_ul/", include("data_egov_kz_gbd_ul.urls")),
     path("source/<slug:slug>", DataSourceView.as_view(), name="about_datasource"),
     path("admin/", admin.site.urls),
     path(

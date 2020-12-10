@@ -1,0 +1,12 @@
+{% extends "abstract/base_infocard.html" %}
+
+{% block header %}
+    <div class="edrpou">{{ res.id }}{% if res.bin %} (БИН: {{ res.bin }}){% endif %}</div>
+    <h3 class="name">{{ res.nameru }} ({{ res.namekz }})</h3>
+{% endblock %}
+
+{% block description %}
+    {{ _("Зареєстрована") }} {{ res.datereg|date }}<br/>
+    {{ _("Стан:") }} {{ res.statusru }}
+    {% if res.director %}{{ _("Директор:") }} {{ res.director }}{% endif %}
+{% endblock %}

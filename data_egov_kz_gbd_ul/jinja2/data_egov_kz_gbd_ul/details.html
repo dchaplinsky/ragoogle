@@ -1,0 +1,94 @@
+{% extends "search/base.html" %}
+
+{% block container_class %}sidebar-o sidebar-inverse side-scroll main-content-narrow  page-header-fixed page-header-inverse{% endblock %}
+
+{% block title %}{{ rec.nameru }} {{ _("— Информация из реестра регистрационных данных юридических лиц, филиалов, представительств Казахстана") }}{% endblock %}
+
+{% block description %}
+{{ _("Компанія") }}
+{{ rec.nameru }}
+{% if rec.id %}, {{ _("Идентификатор") }} {{ rec.id }}{% endif %}
+{% if rec.bin %}, {{ _("БИН") }} {{ rec.bin }}{% endif %}
+, {{ _("Казахстан") }}
+{% endblock %}
+
+
+{% block content %}
+<!-- Page Content -->
+<div class="content" itemscope="" itemtype="http://schema.org/Organization">
+    <!-- Frequently Asked Questions -->
+    <h1 class="content-heading">
+        {{ _("Компанія") }}
+        {{ rec.nameru }}
+        {% if rec.id %}, {{ _("Идентификатор") }} {{ rec.id }}{% endif %}
+        {% if rec.bin %}, {{ _("БИН") }} {{ rec.bin }}{% endif %}
+        , {{ _("Казахстан") }}
+    </h1>
+
+    <div class="block document-details">
+        <div class="block-header block-header-default">
+            <h2 class="block-title">{{ _("Детальна інформація:") }} </h2>
+            <div class="block-options">
+                <button type="button" class="btn-block-option" onclick="Edrdr.helpers('print-page');">
+                    <i class="si si-printer"></i> {{ _("Друкувати") }}
+                </button>
+                <button type="button" class="btn-block-option" data-toggle="block-option"
+                        data-action="fullscreen_toggle"><i class="si si-size-fullscreen"></i></button>
+            </div>
+        </div>
+        <div class="block-content">
+            <div class="table-responsive push">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th>{{ _('Идентификатор') }}</th>
+                        <td>{{ rec.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ _('БИН') }}</th>
+                        <td>{{ rec.bin }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ _('Название (рус. яз.)') }}</th>
+                        <td>{{ rec.nameru }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ _('Название (каз. яз.)') }}</th>
+                        <td>{{ rec.namekz }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ _('Вид деятельности (рус. яз.)') }}</th>
+                        <td>{{ rec.okedru }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ _('Вид деятельности (каз. яз.)') }}</th>
+                        <td>{{ rec.okedkz }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ _('Адрес (рус. яз.)') }}</th>
+                        <td>{{ rec.addressru }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ _('Адрес (каз. яз.)') }}</th>
+                        <td>{{ rec.addresskz }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ _('Директор') }}</th>
+                        <td>{{ rec.director }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ _('Дата регистрации') }}</th>
+                        <td>{{ rec.datereg|date }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ _('Статус') }}</th>
+                        <td>{{ rec.statusru }} ({{ rec.statuskz }})</td>
+                    </tr>
+                </table>
+                {% if rec.details_url %}
+                <a href="{{ rec.details_url }}" target="_blank">{{ _("Посилання на оригінал") }}</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

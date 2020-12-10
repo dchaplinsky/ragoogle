@@ -7,8 +7,8 @@ from django.utils.translation import gettext_lazy as _
 class Gr5GosreestrKzConfig(AbstractConfig):
     name = "gr5_gosreestr_kz"
 
-    verbose_name = _("РЕЕСТР ГОСУДАРСТВЕННЫХ ПРЕДПРИЯТИЙ И УЧРЕЖДЕНИЙ, ЮРИДИЧЕСКИХ ЛИЦ С УЧАСТИЕМ ГОСУДАРСТВА В УСТАВНОМ КАПИТАЛЕ")
-    short_name = _("Госреестры")
+    verbose_name = _("Реестр государственных предприятий и учреждений, юридических лиц с участием государства в уставном капитале (Казахстан)")
+    short_name = _("Предпр. с гос. капиталом (kz)")
 
     loader_class = Gr5GosreestrKzLoader
 

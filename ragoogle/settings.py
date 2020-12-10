@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     "registry_andoz_tj.apps.RegistryAndozTjConfig",
     "gr5_gosreestr_kz.apps.Gr5GosreestrKzConfig",
     "opi_dfo_kz.apps.OpiDfoKzConfig",
+    "data_egov_kz_gbd_ul.apps.DataEgovKzGbdUlConfig",
 
     # Generalized search
     "search",

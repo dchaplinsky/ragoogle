@@ -7,8 +7,8 @@ from django.utils.translation import gettext_lazy as _
 class RegistryAndozTjConfig(AbstractConfig):
     name = "registry_andoz_tj"
 
-    verbose_name = _("Реєстр компаній Таджикістану")
-    short_name = _("Бизнес-реєстри")
+    verbose_name = _("Реестр компаний (Таджикистан)")
+    short_name = _("Реестр компаний (tj)")
 
     loader_class = RegistryAndozTjLoader
 
